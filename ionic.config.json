@@ -1,5 +1,7 @@
 {
   "name": "Halalify",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
