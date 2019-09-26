@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title color="secondary">
-      Login
+  <ion-toolbar color="success">
+    <ion-title>
+      
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="success" padding>
     <ion-card>
-        <img src="assets/img/logo_transparent.png"/>
+        <img src="assets/img/logo_transparent.png" class="center"/>
       </ion-card>
 
     <form #form="ngForm" (ngSubmit)="login(form)">
@@ -24,7 +24,7 @@
                 </ion-item>
               </div>
               <div padding>
-                <ion-button size="large" type="submit"  expand="block" routerLink="/home">LOGIN</ion-button>
+                <ion-button size="large" type="submit"  expand="block" routerLink="/menu">LOGIN</ion-button>
               </div>
             </ion-col>
           </ion-row>
