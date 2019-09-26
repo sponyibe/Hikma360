@@ -53,7 +53,6 @@ export class SearchHalalPage implements OnInit{
     private camera: Camera,
     private loading: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private file: File,
     private ingservice: IngredientService
   ){
 

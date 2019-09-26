@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireAuthModule } from "@angular/fire/auth";
 //import { NgAisModule } from 'angular-instantsearch';
 
 //import { AngularCropperjsModule } from 'angular-cropperjs';
@@ -25,7 +26,8 @@ import { Camera } from '@ionic-native/camera/ngx';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
     // AngularCropperjsModule,
     // NgAisModule.forRoot()
   ],

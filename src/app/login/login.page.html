@@ -17,14 +17,15 @@
             <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
               <div padding>
                 <ion-item>
-                  <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                  <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="username" required></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+                  <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" required></ion-input>
                 </ion-item>
               </div>
               <div padding>
-                <ion-button size="large" type="submit"  expand="block" routerLink="/home">LOGIN</ion-button>
+                <ion-button size="large" type="submit"  expand="block" (click)="login()" routerLink="/home">LOGIN</ion-button>
+                <!-- routerLink="/home" -->
               </div>
             </ion-col>
           </ion-row>
