@@ -16,26 +16,26 @@ export class IngredientService {
   private ingredientsCollection: AngularFirestoreCollection<Ingredient>;
 
   private ingredients: Observable<Ingredient[]>
-  
+
   constructor(db: AngularFirestore) {
     this.ingredientsCollection = db.collection<Ingredient>('Ingredients');
 
-    this.ingredients =  this.ingredientsCollection.snapshotChanges().pipe(
+    this.ingredients = this.ingredientsCollection.snapshotChanges().pipe(
       map(actions => {
-        return actions.map (a => {
+        return actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
-          return {id, ...data};
+          return { id, ...data };
         });
       })
     );
-   }
+  }
 
-   getIngredients(){
-     return this.ingredients;
-   }
+  getIngredients() {
+    return this.ingredients;
+  }
 
-   getIngredient(id){
-     return this.ingredientsCollection.doc<Ingredient>(id).valueChanges();
-   }
+  getIngredient(id) {
+    return this.ingredientsCollection.doc<Ingredient>(id).valueChanges();
+  }
 }

@@ -14,7 +14,8 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
-//import { NgAisModule } from 'angular-instantsearch';
+import { Network } from "@ionic-native/network/ngx";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 //import { AngularCropperjsModule } from 'angular-cropperjs';
 import { Camera } from '@ionic-native/camera/ngx';
@@ -36,6 +37,8 @@ import { Camera } from '@ionic-native/camera/ngx';
     SplashScreen,
     AngularFireStorage,
     Camera,
+    Network,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],

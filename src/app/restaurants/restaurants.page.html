@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>restaurants</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item button *ngFor="let restaurant of places" [routerLink]="['/restaurant-details', restaurant.id]">
+      <ion-label>{{restaurant.Name}}
+      <p>{{restaurant.distance}} km</p>
+      <p>{{restaurant.Address}}</p>
+      <p>{{restaurant.CertifiedBy}}</p>
+    </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
