@@ -20,6 +20,10 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: '../home/home.module#HomePageModule'
+      },
+      {
+        path: 'search-halal',
+        loadChildren: '../search-halal/search-halal.module#SearchHalalPageModule'
       }
      
     ]

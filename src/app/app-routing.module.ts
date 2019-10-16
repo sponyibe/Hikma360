@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'tenets', loadChildren: './tenets/tenets.module#TenetsPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
-  { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'search-halal', loadChildren: './search-halal/search-halal.module#SearchHalalPageModule' },
   { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
   { path: 'restaurant-details', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
   { path: 'restaurant-details/:id', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },

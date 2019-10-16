@@ -7,13 +7,13 @@ import { tap, filter } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { environment } from "../../../environments/environment";
+import { environment } from "../../environments/environment";
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 // import { Plugins, CameraResultType, CameraSource, CameraPhoto } from '@capacitor/core';
 // const { Camera } = Plugins;
 
-import { Ingredient, IngredientService } from "../../services/ingredient.service";
+import { Ingredient, IngredientService } from "../services/ingredient.service";
 
 @Component({
   selector: 'app-search-halal',

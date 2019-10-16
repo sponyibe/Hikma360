@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
     <ion-title>restaurants</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,7 +14,6 @@
       <ion-label>{{restaurant.Name}}
       <p>{{restaurant.distance}} km</p>
       <p>{{restaurant.Address}}</p>
-      <p>{{restaurant.CertifiedBy}}</p>
     </ion-label>
     </ion-item>
   </ion-list>
