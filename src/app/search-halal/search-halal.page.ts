@@ -1,30 +1,36 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, ActionSheetController } from '@ionic/angular';
+import { Component, ViewChild, OnInit } from "@angular/core";
+import { LoadingController, ActionSheetController } from "@ionic/angular";
 
+import { Observable } from "rxjs";
+import { tap, filter } from "rxjs/operators";
 
-import { Observable } from 'rxjs'
-import { tap, filter } from 'rxjs/operators';
-
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { AngularFirestore } from "@angular/fire/firestore";
+import {
+  AngularFireStorage,
+  AngularFireUploadTask
+} from "@angular/fire/storage";
 import { environment } from "../../environments/environment";
 
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
+import {
+  Camera,
+  CameraOptions,
+  PictureSourceType
+} from "@ionic-native/camera/ngx";
 // import { Plugins, CameraResultType, CameraSource, CameraPhoto } from '@capacitor/core';
 // const { Camera } = Plugins;
 
 import { Ingredient, IngredientService } from "../services/ingredient.service";
 
 @Component({
-  selector: 'app-search-halal',
-  templateUrl: './search-halal.page.html',
-  styleUrls: ['./search-halal.page.scss'],
+  selector: "app-search-halal",
+  templateUrl: "./search-halal.page.html",
+  styleUrls: ["./search-halal.page.scss"]
 })
-export class SearchHalalPage implements OnInit{
+export class SearchHalalPage implements OnInit {
   searchConfig = {
     ...environment.algolia,
-    indexName: 'dev_Items'
-  }
+    indexName: "dev_Items"
+  };
 
   showResults = false;
 
@@ -43,54 +49,56 @@ export class SearchHalalPage implements OnInit{
   public ingredient: Ingredient[];
   public loadedIngredientList: Ingredient[];
   // For try 2
-   searchTerm = '';
+  searchTerm = "";
   /*notes = '';
   isHalal: boolean;
   showBody: boolean;
  */
-  constructor(private storage: AngularFireStorage,
+  constructor(
+    private storage: AngularFireStorage,
     private afs: AngularFirestore,
     private camera: Camera,
     private loading: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private ingservice: IngredientService
-  ){
-
+  ) {
     // this.loading = this.loadingCtrl.create({
     //   content: 'Running AI vision analysis...'
     // });
   }
 
-  ngOnInit(){
-    this.ingservice.getIngredients()
-      .subscribe(ingredients =>{
-        this.ingredient = ingredients;
-        this.loadedIngredientList = ingredients;
-      });
+  ngOnInit() {
+    this.ingservice.getIngredients().subscribe(ingredients => {
+      this.ingredient = ingredients;
+      this.loadedIngredientList = ingredients;
+    });
   }
 
   //For Try 3
-  initializeItems(): void{
-    this.ingredient = this.loadedIngredientList
+  initializeItems(): void {
+    this.ingredient = this.loadedIngredientList;
   }
 
-  filterList(event){
+  filterList(event) {
     this.initializeItems();
-    
+
     const searchTerm = event.srcElement.value;
 
-    if(!searchTerm){
+    if (!searchTerm) {
       return;
     }
 
-    this.ingredient = this.ingredient.filter(currentItem =>{
-      if (currentItem.nonhalal && searchTerm){
-        if (currentItem.nonhalal.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ){
+    this.ingredient = this.ingredient.filter(currentItem => {
+      if (currentItem.nonhalal && searchTerm) {
+        if (
+          currentItem.nonhalal.toLowerCase().indexOf(searchTerm.toLowerCase()) >
+          -1
+        ) {
           return true;
         }
         return false;
       }
-    })
+    });
   }
 
   // For Try 1
@@ -106,20 +114,22 @@ export class SearchHalalPage implements OnInit{
     let actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Use Library',
+          text: "Use Library",
           handler: () => {
             this.captureAndUpload(this.camera.PictureSourceType.PHOTOLIBRARY);
             // this.camera.PictureSourceType.PHOTOLIBRARY
           }
-        }, {
-          text: 'Capture Image',
+        },
+        {
+          text: "Capture Image",
           handler: () => {
             this.captureAndUpload(this.camera.PictureSourceType.CAMERA);
             //this.camera.PictureSourceType.CAMERA
           }
-        }, {
-          text: 'Cancel',
-          role: 'cancel'
+        },
+        {
+          text: "Cancel",
+          role: "cancel"
         }
       ]
     });
@@ -127,7 +137,6 @@ export class SearchHalalPage implements OnInit{
   }
 
   startUpload(file: string) {
-
     // Show loader
     //this.loading.present();
 
@@ -137,19 +146,17 @@ export class SearchHalalPage implements OnInit{
     const path = `${docId}.jpg`;
 
     // Make a reference to the future location of the firestore document
-    const photoRef = this.afs.collection('photos').doc(docId)
+    const photoRef = this.afs.collection("photos").doc(docId);
 
     // Firestore observable, dismiss loader when data is available
-    this.result$ = photoRef.valueChanges()
-      .pipe(
-        filter(data => !!data),
-        tap()
-      );
-
+    this.result$ = photoRef.valueChanges().pipe(
+      filter(data => !!data),
+      tap()
+    );
 
     // The main task
-    this.image = 'data:image/jpg;base64,' + file;
-    this.task = this.storage.ref(path).putString(this.image, 'data_url');
+    this.image = "data:image/jpg;base64," + file;
+    this.task = this.storage.ref(path).putString(this.image, "data_url");
   }
 
   // Gets the pic from the native camera then starts the upload
@@ -161,9 +168,9 @@ export class SearchHalalPage implements OnInit{
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: sourceType,
       allowEdit: true
-    }
+    };
 
-    const base64 = await this.camera.getPicture(options)
+    const base64 = await this.camera.getPicture(options);
     this.startUpload(base64);
   }
 
@@ -222,5 +229,4 @@ export class SearchHalalPage implements OnInit{
       this.isLoading = false;
     });
   } */
-
 }

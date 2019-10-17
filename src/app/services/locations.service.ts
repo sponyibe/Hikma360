@@ -1,7 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Geolocation } from "@ionic-native/geolocation/ngx";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from "@angular/fire/firestore";
+import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 
 export interface Restauarant {
@@ -21,19 +24,18 @@ export interface Restauarant {
   Notes: string;
   distance: any;
   Website: string;
-};
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LocationsService {
-
   private restaurantsCollection: AngularFirestoreCollection<Restauarant>;
 
-  private restaurants: Observable<Restauarant[]>
+  private restaurants: Observable<Restauarant[]>;
 
   constructor(db: AngularFirestore) {
-    this.restaurantsCollection = db.collection<Restauarant>('Restaurants');
+    this.restaurantsCollection = db.collection<Restauarant>("Restaurants");
 
     this.restaurants = this.restaurantsCollection.snapshotChanges().pipe(
       map(actions => {
@@ -51,12 +53,15 @@ export class LocationsService {
   }
 
   getIngredient(id: string) {
-    return this.restaurantsCollection.doc<Restauarant>(id).valueChanges().pipe(
-      take(1),
-      map(restaurant => {
-        restaurant.id = id;
-        return restaurant
-      })
-    );
+    return this.restaurantsCollection
+      .doc<Restauarant>(id)
+      .valueChanges()
+      .pipe(
+        take(1),
+        map(restaurant => {
+          restaurant.id = id;
+          return restaurant;
+        })
+      );
   }
 }

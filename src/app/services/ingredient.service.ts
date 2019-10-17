@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from "@angular/fire/firestore";
+import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 export interface Ingredient {
@@ -9,16 +12,15 @@ export interface Ingredient {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class IngredientService {
-
   private ingredientsCollection: AngularFirestoreCollection<Ingredient>;
 
-  private ingredients: Observable<Ingredient[]>
+  private ingredients: Observable<Ingredient[]>;
 
   constructor(db: AngularFirestore) {
-    this.ingredientsCollection = db.collection<Ingredient>('Ingredients');
+    this.ingredientsCollection = db.collection<Ingredient>("Ingredients");
 
     this.ingredients = this.ingredientsCollection.snapshotChanges().pipe(
       map(actions => {
