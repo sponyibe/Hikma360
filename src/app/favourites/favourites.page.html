@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favourites</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list *ngFor="let fave of (faves | async)">
+  <ion-item *ngFor="let store of fave.Store">
+      {{store.Name}}
+  </ion-item>
+</ion-list>
+</ion-content>
