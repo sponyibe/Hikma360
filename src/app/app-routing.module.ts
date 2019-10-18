@@ -11,6 +11,9 @@ const routes: Routes = [
   { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
   { path: 'halal-certification', loadChildren: './halal-certification/halal-certification.module#HalalCertificationPageModule' },
   { path: 'halal-organization', loadChildren: './halal-organization/halal-organization.module#HalalOrganizationPageModule' },
+  { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
+  { path: 'restaurant-details', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
+  { path: 'restaurant-details/:id', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
 ];
 
 @NgModule({
