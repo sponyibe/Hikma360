@@ -19,6 +19,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 //import { AngularCropperjsModule } from 'angular-cropperjs';
 import { Camera } from '@ionic-native/camera/ngx';
+import { AddItemPageModule } from './add-item/add-item.module';
 //import { Crop } from '@ionic-native/crop/ngx';
 //import { File } from '@ionic-native/file/ngx';
 
@@ -28,7 +29,8 @@ import { Camera } from '@ionic-native/camera/ngx';
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AddItemPageModule
     // AngularCropperjsModule,
     // NgAisModule.forRoot()
   ],

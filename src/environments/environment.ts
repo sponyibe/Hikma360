@@ -4,6 +4,14 @@
 
 export const environment = {
   production: false,
+  firebase: {
+    apiKey: "AIzaSyDqEcy9s7EJOBZJ_a1EhJp5eOee9v0RiLs",
+    authDomain: "halalify-1563323333384.firebaseapp.com",
+    databaseURL: "https://halalify-1563323333384.firebaseio.com",
+    projectId: "halalify-1563323333384",
+    storageBucket: "hikma-96b46-vision",
+    messagingSenderId: "576518555827"
+  },
 };
 
 /*

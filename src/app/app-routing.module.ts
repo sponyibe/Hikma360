@@ -9,11 +9,13 @@ const routes: Routes = [
   { path: 'tenets', loadChildren: './tenets/tenets.module#TenetsPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
-  { path: 'halal-certification', loadChildren: './halal-certification/halal-certification.module#HalalCertificationPageModule' },
-  { path: 'halal-organization', loadChildren: './halal-organization/halal-organization.module#HalalOrganizationPageModule' },
   { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
   { path: 'restaurant-details', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
   { path: 'restaurant-details/:id', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
+  { path: 'favourites', loadChildren: './favourites/favourites.module#FavouritesPageModule' },
+  { path: 'favourite-store', loadChildren: './favourite-store/favourite-store.module#FavouriteStorePageModule' },
+  { path: 'add-item', loadChildren: './add-item/add-item.module#AddItemPageModule' },
+
 ];
 
 @NgModule({
