@@ -9,13 +9,13 @@ export interface Restauarant {
   Name: string;
   Address: string;
   Region: string;
-  subRegion: string;
+  SubRegions: string;
   Latitude: number;
   Longitude: number;
   PhoneNumber: string;
-  Hours: string;
+  HoursOfOperation: string;
   CertifiedBy: string;
-  CuisineType: string;
+  CuisneType: string;
   PriceRange: string;
   Rating: number;
   Notes: string;

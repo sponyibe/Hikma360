@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>add-item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Item</ion-label>
+    <ion-input [(ngModel)]="favourite.itemPurchased"></ion-input>
+  </ion-item>
+
+  <ion-button (click)="addStore()">
+    Click me
+  </ion-button>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar colour="primary">
+    <ion-button expand="full" fill="clear" colour="light" (click)="closeModal()">
+      Close
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

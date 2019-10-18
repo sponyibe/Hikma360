@@ -17,7 +17,7 @@ export interface Store {
 export interface Favourites {
   id?: string,
   itemPurchased: string,
-  stores: Store[]
+  stores?: Store[]
 }
 
 @Injectable({

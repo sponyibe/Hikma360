@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
   { path: 'restaurant-details', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
   { path: 'restaurant-details/:id', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },  { path: 'favourites', loadChildren: './favourites/favourites.module#FavouritesPageModule' },
+  { path: 'favourite-store', loadChildren: './favourite-store/favourite-store.module#FavouriteStorePageModule' },
+  { path: 'add-item', loadChildren: './add-item/add-item.module#AddItemPageModule' },
 
 ];
 
