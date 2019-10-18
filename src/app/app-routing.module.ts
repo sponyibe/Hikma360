@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: 'tenets', loadChildren: './tenets/tenets.module#TenetsPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'halal-certification', loadChildren: './halal-certification/halal-certification.module#HalalCertificationPageModule' },
+  { path: 'halal-organization', loadChildren: './halal-organization/halal-organization.module#HalalOrganizationPageModule' },
 ];
 
 @NgModule({

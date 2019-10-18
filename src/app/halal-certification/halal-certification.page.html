@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="success">
+      <ion-buttons slot="start">
+          <ion-back-button routerLink="/menu"></ion-back-button>
+        </ion-buttons>
+    <ion-title>Certification Bodies</ion-title>
+    <ion-icon name="arrow-round-forward" routerLink="/halal-organization"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+      <ion-item  *ngFor="let certifyingbodies of certifyingbodies" lines="inset">
+        <ion-label>
+          {{ certifyingbodies.Organisation }}
+          <p>{{ certifyingbodies.Address }}</p>
+          <p>{{ certifyingbodies.Telephone }}</p>
+          <p>{{ certifyingbodies.Website }}</p>
+          <p>{{ certifyingbodies.Email }}</p>
+          <p> {{ certifyingbodies.Slaughter }}</p>
+          <p>{{ certifyingbodies.StatedConditions }}</p>
+          <p>{{ certifyingbodies.Others }}</p>
+        </ion-label>
+        <ion-note slot="end" color="success"></ion-note>
+      </ion-item>
+
+   </ion-list>
+
+</ion-content>
