@@ -8,12 +8,17 @@ const routes: Routes = [
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'tenets', loadChildren: './tenets/tenets.module#TenetsPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
-  { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'search-halal', loadChildren: './search-halal/search-halal.module#SearchHalalPageModule' },
   { path: 'halal-certification', loadChildren: './halal-certification/halal-certification.module#HalalCertificationPageModule' },
   { path: 'halal-organization', loadChildren: './halal-organization/halal-organization.module#HalalOrganizationPageModule' },
   { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
   { path: 'restaurant-details', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
   { path: 'restaurant-details/:id', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
+  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
+  { path: 'organizations-details', loadChildren: './organizations-details/organizations-details.module#OrganizationsDetailsPageModule' },
+  { path: 'certification-details', loadChildren: './certification-details/certification-details.module#CertificationDetailsPageModule' },
+  { path: 'organizations-details/:id', loadChildren: './organizations-details/organizations-details.module#OrganizationsDetailsPageModule' },
+  { path: 'certification-details/:id', loadChildren: './certification-details/certification-details.module#CertificationDetailsPageModule' },
 ];
 
 @NgModule({
