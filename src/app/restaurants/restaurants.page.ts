@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationsService, Restauarant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Observable } from 'rxjs';
+import { Observable, Subscription  } from 'rxjs';
 
 @Component({
   selector: 'app-restaurants',
   templateUrl: './restaurants.page.html',
   styleUrls: ['./restaurants.page.scss'],
 })
-export class RestaurantsPage implements OnInit {
+export class RestaurantsPage implements OnInit{
 
-  // places: Observable<Restauarant[]>;
+  private subscription: Subscription;
+  place: Observable<Restauarant[]>;
   places: Restauarant[];
   data: Restauarant[];
   usersLocation = {
@@ -20,15 +21,20 @@ export class RestaurantsPage implements OnInit {
   constructor(public locationService: LocationsService, public geolocation: Geolocation) { }
 
   ngOnInit() {
+    //console.log("OnInit")
+  }
+
+  ionViewDidEnter() { 
+    console.log("OnInit")
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
       this.usersLocation.lng = position.coords.longitude
     });
-    
-    this.locationService.getLocations()
+     
+    this.subscription = this.locationService.getLocations()
       .subscribe(restaurantList => {
         //this.places = restaurantList;
-        //console.log(this.places)
+        console.log(restaurantList)
         this.places = this.applyHaversine(restaurantList)
 
         this.places.sort((locationA, locationB) => {
@@ -91,6 +97,11 @@ export class RestaurantsPage implements OnInit {
 
   toRad(x) {
     return x * Math.PI / 180;
+  }
+
+  ionViewWillLeave(){
+    console.log("Leave init")
+    this.subscription.unsubscribe()
   }
 
 }

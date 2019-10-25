@@ -22,7 +22,7 @@ export class AddItemPage implements OnInit {
   }
 
   addStore(){
-    this.favouritesService.addFavouriteStore(this.favourite).then(() =>{
+    this.favouritesService.addFavouriteItem(this.favourite).then(() =>{
       this.router.navigateByUrl('/favourites');
       this.showToast('Store added');
     }, err => {

@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content>
-<ion-list *ngFor="let fave of (faves | async)">
-  <ion-item *ngFor="let store of fave.Store">
-      {{store.Name}}
+<ion-list >
+  <ion-item button *ngFor="let item of (faves | async)" [routerLink]="['/favourite-store', item.id]">
+      {{item.itemPurchased}}
   </ion-item>
 </ion-list>
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">

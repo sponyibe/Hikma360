@@ -6,7 +6,7 @@ import { Timestamp, FieldValue } from '@firebase/firestore-types';
 
 export interface Store {
   Name: string,
-  datePurchased: Timestamp,
+  datePurchased: string,
   pricePerUnit: number,
   priceRating: number,
   quality: number,
@@ -57,8 +57,12 @@ export class FavouritesService {
     );
   }
 
-  addFavouriteStore(store: Favourites): Promise<DocumentReference> {
-    return this.favouritesCollection.add(store)
+  addFavouriteStore(store: Favourites): Promise<void> {
+    return this.favouritesCollection.doc(store.id).update(store.stores)
+  }
+
+  addFavouriteItem(item: Favourites): Promise<DocumentReference> {
+    return this.favouritesCollection.add(item)
   }
 
   deleteFavouriteStore(id: string): Promise<void> {
