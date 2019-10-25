@@ -27,10 +27,10 @@ import { Ingredient, IngredientService } from "../services/ingredient.service";
   styleUrls: ["./search-halal.page.scss"]
 })
 export class SearchHalalPage implements OnInit {
-  searchConfig = {
-    ...environment.algolia,
-    indexName: "dev_Items"
-  };
+  // searchConfig = {
+  //   ...environment.algolia,
+  //   indexName: "dev_Items"
+  // };
 
   showResults = false;
 
