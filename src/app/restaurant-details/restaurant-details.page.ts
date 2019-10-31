@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { LocationsService, Restauarant } from "../services/locations.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: "app-restaurant-details",
@@ -12,7 +13,8 @@ export class RestaurantDetailsPage implements OnInit {
   constructor(
     public locationService: LocationsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private inAppBrowser: InAppBrowser
   ) {}
 
   public places: Observable<Restauarant[]>;
@@ -49,4 +51,9 @@ export class RestaurantDetailsPage implements OnInit {
       });
     }
   }
+
+  openWebsite(){
+    this.inAppBrowser.create(this.restaurants.Website, '_system');
+  }
+  
 }

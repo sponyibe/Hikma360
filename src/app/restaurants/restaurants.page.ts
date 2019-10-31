@@ -25,7 +25,6 @@ export class RestaurantsPage implements OnInit{
   }
 
   ionViewDidEnter() { 
-    console.log("OnInit")
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
       this.usersLocation.lng = position.coords.longitude

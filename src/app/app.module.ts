@@ -23,6 +23,8 @@ import { AddItemPageModule } from './add-item/add-item.module';
 //import { Crop } from '@ionic-native/crop/ngx';
 //import { File } from '@ionic-native/file/ngx';
 
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -41,6 +43,7 @@ import { AddItemPageModule } from './add-item/add-item.module';
     Camera,
     Network,
     Geolocation,
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],
