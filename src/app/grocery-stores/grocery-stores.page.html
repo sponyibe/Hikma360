@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Grocery Stores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item button *ngFor="let groceryStores of groceryStores" [routerLink]="['/grocery-store-details', groceryStores.id]">
+      <ion-label>{{ groceryStores.Name }}
+        <p>{{ groceryStores.distance }} km</p>
+        <p>{{ groceryStores.Address }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

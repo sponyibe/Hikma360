@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/grocery-stores"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{groceryStore.Name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="details">
+      <p>Address: <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
+      <p>City: {{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
+      <p>Call: {{groceryStore.PhoneNumber}}</p>
+      <p>Hours of Operation: {{groceryStore.HoursofOperation}}</p>
+      <p *ngIf="groceryStore.CertifedBy">Certified By: {{groceryStore.CertifedBy}}</p>
+      <p>Cuisine Type: {{groceryStore.StoreType}}</p>
+      <p>Rating: {{groceryStore.Rating}}</p>
+      <a *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
+  </div>
+</ion-content>
