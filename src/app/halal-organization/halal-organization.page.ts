@@ -20,6 +20,7 @@ export class HalalOrganizationPage implements OnInit {
         this.certifyingorganization = certifyingorganization;
         this.loadedCertifyingOrganizationList = certifyingorganization;
       });
+
   }
 
   initializeItems(): void{

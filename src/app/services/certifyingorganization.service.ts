@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 
 export interface Certifyingorganization {
+ id?: string;
  Address: string;
  Brands: string;
  CertifyingBody: string;
@@ -13,6 +14,8 @@ export interface Certifyingorganization {
  OutletType: string;
  Products: string;
  Telephone: string;
+ Website: string;
+ EmailAddress: string;
 }
 
 @Injectable({

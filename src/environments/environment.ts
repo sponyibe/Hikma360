@@ -11,7 +11,7 @@ export const environment = {
     projectId: "halalify-1563323333384",
     storageBucket: "hikma-96b46-vision",
     messagingSenderId: "576518555827"
-  },
+  }
 };
 
 /*

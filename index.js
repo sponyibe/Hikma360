@@ -1,7 +1,7 @@
 const admin = require('./node_modules/firebase-admin');
 const serviceAccount = require("./serviceaccountkey.json");
 const data = require("./data.json");
-const collectionKey = "certifyingorganizations"; //name of the collection
+const collectionKey = "certifyingbodies"; //name of the collection
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://halalify-1563323333384.firebaseio.com"

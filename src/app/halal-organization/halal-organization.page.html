@@ -1,27 +1,17 @@
 <ion-header>
   <ion-toolbar color="success">
-      <ion-buttons slot="start">
-          <ion-back-button routerLink="/halal-certification"></ion-back-button>
-        </ion-buttons>
-    <ion-title>Certifying Organizations</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-list>
-        <ion-item  *ngFor="let certifyingorganization of certifyingorganization" lines="inset">
+        <ion-item button *ngFor="let certifyingorganization of certifyingorganization" [routerLink]= "['/organizations-details', certifyingorganization.id]">
           <ion-label>
-            {{ certifyingorganization.CertifyingBody }}
-            <p>{{ certifyingorganization.Brands }}</p>
-            <p>{{ certifyingorganization.Address }}</p>
-            <p>{{ certifyingorganization.City }}</p>
-            <p>{{ certifyingorganization.Email }}</p>
-            <p> {{ certifyingorganization.OrganizationsCertified }}</p>
-            <p>{{ certifyingorganization.OutletType }}</p>
-            <p>{{ certifyingorganization.Products }}</p>
-            <p>{{ certifyingorganization.Telephone }}</p>
+            {{ certifyingorganization.OrganisationsCertified}}
+            <p><b>Address: </b>{{ certifyingorganization.Address }}</p>
+            <p><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
           </ion-label>
-          <ion-note slot="end" color="success"></ion-note>
+         
         </ion-item>
   
      </ion-list>
