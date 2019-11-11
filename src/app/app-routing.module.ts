@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
@@ -16,7 +16,11 @@ const routes: Routes = [
   { path: 'favourite-store', loadChildren: './favourite-store/favourite-store.module#FavouriteStorePageModule' },
   { path: 'favourite-store/:id', loadChildren: './favourite-store/favourite-store.module#FavouriteStorePageModule' },
   { path: 'add-item', loadChildren: './add-item/add-item.module#AddItemPageModule' },
-  { path: 'add-store', loadChildren: './add-store/add-store.module#AddStorePageModule' },
+  { path: 'add-store/:id/:index', loadChildren: './add-store/add-store.module#AddStorePageModule' },
+  { path: 'add-store/:id', loadChildren: './add-store/add-store.module#AddStorePageModule' },
+  { path: 'grocery-stores', loadChildren: './grocery-stores/grocery-stores.module#GroceryStoresPageModule' },
+  { path: 'grocery-store-details/:id', loadChildren: './grocery-store-details/grocery-store-details.module#GroceryStoreDetailsPageModule' },
+
 
 
 ];

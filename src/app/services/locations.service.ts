@@ -17,7 +17,7 @@ export interface Restauarant {
   Longitude: number;
   PhoneNumber: string;
   HoursOfOperation: string;
-  CertifiedBy: string;
+  CertifedBy: string;
   CuisneType: string;
   PriceRange: string;
   Rating: number;
@@ -52,7 +52,7 @@ export class LocationsService {
     return this.restaurants;
   }
 
-  getIngredient(id: string) {
+  getRestaurant(id: string) {
     return this.restaurantsCollection
       .doc<Restauarant>(id)
       .valueChanges()

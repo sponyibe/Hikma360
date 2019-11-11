@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
 import { Timestamp, FieldValue } from '@firebase/firestore-types';
+import * as firebase from 'firebase/app'
 
 export interface Store {
   Name: string,
@@ -11,19 +12,23 @@ export interface Store {
   priceRating: number,
   quality: number,
   customerService: number,
-  ratedTotal?: number
+  ratedTotal?: number,
+  ourPriceRating?: number
 }
 
 export interface Favourites {
   id?: string,
   itemPurchased: string,
-  stores?: Store[]
+  Store: Store[]
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavouritesService {
+
+  private storeReturned: Store
+  private newStore : Favourites
 
   private favouritesCollection: AngularFirestoreCollection<Favourites>;
 
@@ -57,8 +62,18 @@ export class FavouritesService {
     );
   }
 
+  getStoreDetails(id: string,index: number) {
+    return this.favouritesCollection.doc<Favourites>(id).valueChanges().pipe(
+      take(1),
+      map(store => {
+        store.id = id;
+        return store.Store[index]
+      })
+    );
+  }
+
   addFavouriteStore(store: Favourites): Promise<void> {
-    return this.favouritesCollection.doc(store.id).update(store.stores)
+    return this.favouritesCollection.doc(store.id).update(store.Store)
   }
 
   addFavouriteItem(item: Favourites): Promise<DocumentReference> {
@@ -69,5 +84,8 @@ export class FavouritesService {
     return this.favouritesCollection.doc(id).delete();
   }
 
-
+  addStore(store:Favourites): Promise<void> {
+    let addedStore = store.Store.length-1
+      return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayUnion(store.Store[3])})
+  }
 }

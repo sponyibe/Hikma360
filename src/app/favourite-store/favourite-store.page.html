@@ -4,15 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content >
   <ion-list >
-    <ion-item *ngFor="let store of favourites.stores">
-    <ion-label> store: {{store.quality}} </ion-label>
+    <ion-item button *ngFor="let store of favourites.Store; let i = index" [routerLink]="['/add-store', favourites.id, i]">
+    <ion-label>{{ store.Name }}</ion-label>
   </ion-item>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/add-store">
+    <ion-fab-button [routerLink]="['/add-store', favourites.id]">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

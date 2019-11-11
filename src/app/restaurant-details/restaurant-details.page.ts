@@ -30,7 +30,7 @@ export class RestaurantDetailsPage implements OnInit {
     Longitude: 0,
     PhoneNumber: '',
     HoursOfOperation: '',
-    CertifiedBy: '',
+    CertifedBy: '',
     CuisneType: '',
     PriceRange: '',
     Rating: 0,
@@ -46,7 +46,7 @@ export class RestaurantDetailsPage implements OnInit {
   ionViewWillEnter() {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     if (id) {
-      this.locationService.getIngredient(id).subscribe(restaurant => {
+      this.locationService.getRestaurant(id).subscribe(restaurant => {
         this.restaurants = restaurant;
       });
     }

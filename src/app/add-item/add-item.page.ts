@@ -14,6 +14,7 @@ export class AddItemPage implements OnInit {
 
   favourite: Favourites = {
     itemPurchased: '',
+    Store: []
   };
   constructor(private navParams: NavParams, private modalCtrl: ModalController, private favouritesService: FavouritesService, private toastCtrl: ToastController, private router:Router) { }
 
@@ -21,7 +22,7 @@ export class AddItemPage implements OnInit {
     this.passedText = this.navParams.get('sampleText');
   }
 
-  addStore(){
+  addItem(){
     this.favouritesService.addFavouriteItem(this.favourite).then(() =>{
       this.router.navigateByUrl('/favourites');
       this.showToast('Store added');
