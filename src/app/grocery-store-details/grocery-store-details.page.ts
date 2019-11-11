@@ -1,27 +1,28 @@
 import { Component, OnInit } from "@angular/core";
-import { LocationsService, Restauarant } from "../services/locations.service";
+import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
-  selector: "app-restaurant-details",
-  templateUrl: "./restaurant-details.page.html",
-  styleUrls: ["./restaurant-details.page.scss"]
+  selector: 'app-grocery-store-details',
+  templateUrl: './grocery-store-details.page.html',
+  styleUrls: ['./grocery-store-details.page.scss'],
 })
-export class RestaurantDetailsPage implements OnInit {
+export class GroceryStoreDetailsPage implements OnInit {
+
   constructor(
-    public locationService: LocationsService,
+    public groceryStoreService: GroceryStoresService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private inAppBrowser: InAppBrowser
   ) {}
 
-  public places: Observable<Restauarant[]>;
+  public places: Observable<GroceryStores[]>;
 
   //public restaurant: Restauarant[];
 
-  restaurants: Restauarant = {
+  groceryStore: GroceryStores = {
     Name: '',
     Address: '',
     Region: '',
@@ -29,10 +30,9 @@ export class RestaurantDetailsPage implements OnInit {
     Latitude: 0,
     Longitude: 0,
     PhoneNumber: '',
-    HoursOfOperation: '',
+    HoursofOperation: '',
     CertifedBy: '',
-    CuisneType: '',
-    PriceRange: '',
+    StoreType: '',
     Rating: 0,
     Notes: "",
     distance: "",
@@ -46,14 +46,15 @@ export class RestaurantDetailsPage implements OnInit {
   ionViewWillEnter() {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     if (id) {
-      this.locationService.getRestaurant(id).subscribe(restaurant => {
-        this.restaurants = restaurant;
+      this.groceryStoreService.getGroceryStore(id).subscribe(groceryStore => {
+        this.groceryStore = groceryStore;
       });
     }
   }
 
   openWebsite(){
-    this.inAppBrowser.create(this.restaurants.Website, '_system');
+    this.inAppBrowser.create(this.groceryStore.Website, '_system');
   }
   
+
 }

@@ -14,6 +14,8 @@ const routes: Routes = [
   { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
   { path: 'restaurant-details', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
   { path: 'restaurant-details/:id', loadChildren: './restaurant-details/restaurant-details.module#RestaurantDetailsPageModule' },
+  { path: 'grocery-stores', loadChildren: './grocery-stores/grocery-stores.module#GroceryStoresPageModule' },
+  { path: 'grocery-store-details/:id', loadChildren: './grocery-store-details/grocery-store-details.module#GroceryStoreDetailsPageModule' },
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
   { path: 'organizations-details', loadChildren: './organizations-details/organizations-details.module#OrganizationsDetailsPageModule' },
   { path: 'certification-details', loadChildren: './certification-details/certification-details.module#CertificationDetailsPageModule' },

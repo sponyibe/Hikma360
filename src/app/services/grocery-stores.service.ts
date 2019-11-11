@@ -1,13 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 
-export interface Restauarant {
+export interface GroceryStores {
   id?: string;
   Name: string;
   Address: string;
@@ -16,10 +13,9 @@ export interface Restauarant {
   Latitude: number;
   Longitude: number;
   PhoneNumber: string;
-  HoursOfOperation: string;
+  HoursofOperation: string;
   CertifedBy: string;
-  CuisneType: string;
-  PriceRange: string;
+  StoreType: string;
   Rating: number;
   Notes: string;
   distance: any;
@@ -27,17 +23,18 @@ export interface Restauarant {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class LocationsService {
-  private restaurantsCollection: AngularFirestoreCollection<Restauarant>;
+export class GroceryStoresService {
 
-  private restaurants: Observable<Restauarant[]>;
+  private groceryStoresCollection: AngularFirestoreCollection<GroceryStores>;
+
+  private groceryStores: Observable<GroceryStores[]>;
 
   constructor(db: AngularFirestore) {
-    this.restaurantsCollection = db.collection<Restauarant>("Restaurants");
+    this.groceryStoresCollection = db.collection<GroceryStores>("GroceryStores");
 
-    this.restaurants = this.restaurantsCollection.snapshotChanges().pipe(
+    this.groceryStores = this.groceryStoresCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -48,13 +45,13 @@ export class LocationsService {
     );
   }
 
-  getLocations() {
-    return this.restaurants;
+  getGroceryStores() {
+    return this.groceryStores;
   }
 
-  getRestaurant(id: string) {
-    return this.restaurantsCollection
-      .doc<Restauarant>(id)
+  getGroceryStore(id: string) {
+    return this.groceryStoresCollection
+      .doc<GroceryStores>(id)
       .valueChanges()
       .pipe(
         take(1),

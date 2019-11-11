@@ -22,13 +22,15 @@ import { Camera } from '@ionic-native/camera/ngx';
 //import { Crop } from '@ionic-native/crop/ngx';
 //import { File } from '@ionic-native/file/ngx';
 
+import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
     // AngularCropperjsModule,
     // NgAisModule.forRoot()
   ],
@@ -39,6 +41,7 @@ import { Camera } from '@ionic-native/camera/ngx';
     Camera,
     Network,
     Geolocation,
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],

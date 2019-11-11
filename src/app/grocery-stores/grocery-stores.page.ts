@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationsService, Restauarant } from "../services/locations.service";
+import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Observable, Subscription  } from 'rxjs';
 
 @Component({
-  selector: 'app-restaurants',
-  templateUrl: './restaurants.page.html',
-  styleUrls: ['./restaurants.page.scss'],
+  selector: 'app-grocery-stores',
+  templateUrl: './grocery-stores.page.html',
+  styleUrls: ['./grocery-stores.page.scss'],
 })
-export class RestaurantsPage implements OnInit{
+export class GroceryStoresPage implements OnInit {
 
   private subscription: Subscription;
-  place: Observable<Restauarant[]>;
-  places: Restauarant[];
-  data: Restauarant[];
+  /// groceryStore: Observable<GroceryStores[]>;
+  groceryStores: GroceryStores[];
+  data: GroceryStores[];
   usersLocation = {
     lat: 0,
     lng: 0
   }
-  constructor(public locationService: LocationsService, public geolocation: Geolocation) { }
+  constructor(public groceryStoreService: GroceryStoresService, public geolocation: Geolocation) { }
 
   ngOnInit() {
     //console.log("OnInit")
@@ -30,19 +30,19 @@ export class RestaurantsPage implements OnInit{
       this.usersLocation.lng = position.coords.longitude
     });
      
-    this.subscription = this.locationService.getLocations()
-      .subscribe(restaurantList => {
+    this.subscription = this.groceryStoreService.getGroceryStores()
+      .subscribe(groceryStoresList => {
         //this.places = restaurantList;
-        console.log(restaurantList)
-        this.places = this.applyHaversine(restaurantList)
+        // console.log(groceryStoresList)
+        this.groceryStores = this.applyHaversine(groceryStoresList)
 
-        this.places.sort((locationA, locationB) => {
+        this.groceryStores.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
       });
   }
 
-  applyHaversine(locations: Restauarant[]) {
+  applyHaversine(locations: GroceryStores[]) {
 
     console.log(this.usersLocation)
 
