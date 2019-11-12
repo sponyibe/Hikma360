@@ -33,7 +33,7 @@ export class RestaurantsPage implements OnInit{
     this.subscription = this.locationService.getLocations()
       .subscribe(restaurantList => {
         //this.places = restaurantList;
-        console.log(restaurantList)
+        //console.log(restaurantList)
         this.places = this.applyHaversine(restaurantList)
 
         this.places.sort((locationA, locationB) => {

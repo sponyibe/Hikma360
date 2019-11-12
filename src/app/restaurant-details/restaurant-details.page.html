@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="success">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/restaurants"></ion-back-button>
     </ion-buttons>
-    <ion-title>favourites Details</ion-title>
+    <ion-title>Restaurant Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <div class="details">
       <h2>{{restaurants.Name}}</h2>
       <p>Address: <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
@@ -18,6 +18,6 @@
       <p>Cuisine Type: {{restaurants.CuisneType}}</p>
       <p>Price Range: {{restaurants.PriceRange}}</p>
       <p>Rating: {{restaurants.Rating}}</p>
-      <p>Websie: Visit the Website</p>
+      <a *ngIf="restaurants.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
 </ion-content>

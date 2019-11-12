@@ -1,14 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="success">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/grocery-stores"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{groceryStore.Name}}</ion-title>
+    <ion-title>Store Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <div class="details">
+      <h2>{{groceryStore.Name}}</h2>
       <p>Address: <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
       <p>City: {{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
       <p>Call: {{groceryStore.PhoneNumber}}</p>

@@ -13,9 +13,9 @@
     <h2>{{ certifyingbodies.Organisation }}</h2>
     <p><b>Address: </b>{{ certifyingbodies.Address }}</p>
     <p><b>Phone: </b>{{ certifyingbodies.Telephone }}</p>
-    <p><a href="{{ certifyingbodies.Website }}">Go to Website</a></p>
     <p><b>Email: </b>{{ certifyingbodies.Email }}</p>
     <p><b>Slaughter Method: </b> {{ certifyingbodies.Slaughter }}</p>
     <p><b>Stated Conditions: </b>{{ certifyingbodies.StatedConditions }}</p>
     <p><b>Others: </b>{{ certifyingbodies.Others }} </p>
+    <a *ngIf="certifyingbodies.Website" (click)="openWebsite()">Visit the Website</a>
 </ion-content>
