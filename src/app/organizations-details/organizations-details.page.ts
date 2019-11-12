@@ -3,6 +3,7 @@ import { Certifyingorganization, CertifyingOrganizationService } from '../servic
 import { ActivatedRoute } from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular'
 import { Observable } from 'rxjs';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-organizations-details',
@@ -29,7 +30,7 @@ export class OrganizationsDetailsPage implements OnInit {
   //certifyingorganizationId = null;
   
 
-  constructor(private route: ActivatedRoute, private nav:NavController, private certifyingorganizationService : CertifyingOrganizationService, private loadingController: LoadingController ) { }
+  constructor(private route: ActivatedRoute, private nav:NavController, private certifyingorganizationService : CertifyingOrganizationService, private loadingController: LoadingController, private inAppBrowser: InAppBrowser ) { }
 
 
   ngOnInit() {
@@ -46,6 +47,7 @@ export class OrganizationsDetailsPage implements OnInit {
   
 }
 
- 
-
+openWebsite(){
+  this.inAppBrowser.create(this.certifyingorganization.Website, '_system');
+}
 }

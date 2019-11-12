@@ -17,7 +17,7 @@
       <p><b>Outlet Type: </b>{{ certifyingorganization.OutletType }}</p>
       <p><b>Products: </b>{{ certifyingorganization.Products }}</p>
       <p><b>Telephone: </b>{{ certifyingorganization.Telephone }}</p>
-      <p><a href="{{ certifyingorganization.Website }}">Go to website</a></p>
+      <a *ngIf="certifyingorganization.Website" (click)="openWebsite()">Visit the Website</a>
 
 
 
