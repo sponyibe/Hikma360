@@ -22,7 +22,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 //import { Crop } from '@ionic-native/crop/ngx';
 //import { File } from '@ionic-native/file/ngx';
 
-import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
