@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FavouritesService, Favourites, Store } from '../services/favourites.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-favourite-store',
@@ -28,7 +29,7 @@ export class FavouriteStorePage implements OnInit {
   private storeReturned: Favourites
 
   constructor(private activatedRoute: ActivatedRoute, private favouritesService: FavouritesService,
-    private toastCtrl: ToastController, private router:Router) { }
+    private toastCtrl: ToastController, private router:Router, private afs: AngularFirestore) { }
 
   ngOnInit() {
     let id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -36,7 +37,8 @@ export class FavouriteStorePage implements OnInit {
       this.favouritesService.getFavouritesDetails(id).subscribe(store => {
         this.favourites = store;
         console.log(this.favourites);
-        if (this.favourites.Store.length > 3) {
+        // this.favouritesService.addFavouriteSortedStore(this.favourites);
+        if (this.favourites.Store.length >= 3) {
           this.calculateOurPriceRating(this.favourites)
         }
         });
@@ -67,7 +69,7 @@ export class FavouriteStorePage implements OnInit {
 				if(y < tnum){
 					for(i = y; i < tnum; i++){
 						
-						if(arra[x].pricePerUnit > arra[i].pricePerUnit){
+						if(parseFloat(arra[x].pricePerUnit) > parseFloat(arra[i].pricePerUnit)){
 							temp = arra[i]
 							arra[i] = arra[x];
 							arra[x] = temp;
@@ -95,25 +97,24 @@ export class FavouriteStorePage implements OnInit {
 		}
 
   calculateOurPriceRating(store: Favourites){
-    for (let index = 1; index < store.Store.length; index++) {
-      this.store = this.lowestPrice(store.Store, index);
-      // console.log(nthlargest(Store, index));
+    for (let index = 0; index < store.Store.length; index++) {
+      this.store = this.lowestPrice(store.Store, index+1);
 
       console.log('List of stores in function ' + store.Store[index].Name)
   
-      if (index == 1 ) {
+      if (index+1 == 1 ) {
         this.store.ourPriceRating = 5
       }
-      else if ( index == 2){
+      else if ( index+1 == 2){
         this.store.ourPriceRating = 4
       }
-      else if (index == 3){
+      else if (index+1 == 3){
         this.store.ourPriceRating = 3
       }
-      else if (index == 4){
+      else if (index+1 == 4){
         this.store.ourPriceRating = 2
       }
-      else if (index == 5){
+      else if (index+1 == 5){
         this.store.ourPriceRating = 1
       }
       else {
@@ -123,6 +124,12 @@ export class FavouriteStorePage implements OnInit {
       this.calculateRatedTotal(this.store)
   }
   store.Store.sort(function(a, b){return b.ratedTotal - a.ratedTotal});
+  
+  this.favouritesService.clearStore(this.favourites)
+
+  for (let index2 = 0; index2 < store.Store.length; index2++) {
+    this.favouritesService.addSortedStore(this.favourites, index2);
+  }
     return this.storeReturned
   }
 

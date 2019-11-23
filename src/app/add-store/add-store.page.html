@@ -52,14 +52,14 @@
   </ion-item>
 </ion-content>
 
-<ion-footer *ngIf="!store.Name" class="ion-padding">
+<ion-footer class="ion-padding">
   <ion-button expand="block" fill="solid" color="primary" (click)="addStore()">
     <ion-icon name="checkmark" slot="start"></ion-icon>
     Add Store
   </ion-button>
 </ion-footer>
 
-<ion-footer *ngIf="store.Name">
+<!-- <ion-footer *ngIf="store.Name">
   <ion-row no-padding text-center>
     <ion-col size="6">
       <ion-button expand="block" fill="outline" color="danger" (click)="deleteIdea()">
@@ -74,4 +74,4 @@
       </ion-button>
     </ion-col>
   </ion-row>
-</ion-footer>
+</ion-footer> -->
