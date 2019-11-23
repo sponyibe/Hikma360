@@ -28,6 +28,7 @@ export class AddStorePage implements OnInit {
   customerService: 3}]
  }
   id; index;
+  isUpdatingStore: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,7 +39,9 @@ export class AddStorePage implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get("id");
-    this.index = this.activatedRoute.snapshot.paramMap.get("index")
+    this.index = this.activatedRoute.snapshot.paramMap.get("index");
+    this.isUpdatingStore = false;
+
     if (this.id) {
       console.log(this.id)
       this.favouritesService.getFavouritesDetails(this.id).subscribe(store => {
@@ -49,9 +52,13 @@ export class AddStorePage implements OnInit {
     }
     if (this.index) {
       console.log(this.index)
+      this.isUpdatingStore = true;
+
       this.favouritesService.getStoreDetails(this.id,this.index).subscribe(store => {
         this.favourites.Store[this.index] = store;
         console.log(this.favourites.Store[this.index]);
+
+        this.store = this.favourites.Store[this.index];
       });
     }
   }
