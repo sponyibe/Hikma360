@@ -5,20 +5,19 @@ import { LoadingController, ActionSheetController } from '@ionic/angular';
 import { Observable } from 'rxjs'
 import { tap, filter } from 'rxjs/operators';
 
-import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { environment } from "../../../environments/environment";
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
-
-import { Ingredient, IngredientService } from "../../services/ingredient.service";
+import { Ingredient, IngredientService } from "../services/ingredient.service";
+import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 @Component({
-  selector: 'app-search-halal',
-  templateUrl: './search-halal.page.html',
-  styleUrls: ['./search-halal.page.scss'],
+  selector: 'app-image-search',
+  templateUrl: './image-search.page.html',
+  styleUrls: ['./image-search.page.scss'],
 })
-export class SearchHalalPage implements OnInit{
+export class ImageSearchPage implements OnInit {
 
   showResults = false;
 
@@ -30,59 +29,36 @@ export class SearchHalalPage implements OnInit{
   
   //loading: Loading;
   image: string;
+  originalImage
 
-  croppedImagepath = "";
+  croppedImage = null;
   isLoading = false;
+
+  @ViewChild(ImageCropperComponent)angularCropper: ImageCropperComponent
 
   public ingredient: Ingredient[];
   public loadedIngredientList: Ingredient[];
-
-   searchTerm = '';
 
   constructor(private storage: AngularFireStorage,
     private afs: AngularFirestore,
     private camera: Camera,
     private loading: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private ingservice: IngredientService
-  ){
+    private ingservice: IngredientService) { }
 
-    // this.loading = this.loadingCtrl.create({
-    //   content: 'Running AI vision analysis...'
-    // });
+  ngOnInit() {
   }
 
-  ngOnInit(){
-    this.ingservice.getIngredients()
-      .subscribe(ingredients =>{
-        this.ingredient = ingredients;
-        this.loadedIngredientList = ingredients;
-      });
+  //Cropping image function
+  imageCropper(event: ImageCroppedEvent){
+    this.croppedImage = event.base64
+    // this.startUpload(this.croppedImage)
+    console.log(this.croppedImage)
   }
 
-  //For Try 3
-  initializeItems(): void{
-    this.ingredient = this.loadedIngredientList
-  }
-
-  filterList(event){
-    this.initializeItems();
-    
-    const searchTerm = event.srcElement.value;
-
-    if(!searchTerm){
-      return;
-    }
-
-    this.ingredient = this.ingredient.filter(currentItem =>{
-      if (currentItem.nonhalal && searchTerm){
-        if (currentItem.nonhalal.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 ){
-          return true;
-        }
-        return false;
-      }
-    })
-  }
+  // save(){
+  //   this.croppedImage = this.angularCropper.crop();
+  // }
 
   async selectSource() {
     let actionSheet = await this.actionSheetCtrl.create({
@@ -140,11 +116,14 @@ export class SearchHalalPage implements OnInit{
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: sourceType,
-      allowEdit: true
     }
 
-    const base64 = await this.camera.getPicture(options)
-    this.startUpload(base64);
+    // const base64 = await this.camera.getPicture(options)
+    // this.startUpload(base64);
+
+    this.camera.getPicture(options).then((ImageData) => {
+      this.image = 'data:image/jpeg;base64,' + ImageData;
+    });
   }
 
 }

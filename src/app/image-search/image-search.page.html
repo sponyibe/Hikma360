@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Image Search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-icon (click)="selectSource()" name="camera" color="primary" size="large"></ion-icon>
+
+    <image-cropper
+    [imageBase64]="image"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="6/3" format="png"
+    (imageCropped)="imageCropped($event)" outputType="base64">
+    </image-cropper>
+    <ion-button shape="round" color="secondary" (click)="captureAndUpload()">Save</ion-button>
+
+  <ion-card *ngIf="croppedImage">
+    <ion-card-header>
+      <ion-card-title> Cropped Image </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img [src]="croppedImage"/>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
