@@ -38,6 +38,9 @@ export class ImageSearchPage implements OnInit {
 
   public ingredient: Ingredient[];
   public loadedIngredientList: Ingredient[];
+  public sourceType: number;
+
+  public imageBase64: string;
 
   constructor(private storage: AngularFireStorage,
     private afs: AngularFirestore,
@@ -52,13 +55,11 @@ export class ImageSearchPage implements OnInit {
   //Cropping image function
   imageCropper(event: ImageCroppedEvent){
     this.croppedImage = event.base64
-    // this.startUpload(this.croppedImage)
-    console.log(this.croppedImage)
   }
 
-  // save(){
-  //   this.croppedImage = this.angularCropper.crop();
-  // }
+  saveCroppedImage(){
+    this.imageBase64 = (this.angularCropper.crop() as ImageCroppedEvent).base64;
+  }
 
   async selectSource() {
     let actionSheet = await this.actionSheetCtrl.create({
@@ -67,10 +68,12 @@ export class ImageSearchPage implements OnInit {
           text: 'Use Library',
           handler: () => {
             this.captureAndUpload(this.camera.PictureSourceType.PHOTOLIBRARY);
+            this.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
           }
         }, {
           text: 'Capture Image',
           handler: () => {
+            this.sourceType = this.camera.PictureSourceType.CAMERA;
             this.captureAndUpload(this.camera.PictureSourceType.CAMERA);
           }
         }, {
@@ -82,7 +85,9 @@ export class ImageSearchPage implements OnInit {
     await actionSheet.present();
   }
 
-  startUpload(file: string) {
+  async startUpload() {
+
+    this.saveCroppedImage();
 
     // Show loader
     //this.loading.present();
@@ -104,8 +109,8 @@ export class ImageSearchPage implements OnInit {
 
 
     // The main task
-    this.image = 'data:image/jpg;base64,' + file;
-    this.task = this.storage.ref(path).putString(this.image, 'data_url');
+    // this.image = 'data:image/jpg;base64,' + this.imageBase64;
+    this.task = this.storage.ref(path).putString(this.imageBase64, 'data_url');
   }
 
   // Gets the pic from the native camera then starts the upload
@@ -118,11 +123,11 @@ export class ImageSearchPage implements OnInit {
       sourceType: sourceType,
     }
 
-    // const base64 = await this.camera.getPicture(options)
-    // this.startUpload(base64);
+    // this.image = await this.camera.getPicture(options)
+    // this.startUpload(this.croppedImage);
 
     this.camera.getPicture(options).then((ImageData) => {
-      this.image = 'data:image/jpeg;base64,' + ImageData;
+      this.image = 'data:image/png;base64,' + ImageData;
     });
   }
 
