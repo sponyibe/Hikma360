@@ -23,7 +23,8 @@ export class FavouriteStorePage implements OnInit {
   favourites:  Favourites =  {
     id: '',
     itemPurchased: '',
-    Store: []
+    Store: [],
+    userId: '',
   }
 
   private storeReturned: Favourites

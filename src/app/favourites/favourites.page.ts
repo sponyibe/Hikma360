@@ -13,10 +13,21 @@ export class FavouritesPage implements OnInit {
 
   private faves: Observable<Favourites[]>;
 
+  fav: Favourites =  {
+    id: '',
+    Store: [],
+    userId: '',
+    itemPurchased: ''
+  }
+
   constructor(private favouritesService: FavouritesService, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.faves = this.favouritesService.getFavourites();
+    // this.favouritesService.getFavourites().subscribe(store => {
+    //   this.fav = store;
+    //   console.log(this.fav);
+    // })
   }
 
   async addItemModal(){

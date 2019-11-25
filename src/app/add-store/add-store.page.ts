@@ -25,7 +25,8 @@ export class AddStorePage implements OnInit {
   pricePerUnit: 4,
   priceRating: 4,
   quality:2,
-  customerService: 3}]
+  customerService: 3}],
+  userId: ''
  }
   id; index;
   isUpdatingStore: boolean;
