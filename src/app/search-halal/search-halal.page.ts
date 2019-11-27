@@ -36,7 +36,7 @@ export class SearchHalalPage implements OnInit{
   public ingredient: Ingredient[];
   public loadedIngredientList: Ingredient[];
 
-   searchTerm = '';
+  searchTerm = '';
 
   constructor(private storage: AngularFireStorage,
     private afs: AngularFirestore,
