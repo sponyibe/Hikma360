@@ -5,22 +5,32 @@
 </ion-header>
 
 <ion-content>
-    <ion-icon (click)="selectSource()" name="camera" color="primary" size="large"></ion-icon>
+  <ion-col *ngIf="result$ | async as result">
+    <h4>Is this item halal?</h4>
 
-    <image-cropper
-    [imageBase64]="image"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="6/3" format="png"
+    <p *ngIf="result.nonHalal" color="secondary" ion-button full>
+      No, it is not Halal!!
+    </p>
+
+    <p *ngIf="!result.nonHalal" color="danger" ion-button full>
+      Yes, it is Halal :)
+    </p>
+
+  </ion-col>
+
+  <ion-icon (click)="selectSource()" name="camera" color="primary" size="large"></ion-icon>
+
+  <image-cropper [imageBase64]="image" [maintainAspectRatio]="true" [aspectRatio]="6/3" format="jpg"
     outputType="base64">
-    </image-cropper>
-    <ion-button shape="round" color="secondary" (click)="startUpload()">Save</ion-button>
+  </image-cropper>
+  <ion-button shape="round" color="secondary" (click)="startUpload()">Save</ion-button>
 
-  <ion-card *ngIf="imageBase64">
+  <!-- <ion-card *ngIf="imageBase64">
     <ion-card-header>
       <ion-card-title> Cropped Image </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <img [src]="imageBase64"/>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 </ion-content>
