@@ -6,7 +6,7 @@
 
 <ion-content>
 <ion-list >
-  <ion-item button *ngFor="let item of (faves | async)" [routerLink]="['/favourite-store', item.id]">
+  <ion-item button *ngFor="let item of favesLoggedIn" [routerLink]="['/favourite-store', item.id]">
       {{item.itemPurchased}}
   </ion-item>
 </ion-list>

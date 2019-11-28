@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Favourites, FavouritesService } from '../services/favourites.service';
 import { ModalController } from '@ionic/angular';
+import { AngularFireAuth } from "@angular/fire/auth";
 import { AddItemPage } from '../add-item/add-item.page';
 
 @Component({
@@ -11,23 +12,16 @@ import { AddItemPage } from '../add-item/add-item.page';
 })
 export class FavouritesPage implements OnInit {
 
-  private faves: Observable<Favourites[]>;
+  private faves: Favourites[];
+  private favesLoggedIn: Favourites[];
 
-  fav: Favourites =  {
-    id: '',
-    Store: [],
-    userId: '',
-    itemPurchased: ''
-  }
-
-  constructor(private favouritesService: FavouritesService, private modalCtrl: ModalController) { }
+  constructor(private favouritesService: FavouritesService, private modalCtrl: ModalController, private afAuth: AngularFireAuth ) { }
 
   ngOnInit() {
-    this.faves = this.favouritesService.getFavourites();
-    // this.favouritesService.getFavourites().subscribe(store => {
-    //   this.fav = store;
-    //   console.log(this.fav);
-    // })
+    this.favouritesService.getFavourites().subscribe(store => {
+      this.faves = store;
+      this.favesLoggedIn =  this.faves.filter(fav => fav.userId == this.afAuth.auth.currentUser.uid)
+    })
   }
 
   async addItemModal(){

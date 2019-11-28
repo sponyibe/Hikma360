@@ -38,7 +38,8 @@ export class FavouritesService {
 
   constructor(private afAuth: AngularFireAuth ,private afs: AngularFirestore ) {
     // console.log(this.afAuth.auth.currentUser.uid)
-    this.favouritesCollection = afs.collection<Favourites>('Favourites', ref => ref.where('userId', '==', 'GzfmvEI7yhU34kvI11K5LbRY8Sa2'));
+    // , ref => ref.where('userId', '==', 'GzfmvEI7yhU34kvI11K5LbRY8Sa2')
+    this.favouritesCollection = afs.collection<Favourites>('Favourites');
 
     this.favourites = this.favouritesCollection.snapshotChanges().pipe(
       map(actions => { 
