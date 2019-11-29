@@ -18,7 +18,7 @@ import { Ingredient, IngredientService } from "../services/ingredient.service";
   styleUrls: ["./search-halal.page.scss"]
 })
 export class SearchHalalPage implements OnInit{
-
+  
   showResults = false;
 
   // Upload task
