@@ -8,8 +8,8 @@ const routes: Routes = [
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'tenets', loadChildren: './tenets/tenets.module#TenetsPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
-  { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
-  { path: 'image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
+  { path: 'menu/search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'menu/image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
 
 ];
 
