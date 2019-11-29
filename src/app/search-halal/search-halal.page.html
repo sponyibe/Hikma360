@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-button size="small" routerLink="/home">Back</ion-button>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar showCancelButton (ionInput)="filterList($event)" padding>
+
+  </ion-searchbar>
+
+
+  <ion-list>
+    <ion-item *ngFor="let ingredients of ingredient" lines="inset">
+
+      <ion-label>
+        {{ingredients.nonhalal}}
+        <p>{{ingredient.notes}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

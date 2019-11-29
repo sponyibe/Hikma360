@@ -7,11 +7,11 @@ import { tap, filter } from 'rxjs/operators';
 
 import { AngularFirestore} from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { environment } from "../../../environments/environment";
+import { environment } from "../../environments/environment";
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 
-import { Ingredient, IngredientService } from "../../services/ingredient.service";
+import { Ingredient, IngredientService } from "../services/ingredient.service";
 
 @Component({
   selector: 'app-search-halal',
@@ -19,7 +19,7 @@ import { Ingredient, IngredientService } from "../../services/ingredient.service
   styleUrls: ['./search-halal.page.scss'],
 })
 export class SearchHalalPage implements OnInit{
-
+  
   showResults = false;
 
   // Upload task
