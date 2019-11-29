@@ -20,8 +20,8 @@ const routes: Routes = [
   { path: 'certification-details', loadChildren: './certification-details/certification-details.module#CertificationDetailsPageModule' },
   { path: 'organizations-details/:id', loadChildren: './organizations-details/organizations-details.module#OrganizationsDetailsPageModule' },
   { path: 'certification-details/:id', loadChildren: './certification-details/certification-details.module#CertificationDetailsPageModule' },
-  { path: 'search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
-  { path: 'image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
+  { path: 'menu/search-halal', loadChildren: './pages/search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'menu/image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
 
 ];
 
