@@ -50,6 +50,11 @@ export class ImageSearchPage implements OnInit {
   ngOnInit() {
   }
 
+  //Cropping image function
+  imageCropper(event: ImageCroppedEvent){
+    this.croppedImage = event.base64
+  }
+
   saveCroppedImage(){
     this.imageBase64 = (this.angularCropper.crop() as ImageCroppedEvent).base64;
   }
@@ -111,11 +116,10 @@ export class ImageSearchPage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: sourceType,
-      correctOrientation: true
     }
 
     this.camera.getPicture(options).then((ImageData) => {
-      this.image = 'data:image/jpg;base64,' + ImageData;
+      this.image = 'data:image/png;base64,' + ImageData;
     });
   }
 
