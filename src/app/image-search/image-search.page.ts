@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, ActionSheetController } from '@ionic/angular';
 
-
 import { Observable } from 'rxjs'
 import { tap, filter } from 'rxjs/operators';
 
@@ -29,7 +28,6 @@ export class ImageSearchPage implements OnInit {
   
   //loading: Loading;
   image: string;
-  originalImage
 
   croppedImage = null;
   isLoading = false;
@@ -52,11 +50,6 @@ export class ImageSearchPage implements OnInit {
   ngOnInit() {
   }
 
-  //Cropping image function
-  // imageCropper(event: ImageCroppedEvent){
-  //   this.croppedImage = event.base64
-  // }
-
   saveCroppedImage(){
     this.imageBase64 = (this.angularCropper.crop() as ImageCroppedEvent).base64;
   }
@@ -68,12 +61,10 @@ export class ImageSearchPage implements OnInit {
           text: 'Use Library',
           handler: () => {
             this.captureAndUpload(this.camera.PictureSourceType.PHOTOLIBRARY);
-            // this.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
           }
         }, {
           text: 'Capture Image',
           handler: () => {
-            // this.sourceType = this.camera.PictureSourceType.CAMERA;
             this.captureAndUpload(this.camera.PictureSourceType.CAMERA);
           }
         }, {
@@ -90,7 +81,7 @@ export class ImageSearchPage implements OnInit {
     this.saveCroppedImage();
 
     // Show loader
-    //this.loading.present();
+    // this.loading.present();
 
     // const timestamp = new Date().getTime().toString();
     const docId = this.afs.createId();
@@ -109,7 +100,6 @@ export class ImageSearchPage implements OnInit {
 
 
     // The main task
-    // this.image = 'data:image/jpg;base64,' + this.imageBase64;
     this.task = this.storage.ref(path).putString(this.imageBase64, 'data_url');
   }
 
@@ -123,9 +113,6 @@ export class ImageSearchPage implements OnInit {
       sourceType: sourceType,
       correctOrientation: true
     }
-
-    // this.image = await this.camera.getPicture(options)
-    // this.startUpload(this.croppedImage);
 
     this.camera.getPicture(options).then((ImageData) => {
       this.image = 'data:image/jpg;base64,' + ImageData;

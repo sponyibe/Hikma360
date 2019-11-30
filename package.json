@@ -94,12 +94,8 @@
       "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
-      "ios",
-<<<<<<< HEAD
+      "browser",
       "android"
-=======
-      "browser"
->>>>>>> fixed cropping issue
     ]
   }
 }
