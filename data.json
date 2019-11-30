@@ -1,0 +1,153 @@
+[
+   {
+      "Column1": 1,
+      "Organisation": "Islamic Food and Nutrition Council of Canada (IFANCC)",
+      "Address": "206 - 130 Dundas Street E, Mississuaga, Ontario, L5A 3V8",
+      "Telephone": "(905) 275-0477",
+      "Website": "http://ifancc.org/",
+      "Email": "halal@ifancc.org",
+      "StatedConditions":[ 
+         "Swine/pork and its by-products",
+     "Animals improperly slaughtered or dead before slaughtering",
+     "Animals killed in the name of anyone other than ALLAH (God)",
+     "Alcohol and intoxicants",
+    "Carnivorous animals, birds of prey and land animals without external ears",
+       "Blood and blood by-products",
+      "Foods contaminated with any of the above products"
+   ]
+   },
+  
+   {
+      "Column1": 2,
+      "Organisation": "ISNA Halal Certification Services",
+      "Address": "2200 South Sheridan Way, Mississauga, Ontario, L5J 2M4",
+      "Telephone": "(905)-403-8406 ext 238 ",
+      "Website": "https://isnacanada.com/services/hsc/",
+      "Email": "halal@isnacanada.com"
+   },
+   {
+      "Column1": 3,
+      "Organisation": "Halal Monitoring Authority Canada",
+      "Address": "1825 Markham Road, Suite # 211 Scarborough Ontario M1B 4Z9",
+      "Telephone": "(416)-731-2247 / HOTLINE: 1-855-HMA-1HMA (1-855-462-1462)",
+      "Website": "https://hmacanada.org/",
+      "Email": "info@hmacanada.org",
+      "Slaughter": "Hand Slaughter",
+      "StatedConditions": "No stunning for red meat"
+   },
+   {
+      "Organisation": "Halal Monitoring Authority Canada",
+      "Address": "216 Westwinds Crescent NE, Calgary, Alberta, T3J 5H2",
+      "Telephone": "(403)-903-8800",
+      "Website": "https://hmacanada.org/",
+      "Email": "info@hmacanada.org",
+      "StatedConditions": "Low voltage electrical stunning for poultry"
+   },
+   {
+      "Organisation": "Halal Monitoring Authority Canada",
+      "Address": "12541 89 St, Edmonton Alberta, TB5 3X2",
+      "Telephone": "(855)-462-1462  ",
+      "Website": "https://hmacanada.org/",
+      "Email": "info@hmacanada.org",
+      "StatedConditions": "Manually hand slaughtered by a Muslim.  No mechanical slaughter allowed."
+   },
+   {
+      "Organisation": "Halal Monitoring Authority Canada",
+      "Address": "1562 Danforth Avenue, P.O Box 72031,Toronto, Ontario, M4J 1P0",
+      "Telephone": "(416) 731-2247",
+      "Website": "https://hmacanada.org/",
+      "StatedConditions": "Verbal recitation of Allah’s name"
+   },
+   {
+      "Column1": 4,
+      "Organisation": "Canada Halal examination and certification (CHEC)",
+      "Address": "Headquarters: 120 Bermondsey Road North York,Ontario, M4A 1X5",
+      "Slaughter": "Hand Slaughter",
+      "Others": "Operating since 2002"
+   },
+   {
+      "Organisation": "Canada Halal examination and certification (CHEC)",
+      "Address": "6725 Millcreek Dr. Unit #1, Mississauga, Ontario, L5N 5V3",
+      "Telephone": "(647)-675-1444 /  (647)-886-1444",
+      "Website": "https://www.canadahalalec.com/about-us/",
+      "Email": "info@canadahalalec.com",
+      "Slaughter": "Hand Slaughter"
+   },
+   {
+      "Column1": 5,
+      "Organisation": "Canada Halal Food Certifying Agency (CHFCA)",
+      "Address": "1981 Boylen Road, Unit 7, Mississauga Ontario, L5S 1R9",
+      "Telephone": "(905)-673-6500",
+      "Website": "http://chfcahalal.com/",
+      "Email": "info@chfcahalal.com",
+      "StatedConditions": [
+         "The person should be a Muslim who is mentally sound and knowledgeable of the Islamic slaughtering procedures.",
+      "The animal to be slaughtered should be lawful according to Islamic law.",
+     "The animal to be slaughtered should be alive at the time of slaughtering.",
+     "The phrase Bismillah Allohu Akbar (In the Name of Allah God is Greatest) should be invoked immediately before the slaughter of each animal.",
+     "The slaughtering device should be sharp and should not be lifted off the animal during the slaughter act.",
+   "The slaughter act should sever the Pulmonary, Oesophagus, Jugular and Carotid of the neck region."
+      ]
+   },
+   {
+      "Column1": 6,
+      "Organisation": "Halal Montreal Certification Authority (HMCA)",
+      "Address": "1510 Chemin Chambly Suite 270 Longueuil Quebec J4J 3X5 ",
+      "Telephone": "(514) 296 7360",
+      "Website": "https://halalmontreal.com/",
+      "Email": "info@halalmontreal.com/taibi@halalmontreal.com"
+   },
+   {
+      "Column1": 7,
+      "Organisation": "Halal Advisory Group",
+      "Address": "250 Yonge Street, Suite 2201 Toronto, Ontario M5B 2L7",
+      "Telephone": "(866) 211-6606/ (416) 451-5917",
+      "Website": "https://www.halaladvisory.ca/",
+      "Email": " info@halaladvisory.ca"
+   },
+   {
+      "Column1": 8,
+      "Organisation": "Halal Inspection and Certification (HIC) Canada",
+      "Telephone": "(604)-334-8224",
+      "Website": "https://hiccanada.ca/certified/ ",
+      "Email": " info@hiccanada.ca",
+      "Slaughter": "Hand Slaughter",
+      "Others": "Launching on the 13th of April, 2019"
+   },
+   {
+      "Column1": 9,
+      "Organisation": "Alberta Halal Monitoring Certification Council",
+      "Address": "3800-19 Street NE Calgary Alberta T2E 6V2 ",
+      "Telephone": "(587) 889-7391",
+      "Website": "None",
+      "Email": "None",
+      "Others": "Created in 2015"
+   },
+   {
+      "Column1": 10,
+      "Organisation": "HALALCS Canada",
+      "Address": "33 Bridgewater Rd, Oakville, Ontario, L6H 6G8",
+      "Telephone": "(343) 883-1374",
+      "Website": "https://www.halalcs.ca/  ",
+      "Email": "info@halalcs.ca",
+      "Others": "Site has little information, no address and hardly anything about halal!"
+   },
+   {
+      "Column1": 11,
+      "Organisation": "Halal Monitoring Organisation (HMO)",
+      "Address": "No address",
+      "Telephone": "(905)-909-2525 / (844)-364-2525",
+      "Website": "www.halalmonitoring.com  ",
+      "Email": "support@halalmonitoring.com ",
+      "Slaughter": "Machine slaughter"
+   },
+   {
+      "Column1": 12,
+      "Organisation": "Prairie Halal Monitoring and Certification Council",
+      "Address": "196 Taralake Crescent Northeast, Calgary Alberta T3J 0A9, Canada",
+      "Telephone": "None",
+      "Website": "None",
+      "Email": "None",
+      "Others": "No website and not much about it"
+   }
+]

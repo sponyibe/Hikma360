@@ -21,9 +21,7 @@ export class MenuPage implements OnInit {
       title: 'Scan Halal',
       url: '/menu/image-search',
       icon: 'qr-scanner'
-    }
-
-    
+    }    
 
   ];
   

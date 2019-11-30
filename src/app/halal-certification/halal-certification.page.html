@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="success">
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+      <ion-item  *ngFor="let certifyingbodies of certifyingbodies" [routerLink]= "['/certification-details', certifyingbodies.id]">
+        <ion-label>
+          {{ certifyingbodies.Organisation }}
+          <p><b>Address: </b>{{ certifyingbodies.Address }}</p>
+          <p><b>Phone: </b>{{ certifyingbodies.Telephone }}</p>
+        </ion-label>
+        <ion-note slot="end" color="success"></ion-note>
+      </ion-item>
+
+   </ion-list>
+
+</ion-content>

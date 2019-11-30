@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, ActionSheetController } from '@ionic/angular';
 
-
 import { Observable } from 'rxjs'
 import { tap, filter } from 'rxjs/operators';
 
@@ -29,7 +28,6 @@ export class ImageSearchPage implements OnInit {
   
   //loading: Loading;
   image: string;
-  originalImage
 
   croppedImage = null;
   isLoading = false;
@@ -121,14 +119,10 @@ export class ImageSearchPage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: sourceType,
-      correctOrientation: true
     }
 
-    // this.image = await this.camera.getPicture(options)
-    // this.startUpload(this.croppedImage);
-
     this.camera.getPicture(options).then((ImageData) => {
-      this.image = 'data:image/jpg;base64,' + ImageData;
+      this.image = 'data:image/png;base64,' + ImageData;
     });
   }
 

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="success">
+      <ion-buttons slot="start">
+          <ion-back-button routerLink="/tabs/halal-certification"></ion-back-button>
+        </ion-buttons>
+    <ion-title>Certifying Bodies</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <h2>{{ certifyingbodies.Organisation }}</h2>
+    <p><b>Address: </b>{{ certifyingbodies.Address }}</p>
+    <p><b>Phone: </b>{{ certifyingbodies.Telephone }}</p>
+    <p><b>Email: </b>{{ certifyingbodies.Email }}</p>
+    <p><b>Slaughter Method: </b> {{ certifyingbodies.Slaughter }}</p>
+    <p><b>Stated Conditions: </b>{{ certifyingbodies.StatedConditions }}</p>
+    <p><b>Others: </b>{{ certifyingbodies.Others }} </p>
+    <a *ngIf="certifyingbodies.Website" (click)="openWebsite()">Visit the Website</a>
+</ion-content>
