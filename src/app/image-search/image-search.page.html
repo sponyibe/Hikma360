@@ -1,6 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Image Search</ion-title>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ingredeient Image Search</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,12 +21,14 @@
 
   </ion-col>
 
-  <ion-icon (click)="selectSource()" name="camera" color="primary" size="large"></ion-icon>
-
+  <div class="img_container">
+    <ion-icon (click)="selectSource()" name="camera" color="primary" size="large"></ion-icon>
+  </div>
+  
   <image-cropper [imageBase64]="image" [maintainAspectRatio]="true" [aspectRatio]="6/3" format="jpg"
     outputType="base64">
   </image-cropper>
-  <ion-button shape="round" color="secondary" (click)="startUpload()">Save</ion-button>
+  <ion-button shape="round" color="secondary" (click)="startUpload()">Crop & Save</ion-button>
 
   <!-- <ion-card *ngIf="imageBase64">
     <ion-card-header>
