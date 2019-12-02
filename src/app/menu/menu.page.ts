@@ -15,7 +15,7 @@ export class MenuPage implements OnInit {
 
     {
       title: 'Search Halal',
-      url: '/search-halal'
+      url: '/menu/search-halal'
     }
     
 

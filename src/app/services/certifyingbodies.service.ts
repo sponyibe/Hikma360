@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 
 export interface Certifyingbodies {
+  id?: string;
   Column1: number;
   Organisation: string;
   Address: string;

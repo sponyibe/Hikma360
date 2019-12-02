@@ -21,16 +21,9 @@ const routes: Routes = [
         path: 'home',
         loadChildren: '../home/home.module#HomePageModule'
       },
-<<<<<<< HEAD
-
-      {
-        path:'search-halal',
-        loadChildren:  './pages/search-halal/search-halal.module#SearchHalalPageModule'
-=======
       {
         path: 'search-halal',
         loadChildren: '../search-halal/search-halal.module#SearchHalalPageModule'
->>>>>>> addd95424677764034c7f68d7849176719a21555
       }
      
     ]
