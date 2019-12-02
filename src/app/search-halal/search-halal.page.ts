@@ -9,7 +9,6 @@ import {
   AngularFireStorage,
   AngularFireUploadTask
 } from "@angular/fire/storage";
-import { environment } from "../../environments/environment";
 
 import {
   Camera,
