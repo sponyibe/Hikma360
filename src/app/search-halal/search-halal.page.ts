@@ -9,7 +9,6 @@ import {
   AngularFireStorage,
   AngularFireUploadTask
 } from "@angular/fire/storage";
-import { environment } from "../../environments/environment";
 
 import {
   Camera,
@@ -27,10 +26,6 @@ import { Ingredient, IngredientService } from "../services/ingredient.service";
   styleUrls: ["./search-halal.page.scss"]
 })
 export class SearchHalalPage implements OnInit {
-  // searchConfig = {
-  //   ...environment.algolia,
-  //   indexName: "dev_Items"
-  // };
 
   showResults = false;
 
