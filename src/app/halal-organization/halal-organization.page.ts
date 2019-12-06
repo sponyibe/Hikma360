@@ -22,7 +22,7 @@ export class HalalOrganizationPage{
 
   async ionViewDidEnter() { 
     const loading = await this.loadingCtrl.create({
-      message: 'loading stores..',
+      message: 'loading ...',
       spinner: "circles",
       translucent: true,
       backdropDismiss: true
