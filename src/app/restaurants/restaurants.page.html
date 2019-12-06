@@ -8,12 +8,23 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item button *ngFor="let restaurant of places" [routerLink]="['/restaurant-details', restaurant.id]">
-      <ion-label>{{ restaurant.Name }}
-        <p>{{ restaurant.distance }} km</p>
-        <p>{{ restaurant.Address }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+
+    <ion-list >
+        <!-- <ng-container *ngIf="!data || data.length == 0">
+            <div *ngFor="let n of [0,1,2]" padding>
+              <ion-skeleton-text></ion-skeleton-text>
+              <p>
+                <ion-skeleton-text class="fake-skeleton"></ion-skeleton-text>
+              </p>
+            </div>
+          </ng-container> -->
+
+      <ion-item button *ngFor="let restaurant of data" [routerLink]="['/restaurant-details', restaurant.id]">
+        <ion-label>{{ restaurant.Name }}
+          <p>{{ restaurant.distance }} km</p>
+          <p>{{ restaurant.Address }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
 </ion-content>

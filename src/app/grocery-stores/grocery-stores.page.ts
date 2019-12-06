@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Observable, Subscription  } from 'rxjs';
+import { LoadingController } from '@ionic/angular';
+import { load } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-grocery-stores',
@@ -18,13 +20,20 @@ export class GroceryStoresPage implements OnInit {
     lat: 0,
     lng: 0
   }
-  constructor(public groceryStoreService: GroceryStoresService, public geolocation: Geolocation) { }
+  constructor(public groceryStoreService: GroceryStoresService, public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     //console.log("OnInit")
   }
 
-  ionViewDidEnter() { 
+  async ionViewDidEnter() { 
+    const loading = await this.loadingCtrl.create({
+      message: 'loading stores..',
+      spinner: "circles",
+      translucent: true
+    })
+    await loading.present();
+    
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
       this.usersLocation.lng = position.coords.longitude
@@ -39,6 +48,8 @@ export class GroceryStoresPage implements OnInit {
         this.groceryStores.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
+        loading.dismiss();
+        this.data = this.groceryStores.filter(i => i.distance < 100)
       });
   }
 

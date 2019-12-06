@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocationsService, Restauarant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Observable, Subscription  } from 'rxjs';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-restaurants',
@@ -11,20 +12,29 @@ import { Observable, Subscription  } from 'rxjs';
 export class RestaurantsPage implements OnInit{
 
   private subscription: Subscription;
-  place: Observable<Restauarant[]>;
+  // place: Observable<Restauarant[]>;
   places: Restauarant[];
   data: Restauarant[];
+
   usersLocation = {
     lat: 0,
     lng: 0
   }
-  constructor(public locationService: LocationsService, public geolocation: Geolocation) { }
+
+  constructor(public locationService: LocationsService, public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     //console.log("OnInit")
   }
 
-  ionViewDidEnter() { 
+  async ionViewDidEnter() { 
+    const loading = await this.loadingCtrl.create({
+      message: 'loading restaurants..',
+      spinner: "circles",
+      translucent: true
+    })
+    await loading.present();
+
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
       this.usersLocation.lng = position.coords.longitude
@@ -39,17 +49,14 @@ export class RestaurantsPage implements OnInit{
         this.places.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
+        loading.dismiss();
+        this.data = this.places.filter(i => i.distance < 100)
       });
   }
 
   applyHaversine(locations: Restauarant[]) {
 
     console.log(this.usersLocation)
-
-    // let usersLocation = {
-    //   lat: 43.5134464,
-    //   lng: -80.1988607
-    // };
 
     locations.map((location) => {
 

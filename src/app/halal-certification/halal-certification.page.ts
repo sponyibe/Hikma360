@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Certifyingbodies, CertifyingBodiesService } from '../services/certifyingbodies.service';
 import { Subscription } from 'rxjs';
+import { LoadingController } from '@ionic/angular';
+import { load } from '@angular/core/src/render3';
 
 
 @Component({
@@ -14,17 +16,25 @@ export class HalalCertificationPage {
   public loadedCertifyingBodiesList: Certifyingbodies[];
   private subscription: Subscription;
 
-  constructor(private certifyingbodiesService : CertifyingBodiesService ) { }
+  constructor(private certifyingbodiesService : CertifyingBodiesService, private loadingCtrl: LoadingController) { }
 
   // ngOnInit() {
     
   // }
 
-  ionViewDidEnter() { 
+  async ionViewDidEnter() { 
+    const loading = await this.loadingCtrl.create({
+      message: 'loading stores..',
+      spinner: "circles",
+      translucent: true,
+      backdropDismiss: true
+    })
+    await loading.present();
     this.subscription = this.certifyingbodiesService.getCertifyingBodies()
     .subscribe(certifyingbodies =>{
+      loading.dismiss();
       this.certifyingbodies = certifyingbodies;
-      this.loadedCertifyingBodiesList = certifyingbodies;
+      // this.loadedCertifyingBodiesList = certifyingbodies;
     });
   }
 
