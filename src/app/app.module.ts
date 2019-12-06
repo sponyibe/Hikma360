@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -23,7 +23,7 @@ import { AddItemPageModule } from './add-item/add-item.module';
 //import { Crop } from '@ionic-native/crop/ngx';
 //import { File } from '@ionic-native/file/ngx';
 
-import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
