@@ -10,37 +10,33 @@ import { load } from '@angular/core/src/render3';
   templateUrl: './halal-certification.page.html',
   styleUrls: ['./halal-certification.page.scss'],
 })
-export class HalalCertificationPage {
+export class HalalCertificationPage implements OnInit{
 
   public certifyingbodies: Certifyingbodies[];
-  public loadedCertifyingBodiesList: Certifyingbodies[];
+  // public loadedCertifyingBodiesList: Certifyingbodies[];
   private subscription: Subscription;
 
   constructor(private certifyingbodiesService : CertifyingBodiesService, private loadingCtrl: LoadingController) { }
 
-  // ngOnInit() {
+  ngOnInit() {
     
-  // }
+  }
 
   async ionViewDidEnter() { 
-    const loading = await this.loadingCtrl.create({
-      message: 'loading ...',
-      spinner: "circles",
-      translucent: true,
-      backdropDismiss: true
-    })
-    await loading.present();
+    console.log("certyfting codies")
+ 
     this.subscription = this.certifyingbodiesService.getCertifyingBodies()
     .subscribe(certifyingbodies =>{
-      loading.dismiss();
+
       this.certifyingbodies = certifyingbodies;
+      console.log(this.certifyingbodies)
       // this.loadedCertifyingBodiesList = certifyingbodies;
     });
   }
 
-  initializeItems(): void{
-    this.certifyingbodies = this.loadedCertifyingBodiesList
-  }
+  // initializeItems(): void{
+  //   this.certifyingbodies = this.loadedCertifyingBodiesList
+  // }
 
   ionViewWillLeave(){
     console.log("Leave init")

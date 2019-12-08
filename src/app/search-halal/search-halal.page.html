@@ -44,11 +44,11 @@
   </ion-col>
 
   <ion-list>
-    <ion-item *ngFor="let ingredients of ingredient" lines="inset">
+    <ion-item *ngFor="let ingredients of ingredient">
 
-      <ion-label>
+      <ion-label class="ion-text-wrap ion-text-capitalize">
         {{ingredients.nonhalal}}
-        <p>{{ingredient.notes}}</p>
+        <p *ngIf="ingredients.notes">{{ingredients.notes}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

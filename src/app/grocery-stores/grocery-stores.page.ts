@@ -27,12 +27,6 @@ export class GroceryStoresPage implements OnInit {
   }
 
   async ionViewDidEnter() { 
-    const loading = await this.loadingCtrl.create({
-      message: 'loading stores..',
-      spinner: "circles",
-      translucent: true
-    })
-    await loading.present();
     
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
@@ -48,7 +42,6 @@ export class GroceryStoresPage implements OnInit {
         this.groceryStores.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
-        loading.dismiss();
         this.data = this.groceryStores.filter(i => i.distance < 100)
       });
   }

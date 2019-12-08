@@ -1,6 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>add-item</ion-title>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>add Item</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,13 +13,13 @@
     <ion-input [(ngModel)]="favourite.itemPurchased"></ion-input>
   </ion-item>
 
-  <ion-button (click)="addItem()">
+  <ion-button color="success" (click)="addItem()">
     Add
   </ion-button>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar colour="primary">
+  <ion-toolbar colour="danger-shade">
     <ion-button expand="full" fill="clear" colour="light" (click)="closeModal()">
       Close
     </ion-button>

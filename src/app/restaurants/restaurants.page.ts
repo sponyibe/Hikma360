@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationsService, Restauarant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Observable, Subscription  } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { Subscription  } from 'rxjs';
+import { AlertController, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restaurants',
@@ -15,31 +16,26 @@ export class RestaurantsPage implements OnInit{
   // place: Observable<Restauarant[]>;
   places: Restauarant[];
   data: Restauarant[];
+  tooFar: boolean;
 
   usersLocation = {
     lat: 0,
     lng: 0
   }
 
-  constructor(public locationService: LocationsService, public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
+  constructor(public locationService: LocationsService, public geolocation: Geolocation, private alertController: AlertController , public router:Router, private nav: NavController) { }
 
   ngOnInit() {
     //console.log("OnInit")
   }
 
-  async ionViewDidEnter() { 
-    const loading = await this.loadingCtrl.create({
-      message: 'loading restaurants..',
-      spinner: "circles",
-      translucent: true
-    })
-    await loading.present();
+  ionViewDidEnter() { 
 
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
       this.usersLocation.lng = position.coords.longitude
     });
-     
+       
     this.subscription = this.locationService.getLocations()
       .subscribe(restaurantList => {
         //this.places = restaurantList;
@@ -49,9 +45,21 @@ export class RestaurantsPage implements OnInit{
         this.places.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
-        loading.dismiss();
-        this.data = this.places.filter(i => i.distance < 100)
+        this.data = this.places.filter(i => i.distance < 10)
+        if(this.data.length <= 0){
+          this.presentAlert("Sorry, there are no reataurants within 100km of your current location")
+        }
       });
+  }
+
+  async presentAlert(msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   applyHaversine(locations: Restauarant[]) {

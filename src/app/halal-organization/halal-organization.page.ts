@@ -10,7 +10,7 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./halal-organization.page.scss'],
 })
 export class HalalOrganizationPage{
-  public certifyingorganization: Certifyingorganization[];
+  public certifyingorganizations: Certifyingorganization[];
   // public loadedCertifyingOrganizationList: Certifyingorganization[];
   private subscription: Subscription;
 
@@ -20,19 +20,12 @@ export class HalalOrganizationPage{
   // ngOnInit() {
   // }
 
-  async ionViewDidEnter() { 
-    const loading = await this.loadingCtrl.create({
-      message: 'loading ...',
-      spinner: "circles",
-      translucent: true,
-      backdropDismiss: true
-    })
-    await loading.present();
+  async ionViewWillEnter() { 
 
     this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
-      loading.dismiss();
-      this.certifyingorganization = certifyingorganization;
+      this.certifyingorganizations = certifyingorganization;
+      console.log(this.certifyingorganizations)
       // this.loadedCertifyingOrganizationList = certifyingorganization;
     });
   }
@@ -43,6 +36,6 @@ export class HalalOrganizationPage{
 
   ionViewWillLeave(){
     console.log("Leave init")
-    this.subscription.unsubscribe()
+    // this.subscription.unsubscribe()
   }
 }

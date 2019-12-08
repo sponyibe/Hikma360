@@ -1,18 +1,22 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/favourites"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{favourites.itemPurchased}} Stores</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <ion-list >
-    <ion-item button *ngFor="let store of favourites.Store; let i = index" [routerLink]="['/add-store', favourites.id, i]">
-    <ion-label>{{ store.Name }}</ion-label>
-  </ion-item>
+<ion-content>
+  <ion-list>
+    <ion-item button *ngFor="let store of favourites.Store; let i = index"
+      [routerLink]="['/add-store', favourites.id, i]">
+      <ion-label>{{ store.Name }}</ion-label>
+    </ion-item>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/add-store', favourites.id]">
+    <ion-fab-button color="secondary" [routerLink]="['/add-store', favourites.id]">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

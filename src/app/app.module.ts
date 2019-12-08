@@ -18,11 +18,8 @@ import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 //import { AngularFireAuthGuard} from '@angular/fire/auth-guard';
 
-//import { AngularCropperjsModule } from 'angular-cropperjs';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AddItemPageModule } from './add-item/add-item.module';
-//import { Crop } from '@ionic-native/crop/ngx';
-//import { File } from '@ionic-native/file/ngx';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -34,8 +31,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AddItemPageModule
-    // AngularCropperjsModule,
-    // NgAisModule.forRoot()
   ],
   providers: [
     StatusBar,
