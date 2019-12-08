@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavParams, ModalController, ToastController } from '@ionic/angular';
 import { Favourites, FavouritesService } from '../services/favourites.service';
+import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,9 +15,15 @@ export class AddItemPage implements OnInit {
 
   favourite: Favourites = {
     itemPurchased: '',
-    Store: []
+    Store: [],
+    userId: ''
   };
-  constructor(private navParams: NavParams, private modalCtrl: ModalController, private favouritesService: FavouritesService, private toastCtrl: ToastController, private router:Router) { }
+  constructor(private afAuth: AngularFireAuth ,private navParams: NavParams, private modalCtrl: ModalController, private favouritesService: FavouritesService, private toastCtrl: ToastController, private router:Router) {
+    if (this.afAuth.auth.currentUser){
+      this.favourite.userId = this.afAuth.auth.currentUser.uid
+      console.log(this.favourite.userId)
+    }
+   }
 
   ngOnInit() {
     this.passedText = this.navParams.get('sampleText');

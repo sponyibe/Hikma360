@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
+import { AngularFireAuth } from "@angular/fire/auth";
 import { Timestamp, FieldValue } from '@firebase/firestore-types';
 import * as firebase from 'firebase/app'
 
@@ -20,6 +21,7 @@ export interface Favourites {
   id?: string,
   itemPurchased: string,
   Store: Store[]
+  userId: string
 }
 
 @Injectable({
@@ -31,27 +33,16 @@ export class FavouritesService {
   private newStore : Favourites
 
   private favouritesCollection: AngularFirestoreCollection<Favourites>;
-  private favouritesSortedCollection: AngularFirestoreCollection<Favourites>;
 
   private favourites: Observable<Favourites[]>
-  private favouritesSorted: Observable<Favourites[]>;
 
-  constructor(private afs: AngularFirestore ) {
+  constructor(private afAuth: AngularFireAuth ,private afs: AngularFirestore ) {
+    // console.log(this.afAuth.auth.currentUser.uid)
+    // , ref => ref.where('userId', '==', 'GzfmvEI7yhU34kvI11K5LbRY8Sa2')
     this.favouritesCollection = afs.collection<Favourites>('Favourites');
 
     this.favourites = this.favouritesCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
-
-    this.favouritesSortedCollection = afs.collection<Favourites>('FavouritesSorted');
-    this.favouritesSorted = this.favouritesSortedCollection.snapshotChanges().pipe(
-      map(actions => {
+      map(actions => { 
         return actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
@@ -61,30 +52,16 @@ export class FavouritesService {
     );
    }
 
-   getFavourites() {
+   getFavourites(): Observable<Favourites[]> {
     return this.favourites;
-  }
-
-  getFavouritesSorted() {
-    return this.favouritesSorted;
   }
 
   getFavouritesDetails(id: string) {
     return this.favouritesCollection.doc<Favourites>(id).valueChanges().pipe(
       take(1),
-      map(store => {
-        store.id = id;
-        return store
-      })
-    );
-  }
-
-  getFavouritesSortedDetails(id: string) {
-    return this.favouritesSortedCollection.doc<Favourites>(id).valueChanges().pipe(
-      take(1),
-      map(store => {
-        store.id = id;
-        return store
+      map(item => {
+        item.id = id;
+        return item
       })
     );
   }
@@ -99,22 +76,8 @@ export class FavouritesService {
     );
   }
 
-  getStoreSortedDetails(id: string,index: number) {
-    return this.favouritesSortedCollection.doc<Favourites>(id).valueChanges().pipe(
-      take(1),
-      map(store => {
-        store.id = id;
-        return store.Store[index]
-      })
-    );
-  }
-
   addFavouriteStore(store: Favourites): Promise<void> {
     return this.favouritesCollection.doc(store.id).update(store.Store)
-  }
-
-  addFavouriteSortedStore(store: Favourites): Promise<DocumentReference> {
-    return this.favouritesSortedCollection.add(store)
   }
 
   addFavouriteItem(item: Favourites): Promise<DocumentReference> {
