@@ -20,17 +20,21 @@ export class MenuPage implements OnInit {
       url: '/menu/home',
       icon: 'home'
     },
-
     {
       title: 'Search Halal',
       url: '/menu/search-halal',
+      icon: 'search'
+    },
+    {
+      title: 'Scan Halal',
+      url: '/menu/image-search',
       icon: 'qr-scanner'
     },
     {
       title: 'My Favourites',
       url: '/favourites',
       icon: 'star'
-    },
+    },   
 
   ];
 

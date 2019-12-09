@@ -12,8 +12,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'tenets', loadChildren: './tenets/tenets.module#TenetsPageModule' },
-  { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule'},
-  { path: 'search-halal', loadChildren: './search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'halal-certification', loadChildren: './halal-certification/halal-certification.module#HalalCertificationPageModule' },
   { path: 'halal-organization', loadChildren: './halal-organization/halal-organization.module#HalalOrganizationPageModule' },
   { path: 'restaurants', loadChildren: './restaurants/restaurants.module#RestaurantsPageModule' },
@@ -32,6 +31,9 @@ const routes: Routes = [
   { path: 'add-item', loadChildren: './add-item/add-item.module#AddItemPageModule', canActivate: [AuthGuardService] },
   { path: 'add-store/:id/:index', loadChildren: './add-store/add-store.module#AddStorePageModule', canActivate: [AuthGuardService] },
   { path: 'add-store/:id', loadChildren: './add-store/add-store.module#AddStorePageModule', canActivate: [AuthGuardService] },
+  { path: 'menu/search-halal', loadChildren: './search-halal/search-halal.module#SearchHalalPageModule' },
+  { path: 'menu/image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
+
 ];
 
 @NgModule({
