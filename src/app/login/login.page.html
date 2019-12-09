@@ -1,17 +1,7 @@
-<ion-header>
-  <ion-toolbar color="success">
-    <ion-title>
-      
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content color="success" padding>
     <ion-card>
         <img src="assets/img/logo_transparent.png" class="center"/>
       </ion-card>
-
-
 
       <form #form="ngForm" (ngSubmit)="login(form)">
         <ion-grid>
@@ -38,4 +28,5 @@
           <a routerLink="/register">Create an Account</a>
         </div>
       </ion-row>
+      <a routerLink="/menu/home">Return to homepage</a>
 </ion-content>
