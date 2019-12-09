@@ -45,7 +45,7 @@ export class RestaurantsPage implements OnInit{
         this.places.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
-        this.data = this.places.filter(i => i.distance < 10)
+        this.data = this.places.filter(i => i.distance < 100)
         if(this.data.length <= 0){
           this.presentAlert("Sorry, there are no reataurants within 100km of your current location")
         }
