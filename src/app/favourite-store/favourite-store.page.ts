@@ -33,6 +33,20 @@ export class FavouriteStorePage implements OnInit {
     private toastCtrl: ToastController, private router:Router, private afs: AngularFirestore) { }
 
   ngOnInit() {
+    // let id = this.activatedRoute.snapshot.paramMap.get('id');
+    // if (id){
+    //   this.favouritesService.getFavouritesDetails(id).subscribe(store => {
+    //     this.favourites = store;
+    //     console.log(this.favourites);
+    //     // this.favouritesService.addFavouriteSortedStore(this.favourites);
+    //     if (this.favourites.Store.length >= 3) {
+    //       this.calculateOurPriceRating(this.favourites)
+    //     }
+    //     });
+    // }
+  }
+
+  ionViewDidEnter(){
     let id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id){
       this.favouritesService.getFavouritesDetails(id).subscribe(store => {

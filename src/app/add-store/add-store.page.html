@@ -58,18 +58,18 @@
 <ng-container *ngIf="isUpdatingStore; else addStoreTemplate">
   <ion-footer>
     <ion-row no-padding text-center>
-      <ion-col size="6">
-        <ion-button expand="block" fill="outline" color="danger" (click)="deleteIdea()">
+      <ion-col size="12">
+        <ion-button expand="block" fill="outline" color="danger" (click)="deleteStore()">
           <ion-icon name="trash" slot="start"></ion-icon>
           Delete
         </ion-button>
       </ion-col>
-      <ion-col size="6">
-        <ion-button expand="block" fill="solid" color="success" (click)="updateIdea()">
+      <!-- <ion-col size="6">
+        <ion-button expand="block" fill="solid" color="success" (click)="updateStore()">
           <ion-icon name="save" slot="start"></ion-icon>
           Update
         </ion-button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-footer>
 </ng-container>

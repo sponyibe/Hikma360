@@ -68,10 +68,28 @@ export class AddStorePage implements OnInit {
     this.favourites.Store.push(this.store)
     console.log(this.favourites.Store);
     this.favouritesService.addStore(this.favourites).then(() =>{
-      this.router.navigateByUrl('/favourites');
+      this.router.navigateByUrl('/favourite-store/' + this.id);
       this.showToast('Store added');
     }, err => {
       this.showToast('There was a problem adding your favourite store');
+    });
+  }
+
+  updateStore(){
+    this.favouritesService.updateFavouriteSortedStore(this.favourites, this.index).then(() =>{
+      this.router.navigateByUrl('/favourites');
+      this.showToast('Store updated');
+    }, err =>{
+      this.showToast('There was a problem updating the store');
+    });
+  }
+
+  deleteStore(){
+    this.favouritesService.deleteFavouriteSortedStore(this.favourites, this.index).then(() =>{
+      this.router.navigateByUrl('/favourite-store/' + this.id);
+      this.showToast('Store deleted');
+    }, err =>{
+      this.showToast('There was a problem deleting the store');
     });
   }
 
