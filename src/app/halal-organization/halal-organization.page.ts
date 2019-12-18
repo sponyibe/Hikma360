@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Certifyingorganization, CertifyingOrganizationService } from '../services/certifyingorganization.service';
 import { Subscription } from 'rxjs';
+import { LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -9,30 +10,32 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./halal-organization.page.scss'],
 })
 export class HalalOrganizationPage{
-  public certifyingorganization: Certifyingorganization[];
-  public loadedCertifyingOrganizationList: Certifyingorganization[];
+  public certifyingorganizations: Certifyingorganization[];
+  // public loadedCertifyingOrganizationList: Certifyingorganization[];
   private subscription: Subscription;
 
 
-  constructor(private certifyingorganizationService : CertifyingOrganizationService ) { }
+  constructor(private certifyingorganizationService : CertifyingOrganizationService, private loadingCtrl: LoadingController ) { }
 
   // ngOnInit() {
   // }
 
-  ionViewDidEnter() { 
+  async ionViewWillEnter() { 
+
     this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
-      this.certifyingorganization = certifyingorganization;
-      this.loadedCertifyingOrganizationList = certifyingorganization;
+      this.certifyingorganizations = certifyingorganization;
+      console.log(this.certifyingorganizations)
+      // this.loadedCertifyingOrganizationList = certifyingorganization;
     });
   }
 
-  initializeItems(): void{
-    this.certifyingorganization = this.loadedCertifyingOrganizationList
-  }
+  // initializeItems(): void{
+  //   this.certifyingorganization = this.loadedCertifyingOrganizationList
+  // }
 
   ionViewWillLeave(){
     console.log("Leave init")
-    this.subscription.unsubscribe()
+    // this.subscription.unsubscribe()
   }
 }
