@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      <ion-button size="small" routerLink="/home">Back</ion-button>
-      Ionic Blank
-    </ion-title>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Search Halal</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,11 +15,11 @@
 
 
   <ion-list>
-    <ion-item *ngFor="let ingredients of ingredient" lines="inset">
+    <ion-item *ngFor="let ingredients of ingredient">
 
-      <ion-label>
+      <ion-label class="ion-text-wrap ion-text-capitalize">
         {{ingredients.nonhalal}}
-        <p>{{ingredient.notes}}</p>
+        <p *ngIf="ingredients.notes">{{ingredients.notes}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

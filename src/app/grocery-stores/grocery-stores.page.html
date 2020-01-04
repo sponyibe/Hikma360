@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="success">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="menu//home"></ion-back-button>
+      <ion-back-button defaultHref="menu/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Grocery Stores</ion-title>
   </ion-toolbar>
@@ -9,6 +9,14 @@
 
 <ion-content>
   <ion-list>
+      <ng-container *ngIf="!groceryStores || groceryStores.length == 0">
+          <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <p>
+              <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
+            </p>
+          </div>
+        </ng-container>
     <ion-item button *ngFor="let groceryStores of groceryStores" [routerLink]="['/grocery-store-details', groceryStores.id]">
       <ion-label>{{ groceryStores.Name }}
         <p>{{ groceryStores.distance }} km</p>
