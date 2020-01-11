@@ -17,9 +17,9 @@ const visionClient = new vision.ImageAnnotatorClient();
 
 
 // Dedicated bucket for cloud function invocation
-const bucketName = 'hikma-96b46-vision';
+const bucketName = 'hikma-96b46-image-search';
 
-export const imageTagger = functions.storage
+export const HalalChecker = functions.storage
 
   .bucket(bucketName)
   .object()
@@ -28,7 +28,7 @@ export const imageTagger = functions.storage
     // File data
     const filePath = object.name || '';
 
-    // Location of saved file in bcket
+    // Location of saved file in bucket
     const imageUri = `gs://${bucketName}/${filePath}`;
 
     const docId = filePath.split('.jpg')[0];

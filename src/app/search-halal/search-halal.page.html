@@ -9,18 +9,74 @@
 
 <ion-content>
 
-  <ion-searchbar showCancelButton (ionInput)="filterList($event)" padding>
+  <p class="description">Search for an animal or ingredient to determine if it's halal or not.</p>
 
-  </ion-searchbar>
+  <ion-grid >
+    <ion-row>
+      <ion-col size="10">
+        <ion-searchbar #searchbar lowercase [(ngModel)]="searchTerm" (search)="getList()" autocomplete="on"
+          spellcheck="true" showCancelButton="focus"></ion-searchbar>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon (click)="selectSource()" name="camera" size="large"></ion-icon>
+      </ion-col>
+    </ion-row>
 
+    <ion-row>
+      <ion-col size="12">
+        <div *ngIf="showBody">
+          <div *ngIf="isHalal">
+            <ion-card>
+              <ion-card-content>
+                <ion-card-header>
+                  <ion-card-title>This item is Halal :D</ion-card-title>
+                </ion-card-header>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div>
+            <ion-card *ngIf="!isHalal">
+              <ion-card-content>
+                <ion-card-header>
+                  <ion-card-title>This item is Not halal :(</ion-card-title>
+                  <p>{{notes}}</p>
+                </ion-card-header>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
 
-  <ion-list>
-    <ion-item *ngFor="let ingredients of ingredient">
+        <div *ngIf="result$ | async as result">
+          <h4>Is this item halal?</h4>
 
-      <ion-label class="ion-text-wrap ion-text-capitalize">
-        {{ingredients.nonhalal}}
-        <p *ngIf="ingredients.notes">{{ingredients.notes}}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+          <p *ngIf="result.nonHalal" color="secondary" ion-button full>
+            No, it is not Halal!!
+          </p>
+
+          <p *ngIf="!result.nonHalal" color="danger" ion-button full>
+            Yes, it is Halal :)
+          </p>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <div class="croppingSection" *ngIf="hideCropping">
+      <ion-row >
+        <ion-col size="12">
+          <image-cropper [imageBase64]="image" [maintainAspectRatio]="true" [aspectRatio]="6/3" format="jpg"
+            outputType="base64">
+          </image-cropper>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="image">
+        <ion-col size="6" >
+          <ion-button shape="round" color="secondary" (click)="startUpload()">Crop & Save</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button shape="round" (click)="cancelCropping()">Close</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+    
+  </ion-grid>
 </ion-content>

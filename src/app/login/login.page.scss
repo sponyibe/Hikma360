@@ -9,7 +9,7 @@ ion-button{
 ion-card{
   position: relative;
   width: 347px;
-  height: 434px;
+  height: 347px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -24,5 +24,15 @@ ion-card{
 a{
   color: #fff;
   
+}
+
+.buttons{
+  margin-left: 15px;
+}
+
+.block {
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 

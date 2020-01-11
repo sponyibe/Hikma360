@@ -16,7 +16,6 @@ export class RestaurantsPage implements OnInit{
   // place: Observable<Restauarant[]>;
   places: Restauarant[];
   data: Restauarant[];
-  tooFar: boolean;
 
   usersLocation = {
     lat: 0,
