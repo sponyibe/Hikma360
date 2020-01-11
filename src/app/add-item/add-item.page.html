@@ -1,27 +1,34 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/menu/home"></ion-back-button>
-    </ion-buttons>
     <ion-title>add Item</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+  <p>Add a food item you would like to keep track of. e.g <i>Chicken, Fish</i></p>
+
+
   <ion-item>
-    <ion-label position="stacked">Item</ion-label>
+    <ion-label position="floating">Item</ion-label>
     <ion-input [(ngModel)]="favourite.itemPurchased"></ion-input>
   </ion-item>
 
-  <ion-button color="success" (click)="addItem()">
-    Add
-  </ion-button>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar colour="danger-shade">
-    <ion-button expand="full" fill="clear" colour="light" (click)="closeModal()">
-      Close
-    </ion-button>
-  </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button class="block" (click)="closeModal()">
+          Cancel
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button class="block" color="success" (click)="addItem()">
+          Add
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

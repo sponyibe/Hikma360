@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SearchHalalPage } from './search-halal.page';
+import { ImageCropperModule } from 'ngx-image-cropper'
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ImageCropperModule
   ],
   declarations: [SearchHalalPage]
 })

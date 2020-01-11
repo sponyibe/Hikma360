@@ -5,6 +5,7 @@ ion-item{
 
 ion-button{
     --background: #b8a95e;
+    margin-left: 15px;
 }
 
 ion-card{
@@ -20,12 +21,12 @@ a{
     
   }
 
-  form {
-    margin-bottom: 32px;
-    button {
-      margin-top: 20px !important;
-    }
-  }
+  // form {
+  //   margin-bottom: 32px;
+  //   button {
+  //     margin-top: 20px !important;
+  //   }
+  // }
   
   p {
     font-size: 0.8em;
@@ -36,9 +37,9 @@ a{
     margin-left: 5px;
   }
   
-  ion-input {
-    padding: 5px;
-  }
+  // ion-input {
+  //   padding: 5px;
+  // }
   
   .invalid {
     border-bottom: 1px solid #ff6153;

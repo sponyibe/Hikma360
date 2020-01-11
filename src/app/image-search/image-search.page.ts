@@ -34,8 +34,6 @@ export class ImageSearchPage implements OnInit {
 
   @ViewChild(ImageCropperComponent)angularCropper: ImageCropperComponent
 
-  public ingredient: Ingredient[];
-  public loadedIngredientList: Ingredient[];
   public sourceType: number;
 
   public imageBase64: string;
@@ -44,8 +42,7 @@ export class ImageSearchPage implements OnInit {
     private afs: AngularFirestore,
     private camera: Camera,
     private loading: LoadingController,
-    private actionSheetCtrl: ActionSheetController,
-    private ingservice: IngredientService) { }
+    private actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit() {
   }
@@ -119,6 +116,7 @@ export class ImageSearchPage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: sourceType,
+      correctOrientation: true
     }
 
     this.camera.getPicture(options).then((ImageData) => {

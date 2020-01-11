@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  
   <ion-list>
     <ion-item button *ngFor="let store of favourites.Store; let i = index"
       [routerLink]="['/add-store', favourites.id, i]">
@@ -20,4 +21,5 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <div><i>Add the stores you've purchased this item from; so we can begin analysis</i></div>
 </ion-content>
