@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Observable, Subscription  } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { load } from '@angular/core/src/render3';
 
 @Component({
@@ -20,7 +20,7 @@ export class GroceryStoresPage implements OnInit {
     lat: 0,
     lng: 0
   }
-  constructor(public groceryStoreService: GroceryStoresService, public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
+  constructor(public groceryStoreService: GroceryStoresService, private alertController: AlertController , public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     //console.log("OnInit")
@@ -43,7 +43,20 @@ export class GroceryStoresPage implements OnInit {
           return locationA.distance - locationB.distance;
         });
         this.data = this.groceryStores.filter(i => i.distance < 100)
+        if(this.data.length <= 0){
+          this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
+        }
       });
+  }
+
+async presentAlert(msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   applyHaversine(locations: GroceryStores[]) {
