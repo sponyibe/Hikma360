@@ -8,8 +8,9 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="details">
-      <h2>{{groceryStore.Name}}</h2>
+  <ion-icon name="basket"></ion-icon>
+  <div class="card">
+      <h4 style="text-align:center;">{{groceryStore.Name}}</h4>
       <p>Address: <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
       <p>City: {{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
       <p>Call: {{groceryStore.PhoneNumber}}</p>

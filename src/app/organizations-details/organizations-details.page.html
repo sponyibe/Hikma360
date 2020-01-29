@@ -7,8 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-      <h2>{{ certifyingorganization.OrganisationsCertified}}</h2>
+<ion-content padding>
+  <div class="card">
+      <h4 style="text-align:center;">{{ certifyingorganization.OrganisationsCertified}}</h4>
       <p><b>Brands: </b>{{ certifyingorganization.Brands }}</p>
       <p><b>Address: </b>{{ certifyingorganization.Address }}</p>
       <p><b>City: </b>{{ certifyingorganization.City }}</p>
@@ -18,7 +19,7 @@
       <p><b>Products: </b>{{ certifyingorganization.Products }}</p>
       <p><b>Telephone: </b>{{ certifyingorganization.Telephone }}</p>
       <a *ngIf="certifyingorganization.Website" (click)="openWebsite()">Visit the Website</a>
-
+  </div>
 
 
 </ion-content>
