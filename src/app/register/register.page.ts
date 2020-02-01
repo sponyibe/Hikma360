@@ -28,7 +28,8 @@ export class RegisterPage implements OnInit {
   async register() {
     const {email, password, cpassword} = this
     if(password !== cpassword){
-      return console.error("Passwowrd don't match")
+      return console.error("Passwowrd don't match");
+      
     }
     try{
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
