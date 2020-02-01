@@ -16,25 +16,24 @@ export class RestaurantsPage implements OnInit{
   // place: Observable<Restauarant[]>;
   places: Restauarant[];
   data: Restauarant[];
+  filtered: Restauarant[];
 
   usersLocation = {
     lat: 0,
     lng: 0
   }
 
-  constructor(public locationService: LocationsService, public geolocation: Geolocation, private alertController: AlertController , public router:Router, private nav: NavController) { }
+  public top: string;
+  public search;
 
-  ngOnInit() {
-    //console.log("OnInit")
+  constructor(public locationService: LocationsService, 
+              public geolocation: Geolocation,
+              private alertController: AlertController , 
+              public router:Router, 
+              private nav: NavController) { 
   }
 
-  ionViewDidEnter() { 
-
-    this.geolocation.getCurrentPosition().then((position) => {
-      this.usersLocation.lat = position.coords.latitude
-      this.usersLocation.lng = position.coords.longitude
-    });
-       
+  ngOnInit() {
     this.subscription = this.locationService.getLocations()
       .subscribe(restaurantList => {
         //this.places = restaurantList;
@@ -46,9 +45,77 @@ export class RestaurantsPage implements OnInit{
         });
         this.data = this.places.filter(i => i.distance < 100)
         if(this.data.length <= 0){
-          this.presentAlert("Sorry, there are no reataurants within 100km of your current location")
+          this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
         }
+        this.filtered = this.data.slice(0);
       });
+      
+  }
+
+  ionViewWillEnter() { 
+
+    this.geolocation.getCurrentPosition().then((position) => {
+      this.usersLocation.lat = position.coords.latitude
+      this.usersLocation.lng = position.coords.longitude
+    });
+       
+    // this.subscription = this.locationService.getLocations()
+    //   .subscribe(restaurantList => {
+    //     //this.places = restaurantList;
+    //     //console.log(restaurantList)
+    //     this.places = this.applyHaversine(restaurantList)
+
+    //     this.places.sort((locationA, locationB) => {
+    //       return locationA.distance - locationB.distance;
+    //     });
+    //     this.data = this.places.filter(i => i.distance < 100)
+    //     if(this.data.length <= 0){
+    //       this.presentAlert("Sorry, there are no reataurants within 100km of your current location")
+    //     }
+    //   });
+  }
+
+  getValues(){
+    console.log(this.top);
+    console.log(this.search);  
+    this.data = this.filtered;
+
+    //   // sample.forEach(element => {
+    //   //   console.log(element.CuisneType)
+    //   // });
+
+    //   this.data = this.data.filter(type => type.CuisneType === this.top[0])
+
+    //   console.log(this.data)
+
+    if(this.top == "cuisine"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.CuisneType === thing.CuisneType) === i);
+
+      this.data = this.filtered.filter( type =>
+        type.CuisneType.toLowerCase() == this.search.toLowerCase()
+      )
+      console.log(this.data);
+    }
+    if(this.top == "rating"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
+
+      this.data = this.filtered.filter( type =>
+        type.Rating == this.search
+      )
+      console.log(this.data);
+    }
+    if(this.top == "name"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
+
+      this.data = this.filtered.filter( type =>
+        type.Name.toLowerCase() == this.search.toLowerCase()
+      )
+      console.log(this.data);
+    }
+
   }
 
   async presentAlert(msg: string) {

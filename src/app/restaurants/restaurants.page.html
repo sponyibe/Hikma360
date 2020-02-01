@@ -8,6 +8,44 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-select  [(ngModel)]="top" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Category">
+            <ion-select-option value="cuisine">Cuisine Type</ion-select-option>
+            <ion-select-option value="rating">Rating</ion-select-option>
+            <ion-select-option value="name">Name</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <!-- <ion-item>
+          <ion-label>Toppings</ion-label>
+          <ion-select #someInput [(ngModel)]="top" multiple="true" cancelText="Nah" okText="Okay!">
+            <ion-select-option value="Indian">Indian</ion-select-option>
+            <ion-select-option value="Casual">Casual</ion-select-option>
+            <ion-select-option value="Caribbean">Caribbean</ion-select-option>
+            <ion-select-option value="Dessert">Dessert</ion-select-option>
+            <ion-select-option value="Fast Food">Fast Food</ion-select-option>
+          </ion-select>
+        </ion-item> -->
+        <ion-item>
+          <ion-input attribute="search" clearInput [(ngModel)]="search" placeholder="Search"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button size="small" Expand="block" (click)="getValues()">
+          Search
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <hr>
+
     <ion-list>
         <ng-container *ngIf="!data || data.length == 0">
             <div *ngFor="let n of [0,1,2,3,4,5]" padding>
@@ -17,6 +55,7 @@
               </p>
             </div>
           </ng-container>
+
 
       <ion-item button *ngFor="let restaurant of data" [routerLink]="['/restaurant-details', restaurant.id]">
         <ion-label>{{ restaurant.Name }}
