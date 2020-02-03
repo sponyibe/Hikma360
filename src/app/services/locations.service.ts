@@ -7,7 +7,7 @@ import {
 import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 
-export interface Restauarant {
+export interface Restaurant {
   id?: string;
   Name: string;
   Address: string;
@@ -17,7 +17,7 @@ export interface Restauarant {
   Longitude: number;
   PhoneNumber: string;
   HoursOfOperation: string;
-  CertifedBy: string;
+  CertifiedBy: string;
   CuisneType: string;
   PriceRange: string;
   Rating: number;
@@ -30,12 +30,13 @@ export interface Restauarant {
   providedIn: "root"
 })
 export class LocationsService {
-  private restaurantsCollection: AngularFirestoreCollection<Restauarant>;
+  private restaurantsCollection: AngularFirestoreCollection<Restaurant>;
 
-  private restaurants: Observable<Restauarant[]>;
+  private restaurants: Observable<Restaurant[]>;
+  public restaurantData: Restaurant[];
 
   constructor(db: AngularFirestore) {
-    this.restaurantsCollection = db.collection<Restauarant>("Restaurants");
+    this.restaurantsCollection = db.collection<Restaurant>("Restaurants");
 
     this.restaurants = this.restaurantsCollection.snapshotChanges().pipe(
       map(actions => {
@@ -54,7 +55,7 @@ export class LocationsService {
 
   getRestaurant(id: string) {
     return this.restaurantsCollection
-      .doc<Restauarant>(id)
+      .doc<Restaurant>(id)
       .valueChanges()
       .pipe(
         take(1),

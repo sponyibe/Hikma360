@@ -5,7 +5,7 @@ import { LoadingController, ActionSheetController, AlertController } from '@ioni
 import { Observable } from 'rxjs'
 import { tap, filter } from 'rxjs/operators';
 
-import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
@@ -19,8 +19,8 @@ import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
   templateUrl: './search-halal.page.html',
   styleUrls: ['./search-halal.page.scss'],
 })
-export class SearchHalalPage implements OnInit{
-  
+export class SearchHalalPage implements OnInit {
+
   showResults = false;
 
   // Upload task
@@ -28,7 +28,7 @@ export class SearchHalalPage implements OnInit{
 
   // Firestore data
   result$: Observable<any>;
-  
+
   //loading: Loading;
   image: string;
 
@@ -39,33 +39,34 @@ export class SearchHalalPage implements OnInit{
   public loadedIngredientList: Ingredient[];
 
   public searchTerm = '';
-  public isHalal:boolean;
+  public isHalal: boolean;
   // public showBody:boolean = false;
   public hideCropping: boolean;
   public sourceType: number;
   public message: string;
 
   public imageBase64: string;
+  public brokenDownSearch
 
-  @ViewChild(ImageCropperComponent)angularCropper: ImageCropperComponent;
-  
+  @ViewChild(ImageCropperComponent) angularCropper: ImageCropperComponent;
+
   constructor(private storage: AngularFireStorage,
     private afs: AngularFirestore,
     private camera: Camera,
     private loading: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private alertController: AlertController ,
+    private alertController: AlertController,
     private ingservice: IngredientService
-  ){
+  ) {
 
     // this.loading = this.loadingCtrl.create({
     //   content: 'Running AI vision analysis...'
     // });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.ingservice.getIngredients()
-      .subscribe(ingredients =>{
+      .subscribe(ingredients => {
         this.ingredient = ingredients;
         this.loadedIngredientList = ingredients;
       });
@@ -76,39 +77,48 @@ export class SearchHalalPage implements OnInit{
     this.ingredient = this.loadedIngredientList
   }
 
-  getList(){
+  getList() {
     this.initializeItems();
 
-    console.log(this.ingredient.length)
+    this.brokenDownSearch = this.searchTerm.split(" ");
 
-    for (let index = 0; index < this.ingredient.length; index++) {
+    if (this.brokenDownSearch.length > 1) {
+      this.brokenDownSearch.push(this.searchTerm);
+    }
 
-      if (this.searchTerm.toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()){
-        console.log('+++++++++++++++++++++++++++++++++++++++')
-        this.isHalal = false;
-        // console.log(this.ingredient[index].nonhalal)
-        // this.showBody = true;
-        this.presentAlert("It Isn't Halal", this.searchTerm, this.ingredient[index].notes)
+    console.log(this.brokenDownSearch);
+
+    for (let i = 0; i < this.brokenDownSearch.length; i++) {
+
+      for (let index = 0; index < this.ingredient.length; index++) {
+
+        if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
+          console.log(this.isHalal);
+          break;
+        }
+        else {         
+          this.isHalal = true;
+          console.log(this.isHalal);
+        }
+      }
+      if (this.isHalal == false) {
         break;
       }
-      else{
-        // console.log('__________________________________________________________________')
-        this.isHalal = true;
-        //  console.log(this.ingredient[index])
-        // this.showBody = true;
-        this.message = "It Is Halal"
-      }
-    };
+    }
+
     if(this.isHalal == true){
-      this.presentAlert(this.message, this.searchTerm, 'None')
+      this.presentAlert('This is Halal', this.searchTerm)
+    }
+    if(this.isHalal == false){
+      this.presentAlert("It Isn't Halal", this.searchTerm)
     }
   }
 
-  saveCroppedImage(){
+  saveCroppedImage() {
     this.imageBase64 = (this.angularCropper.crop() as ImageCroppedEvent).base64;
   }
 
-  cancelCropping(){
+  cancelCropping() {
     this.hideCropping = !this.hideCropping;
   }
 
@@ -184,10 +194,10 @@ export class SearchHalalPage implements OnInit{
     });
   }
 
-  async presentAlert(msg: string, item:string, notes: string) {
+  async presentAlert(msg: string, item: string) {
     const alert = await this.alertController.create({
       header: 'Is ' + item + ' Halal?',
-      message: msg + '<br>Additional notes: ' + notes,
+      message: msg,
       buttons: ['OK'],
     });
 

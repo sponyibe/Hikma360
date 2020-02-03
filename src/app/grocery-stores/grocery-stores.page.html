@@ -8,20 +8,30 @@
 </ion-header>
 
 <ion-content>
+  <ng-container *ngIf="!data || data.length == 0">
+    <ion-list>
+      <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <p>
+          <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
+        </p>
+      </div>
+    </ion-list>
+  </ng-container>
+
   <ion-list>
-      <ng-container *ngIf="!groceryStores || groceryStores.length == 0">
-          <div *ngFor="let n of [0,1,2,3,4,5]" padding>
-            <ion-skeleton-text animated></ion-skeleton-text>
-            <p>
-              <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
-            </p>
-          </div>
-        </ng-container>
-    <ion-item button *ngFor="let groceryStores of groceryStores" [routerLink]="['/grocery-store-details', groceryStores.id]">
+    <ion-item button *ngFor="let groceryStores of storeList" [routerLink]="['/grocery-store-details', groceryStores.id]">
       <ion-label>{{ groceryStores.Name }}
         <p>{{ groceryStores.distance }} km</p>
         <p>{{ groceryStores.Address }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadStoresData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more grocery stores...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

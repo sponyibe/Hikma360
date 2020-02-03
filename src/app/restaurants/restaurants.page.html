@@ -8,22 +8,30 @@
 </ion-header>
 
 <ion-content>
+  <ng-container *ngIf="!data || data.length == 0">
     <ion-list>
-        <ng-container *ngIf="!data || data.length == 0">
-            <div *ngFor="let n of [0,1,2,3,4,5]" padding>
-              <ion-skeleton-text animated></ion-skeleton-text>
-              <p>
-                <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
-              </p>
-            </div>
-          </ng-container>
-
-      <ion-item button *ngFor="let restaurant of data" [routerLink]="['/restaurant-details', restaurant.id]">
-        <ion-label>{{ restaurant.Name }}
-          <p>{{ restaurant.distance }} km</p>
-          <p>{{ restaurant.Address }}</p>
-        </ion-label>
-      </ion-item>
+      <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <p>
+          <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
+        </p>
+      </div>
     </ion-list>
+  </ng-container>
 
+  <ion-list>
+    <ion-item button *ngFor="let restaurant of dataList" [routerLink]="['/restaurant-details', restaurant.id]">
+      <ion-label>{{ restaurant.Name }}
+        <p>{{ restaurant.distance }} km</p>
+        <p>{{ restaurant.Address }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more restaurants...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

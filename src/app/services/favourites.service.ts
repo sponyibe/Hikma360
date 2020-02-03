@@ -110,7 +110,8 @@ export class FavouritesService {
       return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayUnion(store.Store[index])})
   }
 
-  clearStore(store:Favourites): Promise<void> {
-      return this.afs.collection('Favourites').doc(store.id).set({ Store: [], itemPurchased: store.itemPurchased});
+  clearStore(store:Favourites, userId): Promise<void> {
+    console.log(store)
+      return this.afs.collection('Favourites').doc(store.id).set({ Store: [], itemPurchased: store.itemPurchased, userId: userId });
   }
 }
