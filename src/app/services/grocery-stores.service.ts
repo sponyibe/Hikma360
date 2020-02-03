@@ -31,6 +31,8 @@ export class GroceryStoresService {
 
   private groceryStores: Observable<GroceryStores[]>;
 
+  public groceryStoresData: GroceryStores[];
+
   constructor(db: AngularFirestore) {
     this.groceryStoresCollection = db.collection<GroceryStores>("GroceryStores");
 

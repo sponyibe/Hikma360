@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Observable, Subscription  } from 'rxjs';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { load } from '@angular/core/src/render3';
+import { Subscription  } from 'rxjs';
+import { LoadingController, AlertController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-grocery-stores',
@@ -13,40 +12,61 @@ import { load } from '@angular/core/src/render3';
 export class GroceryStoresPage implements OnInit {
 
   private subscription: Subscription;
-  /// groceryStore: Observable<GroceryStores[]>;
-  groceryStores: GroceryStores[];
-  data: GroceryStores[];
+  public groceryStores: GroceryStores[];
+  public data: GroceryStores[];
+  public storeList: GroceryStores[];
+  private numOfItemsToDisplay: number;
+
   usersLocation = {
     lat: 0,
     lng: 0
   }
-  constructor(public groceryStoreService: GroceryStoresService, private alertController: AlertController , public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
+  constructor(public groceryStoreService: GroceryStoresService, 
+    private alertController: AlertController,
+    public geolocation: Geolocation,
+    private platform: Platform) { 
+
+    }
 
   ngOnInit() {
-    //console.log("OnInit")
+    
   }
 
-  async ionViewDidEnter() { 
+  ionViewWillEnter() { 
     
-    this.geolocation.getCurrentPosition().then((position) => {
-      this.usersLocation.lat = position.coords.latitude
-      this.usersLocation.lng = position.coords.longitude
+    this.platform.ready().then(() => {
+      this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
+        this.usersLocation.lat = position.coords.latitude
+        this.usersLocation.lng = position.coords.longitude
+      });
     });
-     
+    
+     if (this.groceryStoreService.groceryStoresData) {
+      this.data = this.groceryStoreService.groceryStoresData;
+      
+      this.storeList = this.data.slice(0, 24);
+      this.numOfItemsToDisplay = 25;
+      return;
+    }
+
     this.subscription = this.groceryStoreService.getGroceryStores()
       .subscribe(groceryStoresList => {
-        //this.places = restaurantList;
-        // console.log(groceryStoresList)
         this.groceryStores = this.applyHaversine(groceryStoresList)
 
         this.groceryStores.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
         this.data = this.groceryStores.filter(i => i.distance < 100)
+
+        this.groceryStoreService.groceryStoresData  = this.data;
+        this.storeList = this.data.slice(0, 25);
+        this.numOfItemsToDisplay = 25;
+
         if(this.data.length <= 0){
           this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
         }
       });
+     
   }
 
 async presentAlert(msg: string) {
@@ -62,11 +82,6 @@ async presentAlert(msg: string) {
   applyHaversine(locations: GroceryStores[]) {
 
     console.log(this.usersLocation)
-
-    // let usersLocation = {
-    //   lat: 43.5134464,
-    //   lng: -80.1988607
-    // };
 
     locations.map((location) => {
 
@@ -113,6 +128,22 @@ async presentAlert(msg: string) {
 
   toRad(x) {
     return x * Math.PI / 180;
+  }
+
+  loadStoresData(event){
+    setTimeout(() => {
+      console.log('Done');
+      this.storeList = this.storeList.concat(this.data.slice(this.numOfItemsToDisplay, this.numOfItemsToDisplay + 24));
+      this.numOfItemsToDisplay += 25;
+
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.storeList.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
   }
 
   ionViewWillLeave(){
