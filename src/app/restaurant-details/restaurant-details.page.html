@@ -8,8 +8,9 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="details">
-      <h2>{{restaurants.Name}}</h2>
+     <ion-icon name="restaurant"></ion-icon>
+  <div class="card">
+      <h4 style="text-align:center;">{{restaurants.Name}}</h4>
       <p>Address: <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
       <p>City: {{restaurants.SubRegions}}, {{restaurants.Region}}</p>
       <p>Call: {{restaurants.PhoneNumber}}</p>

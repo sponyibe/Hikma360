@@ -30,6 +30,11 @@ export class MenuPage implements OnInit {
       url: '/favourites',
       icon: 'star'
     },   
+    {
+      title: 'FAQ',
+      url: '/faq',
+      icon: 'help'
+    }
 
   ];
 
