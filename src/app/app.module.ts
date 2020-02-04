@@ -22,6 +22,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { AddItemPageModule } from './add-item/add-item.module';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AddItemPageModule
+    AddItemPageModule,
+    NgbModule.forRoot()
   ],
   providers: [
     StatusBar,

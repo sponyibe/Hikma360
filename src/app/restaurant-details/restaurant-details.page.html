@@ -17,7 +17,14 @@
       <p *ngIf="restaurants.CertifedBy">Certified By: {{restaurants.CertifedBy}}</p>
       <p>Cuisine Type: {{restaurants.CuisneType}}</p>
       <p>Price Range: {{restaurants.PriceRange}}</p>
-      <p>Rating: {{restaurants.Rating}}</p>
+      <p>Rating: <ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating> {{restaurants.Rating}} </p>
       <a *ngIf="restaurants.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
+
+  <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&#8902;</span>&#8902;
+    </span>
+  </ng-template>
+  
 </ion-content>

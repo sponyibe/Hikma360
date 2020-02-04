@@ -23,6 +23,10 @@ export class RestaurantsPage implements OnInit {
     lng: 0
   }
 
+  public top: string;
+  public search;
+  public filtered: Restaurant[];
+
   constructor(public locationService: LocationsService,
     public geolocation: Geolocation,
     private alertController: AlertController,
@@ -43,10 +47,12 @@ export class RestaurantsPage implements OnInit {
     });
 
     if (this.locationService.restaurantData) {
+      console.log("In here")
       this.data = this.locationService.restaurantData;
 
       this.dataList = this.data.slice(0, 24);
       this.numOfItemsDisplaying = 25;
+      this.filtered = this.data.slice(0);
       return;
     }
 
@@ -67,8 +73,43 @@ export class RestaurantsPage implements OnInit {
         if (this.data.length <= 0) {
           this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
         }
+        this.filtered = this.data.slice(0);
       });
 
+  }
+
+  searchList(){
+    console.log(this.top)
+    console.log(this.search)
+    this.dataList = this.filtered;
+
+    if(this.top == "cuisine"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.CuisneType === thing.CuisneType) === i);
+
+      this.dataList = this.filtered.filter( type =>
+        type.CuisneType.toLowerCase() == this.search.toLowerCase()
+      )
+      console.log(this.dataList);
+    }
+    if(this.top == "rating"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
+
+      this.dataList = this.filtered.filter( type =>
+        type.Rating == this.search
+      )
+      console.log(this.dataList);
+    }
+    if(this.top == "name"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
+
+      this.dataList = this.filtered.filter( type =>
+        type.Name.toLowerCase() == this.search.toLowerCase()
+      )
+      console.log(this.dataList);
+    }
   }
 
   async presentAlert(msg: string) {
@@ -148,9 +189,9 @@ export class RestaurantsPage implements OnInit {
     }, 500);
   }
 
-  ionViewWillLeave() {
-    console.log("Leave init")
-    this.subscription.unsubscribe()
-  }
+  // ionViewWillUnload() {
+  //   console.log("Leave init")
+  //   this.subscription.unsubscribe()
+  // }
 
 }

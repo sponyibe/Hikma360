@@ -1,0 +1,16 @@
+.star {
+    position: relative;
+    // display: inline-block;
+    font-size: 2rem;
+    color: #d3d3d3;
+  }
+  .full {
+    // display: inline;
+    color:#ffd000;
+  }
+  .half {
+    position: absolute;
+    // display: inline-block;
+    overflow: hidden;
+    color:#ffd000;
+  }
