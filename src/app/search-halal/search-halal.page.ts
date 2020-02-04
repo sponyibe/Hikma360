@@ -91,8 +91,10 @@ export class SearchHalalPage implements OnInit {
     for (let i = 0; i < this.brokenDownSearch.length; i++) {
 
       for (let index = 0; index < this.ingredient.length; index++) {
+        this.ingredient[index].nonhalal.toLowerCase()
 
         if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
+          this.isHalal = false;
           console.log(this.isHalal);
           break;
         }

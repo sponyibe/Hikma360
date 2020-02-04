@@ -53,7 +53,7 @@
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
             <string>We need to access your location</string>
-          </edit-config>
+        </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
