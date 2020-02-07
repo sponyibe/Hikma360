@@ -23,7 +23,7 @@
     <ion-item button *ngFor="let groceryStores of storeList" [routerLink]="['/grocery-store-details', groceryStores.id]">
       <ion-label>{{ groceryStores.Name }}
         <p>{{ groceryStores.distance }} km</p>
-        <p>{{ groceryStores.Address }}</p>
+        <p><strong>Address: </strong>{{ groceryStores.Address }}</p>
       </ion-label>
     </ion-item>
   </ion-list>

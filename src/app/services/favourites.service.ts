@@ -96,9 +96,9 @@ export class FavouritesService {
     return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayRemove(store.Store[index])})
   }
 
-  updateFavouriteSortedStore(store: Favourites, index: number): Promise<void> {
-    return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayUnion(store.Store[index])})
-  }
+  // updateFavouriteSortedStore(store: Favourites, index: number): Promise<void> {
+  //   return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayUnion(store.Store[index])})
+  // }
 
   addStore(store:Favourites): Promise<void> {
     let addedStore = store.Store.length-1

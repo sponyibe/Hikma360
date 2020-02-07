@@ -16,7 +16,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-//import { AngularFireAuthGuard} from '@angular/fire/auth-guard';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { AddItemPageModule } from './add-item/add-item.module';

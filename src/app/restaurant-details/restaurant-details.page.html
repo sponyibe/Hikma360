@@ -11,14 +11,14 @@
      <ion-icon name="restaurant"></ion-icon>
   <div class="card">
       <h4 style="text-align:center;">{{restaurants.Name}}</h4>
-      <p>Address: <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
-      <p>City: {{restaurants.SubRegions}}, {{restaurants.Region}}</p>
-      <p>Call: {{restaurants.PhoneNumber}}</p>
-      <p>Hours of Operation: {{restaurants.HoursOfOperation}}</p>
-      <p *ngIf="restaurants.CertifedBy">Certified By: {{restaurants.CertifedBy}}</p>
-      <p>Cuisine Type: {{restaurants.CuisneType}}</p>
-      <p>Price Range: {{restaurants.PriceRange}}</p>
-      <p>Rating: <ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating> {{restaurants.Rating}} </p>
+      <p><strong> Address: </strong> <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
+      <p><strong>City: </strong> {{restaurants.SubRegions}}, {{restaurants.Region}}</p>
+      <p><strong>Telephone: </strong> {{restaurants.PhoneNumber}}</p>
+      <p><strong>Hours of Operation: </strong> {{restaurants.HoursOfOperation}}</p>
+      <p *ngIf="restaurants.CertifedBy"><strong>Certified By: </strong> {{restaurants.CertifedBy}}</p>
+      <p><strong>Cuisine Type: </strong> {{restaurants.CuisneType}}</p>
+      <p><strong>Price Range: </strong> {{restaurants.PriceRange}}</p>
+      <p><ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating> {{restaurants.Rating}} </p>
       <a *ngIf="restaurants.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
 

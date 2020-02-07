@@ -16,6 +16,7 @@ export class FavouritesPage implements OnInit {
   private faves: Favourites[];
   private favesLoggedIn: Favourites[];
   private subscription: Subscription;
+  public noFave: string
 
   constructor(private favouritesService: FavouritesService, private modalCtrl: ModalController, private afAuth: AngularFireAuth) { 
     

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ToastController } from "@ionic/angular";
+import { ToastController, NavController} from "@ionic/angular";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FavouritesService, Favourites, Store } from "../services/favourites.service";
 
@@ -37,7 +37,8 @@ export class AddStorePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private favouritesService: FavouritesService,
     private toastCtrl: ToastController,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -73,7 +74,7 @@ export class AddStorePage implements OnInit {
       if (this.favourites.Store.length >= 3) {
         this.calculateOurPriceRating(this.favourites)
       }
-      this.router.navigateByUrl('/favourite-store/' + this.id);
+      this.navCtrl.navigateBack('/favourite-store/' + this.id);
       this.showToast('Store added');
     }, err => {
       this.showToast('There was a problem adding your favourite store');
@@ -81,8 +82,11 @@ export class AddStorePage implements OnInit {
   }
 
   updateStore(){
-    this.favouritesService.updateFavouriteSortedStore(this.favourites, this.index).then(() =>{
-      this.router.navigateByUrl('/favourites');
+    this.favouritesService.addStore(this.favourites).then(() =>{
+      if (this.favourites.Store.length >= 3) {
+        this.calculateOurPriceRating(this.favourites)
+      }
+      this.navCtrl.navigateBack('/favourite-store/' + this.id);
       this.showToast('Store updated');
     }, err =>{
       this.showToast('There was a problem updating the store');

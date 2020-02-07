@@ -19,7 +19,7 @@ import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
   templateUrl: './search-halal.page.html',
   styleUrls: ['./search-halal.page.scss'],
 })
-export class SearchHalalPage implements OnInit {
+export class SearchHalalPage {
 
   showResults = false;
 
@@ -64,7 +64,7 @@ export class SearchHalalPage implements OnInit {
     // });
   }
 
-  ngOnInit() {
+  ionViewWillEnter(){
     this.ingservice.getIngredients()
       .subscribe(ingredients => {
         this.ingredient = ingredients;

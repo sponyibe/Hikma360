@@ -11,13 +11,13 @@
   <ion-icon name="basket"></ion-icon>
   <div class="card">
       <h4 style="text-align:center;">{{groceryStore.Name}}</h4>
-      <p>Address: <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
-      <p>City: {{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
-      <p>Call: {{groceryStore.PhoneNumber}}</p>
-      <p>Hours of Operation: {{groceryStore.HoursofOperation}}</p>
-      <p *ngIf="groceryStore.CertifedBy">Certified By: {{groceryStore.CertifedBy}}</p>
-      <p>Cuisine Type: {{groceryStore.StoreType}}</p>
-      <p>Rating: {{groceryStore.Rating}}</p>
+      <p><strong>Address: </strong> <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
+      <p><strong>City: </strong>{{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
+      <p><strong>Telephone: </strong>{{groceryStore.PhoneNumber}}</p>
+      <p><strong>Hours of Operation: </strong>{{groceryStore.HoursofOperation}}</p>
+      <p *ngIf="groceryStore.CertifedBy"> <strong>Certified By: </strong>{{groceryStore.CertifedBy}}</p>
+      <p><strong>Cuisine Type: </strong>{{groceryStore.StoreType}}</p>
+      <p><strong></strong> {{groceryStore.Rating}}</p>
       <a *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
 </ion-content>
