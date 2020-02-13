@@ -1,10 +1,17 @@
+ion-content{
+   --background : linear-gradient(#447741 30%,#006400);
+  //background: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+}
+
 ion-item{
-    --background: #447741;
+   // --background: #447741;
+   --background: none;
     --color: #fff;
 }
 
 ion-button{
     --background: #b8a95e;
+    margin-left: 15px;
 }
 
 ion-card{
@@ -18,4 +25,41 @@ ion-card{
 a{
     color: #fff;
     
+  }
+
+  // form {
+  //   margin-bottom: 32px;
+  //   button {
+  //     margin-top: 20px !important;
+  //   }
+  // }
+  
+  p {
+    font-size: 0.8em;
+    color: #d2d2d2;
+  }
+  
+  ion-label {
+    margin-left: 5px;
+  }
+  
+  // ion-input {
+  //   padding: 5px;
+  // }
+  
+  .invalid {
+    border-bottom: 1px solid #ff6153;
+  }
+  
+  .error-message {
+    min-height: 2.2rem;
+    ion-label {
+      margin: 2px 0;
+      font-size: 60%;
+      color: #ff6153;
+    }
+    
+    .item-inner {
+      border-bottom: 0 !important;
+    }
   }

@@ -1,20 +1,29 @@
 <ion-header>
   <ion-toolbar color="success">
-    
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-      <ion-item  *ngFor="let certifyingbodies of certifyingbodies" [routerLink]= "['/certification-details', certifyingbodies.id]">
-        <ion-label>
-          {{ certifyingbodies.Organisation }}
-          <p><b>Address: </b>{{ certifyingbodies.Address }}</p>
-          <p><b>Phone: </b>{{ certifyingbodies.Telephone }}</p>
-        </ion-label>
-        <ion-note slot="end" color="success"></ion-note>
-      </ion-item>
+<ion-content padding>
+  <ng-container *ngIf="!certifyingbodies || certifyingbodies.length == 0">
+    <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <p>
+        <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
+      </p>
+    </div>
+  </ng-container>
 
-   </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let certifyingbody of certifyingbodies"
+      [routerLink]="['/certification-details', certifyingbody.id]">
+      <ion-label>
+        {{ certifyingbody.Organisation }}
+        <p><b>Address: </b>{{ certifyingbody.Address }}</p>
+        <p><b>Phone: </b>{{ certifyingbody.Telephone }}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

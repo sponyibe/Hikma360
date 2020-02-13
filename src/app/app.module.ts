@@ -10,17 +10,19 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+//import { AngularFireAuthGuard} from '@angular/fire/auth-guard';
 
-//import { AngularCropperjsModule } from 'angular-cropperjs';
 import { Camera } from '@ionic-native/camera/ngx';
-//import { Crop } from '@ionic-native/crop/ngx';
-//import { File } from '@ionic-native/file/ngx';
+import { AddItemPageModule } from './add-item/add-item.module';
+
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,17 +30,19 @@ import { Camera } from '@ionic-native/camera/ngx';
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
-    // AngularCropperjsModule,
-    // NgAisModule.forRoot()
+    AngularFireAuthModule,
+    AddItemPageModule,
+    NgbModule.forRoot()
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AngularFireStorage,
+//    AngularFireAuthGuard,
     Camera,
     Network,
     Geolocation,
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],

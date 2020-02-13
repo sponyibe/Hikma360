@@ -4,16 +4,27 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-item button *ngFor="let certifyingorganization of certifyingorganization" [routerLink]= "['/organizations-details', certifyingorganization.id]">
-          <ion-label>
-            {{ certifyingorganization.OrganisationsCertified}}
-            <p><b>Address: </b>{{ certifyingorganization.Address }}</p>
-            <p><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
-          </ion-label>
-         
-        </ion-item>
-  
-     </ion-list>
+
+  <ion-list>
+    <ng-container *ngIf="!certifyingorganizations || certifyingorganizations.length == 0">
+      <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <p>
+          <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
+        </p>
+      </div>
+    </ng-container>
+
+    <ion-item button *ngFor="let certifyingorganization of certifyingorganizations"
+      [routerLink]="['/organizations-details', certifyingorganization.id]">
+      <ion-label>
+        {{ certifyingorganization.OrganisationsCertified}}
+        <p><b>Address: </b>{{ certifyingorganization.Address }}</p>
+        <p><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
+      </ion-label>
+
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

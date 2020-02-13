@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Certifyingbodies, CertifyingBodiesService } from '../services/certifyingbodies.service';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular'
-
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-certification-details',
@@ -25,7 +24,7 @@ export class CertificationDetailsPage implements OnInit {
 
   };
 
-  constructor(private route: ActivatedRoute, private nav:NavController, private certifyingbodiesService : CertifyingBodiesService, private loadingController: LoadingController) { }
+  constructor(private route: ActivatedRoute, private nav:NavController, private certifyingbodiesService : CertifyingBodiesService, private loadingController: LoadingController, private inAppBrowser: InAppBrowser) { }
 
   ngOnInit() {
     this.ionViewWillEnter()
@@ -39,5 +38,9 @@ export class CertificationDetailsPage implements OnInit {
         this.certifyingbodies = certifyingbodies;
       });
     }
+  }
+
+  openWebsite(){
+    this.inAppBrowser.create(this.certifyingbodies.Website, '_system');
   }
 }

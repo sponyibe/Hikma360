@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { LocationsService, Restauarant } from "../services/locations.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: "app-restaurant-details",
@@ -12,7 +13,8 @@ export class RestaurantDetailsPage implements OnInit {
   constructor(
     public locationService: LocationsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private inAppBrowser: InAppBrowser
   ) {}
 
   public places: Observable<Restauarant[]>;
@@ -20,17 +22,17 @@ export class RestaurantDetailsPage implements OnInit {
   //public restaurant: Restauarant[];
 
   restaurants: Restauarant = {
-    Name: "",
-    Address: "",
-    Region: "",
-    subRegion: "",
+    Name: '',
+    Address: '',
+    Region: '',
+    SubRegions: '',
     Latitude: 0,
     Longitude: 0,
-    PhoneNumber: "",
-    Hours: "",
-    CertifiedBy: "",
-    CuisineType: "",
-    PriceRange: "",
+    PhoneNumber: '',
+    HoursOfOperation: '',
+    CertifedBy: '',
+    CuisneType: '',
+    PriceRange: '',
     Rating: 0,
     Notes: "",
     distance: "",
@@ -44,9 +46,14 @@ export class RestaurantDetailsPage implements OnInit {
   ionViewWillEnter() {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     if (id) {
-      this.locationService.getIngredient(id).subscribe(restaurant => {
+      this.locationService.getRestaurant(id).subscribe(restaurant => {
         this.restaurants = restaurant;
       });
     }
   }
+
+  openWebsite(){
+    this.inAppBrowser.create(this.restaurants.Website, '_system');
+  }
+  
 }

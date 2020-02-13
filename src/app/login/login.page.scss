@@ -1,7 +1,12 @@
+ion-content{
+  --background : linear-gradient(#447741 30%,#006400);
+}
+
 ion-item{
-  --background: #447741;
+  --background: none;
   --color: #fff;
 }
+
 ion-button{
   --background: #b8a95e;
 }
@@ -9,7 +14,7 @@ ion-button{
 ion-card{
   position: relative;
   width: 347px;
-  height: 434px;
+  height: 347px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -25,3 +30,14 @@ a{
   color: #fff;
   
 }
+
+.buttons{
+  margin-left: 15px;
+}
+
+.block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+

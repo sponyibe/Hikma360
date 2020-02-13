@@ -12,13 +12,13 @@ export interface Restauarant {
   Name: string;
   Address: string;
   Region: string;
-  subRegion: string;
+  SubRegions: string;
   Latitude: number;
   Longitude: number;
   PhoneNumber: string;
-  Hours: string;
-  CertifiedBy: string;
-  CuisineType: string;
+  HoursOfOperation: string;
+  CertifedBy: string;
+  CuisneType: string;
   PriceRange: string;
   Rating: number;
   Notes: string;
@@ -52,7 +52,7 @@ export class LocationsService {
     return this.restaurants;
   }
 
-  getIngredient(id: string) {
+  getRestaurant(id: string) {
     return this.restaurantsCollection
       .doc<Restauarant>(id)
       .valueChanges()

@@ -1,29 +1,24 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="success">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/restaurants"></ion-back-button>
     </ion-buttons>
-    <ion-title>favourites Details</ion-title>
+    <ion-title>Restaurant Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="details">
-    <h2>{{ restaurants.Name }}</h2>
-    <p>
-      Address:
-      <a href="https://google.ca/maps/place/{{ restaurants.Address }}">
-        {{ restaurants.Address }}</a
-      >
-    </p>
-    <p>Region: {{ restaurants.Region }}</p>
-    <p>subRegion: {{ restaurants.subRegion }}</p>
-    <p>Call: {{ restaurants.PhoneNumber }}</p>
-    <p>Hours of Operation: {{ restaurants.Hours }}</p>
-    <p>Certified By: {{ restaurants.CertifiedBy }}</p>
-    <p>Cuisine Type: {{ restaurants.CuisineType }}</p>
-    <p>Price Range: {{ restaurants.PriceRange }}</p>
-    <p>Rating: {{ restaurants.Rating }}</p>
-    <p>Website:<a href="{{ restaurants.Website }}"> Visit the Website</a></p>
+<ion-content padding>
+     <ion-icon name="restaurant"></ion-icon>
+  <div class="card">
+      <h4 style="text-align:center;">{{restaurants.Name}}</h4>
+      <p>Address: <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
+      <p>City: {{restaurants.SubRegions}}, {{restaurants.Region}}</p>
+      <p>Call: {{restaurants.PhoneNumber}}</p>
+      <p>Hours of Operation: {{restaurants.HoursOfOperation}}</p>
+      <p *ngIf="restaurants.CertifedBy">Certified By: {{restaurants.CertifedBy}}</p>
+      <p>Cuisine Type: {{restaurants.CuisneType}}</p>
+      <p>Price Range: {{restaurants.PriceRange}}</p>
+      <p>Rating: {{restaurants.Rating}}</p>
+      <a *ngIf="restaurants.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
 </ion-content>

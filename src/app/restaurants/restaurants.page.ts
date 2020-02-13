@@ -1,50 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationsService, Restauarant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Observable } from 'rxjs';
+import { Subscription  } from 'rxjs';
+import { AlertController, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restaurants',
   templateUrl: './restaurants.page.html',
   styleUrls: ['./restaurants.page.scss'],
 })
-export class RestaurantsPage implements OnInit {
+export class RestaurantsPage implements OnInit{
 
-  // places: Observable<Restauarant[]>;
+  private subscription: Subscription;
+  // place: Observable<Restauarant[]>;
   places: Restauarant[];
   data: Restauarant[];
+
   usersLocation = {
     lat: 0,
     lng: 0
   }
-  constructor(public locationService: LocationsService, public geolocation: Geolocation) { }
+
+  constructor(public locationService: LocationsService, public geolocation: Geolocation, private alertController: AlertController , public router:Router, private nav: NavController) { }
 
   ngOnInit() {
+    //console.log("OnInit")
+  }
+
+  ionViewDidEnter() { 
+
     this.geolocation.getCurrentPosition().then((position) => {
       this.usersLocation.lat = position.coords.latitude
       this.usersLocation.lng = position.coords.longitude
     });
-    
-    this.locationService.getLocations()
+       
+    this.subscription = this.locationService.getLocations()
       .subscribe(restaurantList => {
         //this.places = restaurantList;
-        //console.log(this.places)
+        //console.log(restaurantList)
         this.places = this.applyHaversine(restaurantList)
 
         this.places.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
+        this.data = this.places.filter(i => i.distance < 100)
+        if(this.data.length <= 0){
+          this.presentAlert("Sorry, there are no reataurants within 100km of your current location")
+        }
       });
+  }
+
+  async presentAlert(msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   applyHaversine(locations: Restauarant[]) {
 
     console.log(this.usersLocation)
-
-    // let usersLocation = {
-    //   lat: 43.5134464,
-    //   lng: -80.1988607
-    // };
 
     locations.map((location) => {
 
@@ -91,6 +110,11 @@ export class RestaurantsPage implements OnInit {
 
   toRad(x) {
     return x * Math.PI / 180;
+  }
+
+  ionViewWillLeave(){
+    console.log("Leave init")
+    this.subscription.unsubscribe()
   }
 
 }

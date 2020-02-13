@@ -1,0 +1,83 @@
+<ion-header>
+    <ion-toolbar color="success">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/menu/home"></ion-back-button>
+          </ion-buttons>
+    <ion-title>add Store</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Store Name</ion-label>
+    <ion-input [(ngModel)]="store.Name"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Item Purchased</ion-label>
+    <ion-input>{{ favourites.itemPurchased }}</ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Price/unit</ion-label>
+    <ion-input [(ngModel)]="store.pricePerUnit"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Date Purchased</ion-label>
+    <ion-label>MM DD YY</ion-label>
+    <ion-datetime [(ngModel)]="store.datePurchased" displayFormat="MM DD YY" placeholder="Select Date">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Quality Rating</ion-label>
+    <ion-range min="0" snaps="true" max="5" pin="true" [(ngModel)]="store.quality">
+      <ion-icon color="warning" slot="start" name="thumbs-down"></ion-icon>
+      <ion-icon color="warning" slot="end" name="thumbs-up"></ion-icon>
+    </ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Customer Service Rating</ion-label>
+    <ion-range min="0" snaps="true" max="5" pin="true" [(ngModel)]="store.customerService">
+      <ion-icon slot="start" name="sad"></ion-icon>
+      <ion-icon slot="end" name="happy"></ion-icon>
+    </ion-range>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Price Rating</ion-label>
+    <ion-range min="0" snaps="true" max="5" pin="true" [(ngModel)]="store.priceRating">
+      <ion-icon color="warning" slot="start" name="thumbs-down"></ion-icon>
+      <ion-icon color="warning" slot="end" name="thumbs-up"></ion-icon>
+    </ion-range>
+  </ion-item>
+</ion-content>
+
+<ng-container *ngIf="isUpdatingStore; else addStoreTemplate">
+  <ion-footer>
+    <ion-row no-padding text-center>
+      <ion-col size="12">
+        <ion-button expand="block" fill="outline" color="danger" (click)="deleteStore()">
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Delete
+        </ion-button>
+      </ion-col>
+      <!-- <ion-col size="6">
+        <ion-button expand="block" fill="solid" color="success" (click)="updateStore()">
+          <ion-icon name="save" slot="start"></ion-icon>
+          Update
+        </ion-button>
+      </ion-col> -->
+    </ion-row>
+  </ion-footer>
+</ng-container>
+<ng-template #addStoreTemplate>
+  <ion-footer class="ion-padding">
+    <ion-button expand="block" fill="solid" color="primary" (click)="addStore()">
+      <ion-icon name="checkmark" slot="start"></ion-icon>
+      Add Store
+    </ion-button>
+  </ion-footer>
+</ng-template>

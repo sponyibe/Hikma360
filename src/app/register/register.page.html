@@ -1,23 +1,18 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="success">
-    <ion-title >
-     
-    </ion-title>
+    <ion-title>Create You Account</ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content color="success">
-    <ion-card>
+</ion-header> -->
+<ion-content>
+    <!-- <ion-card> -->
         <img src="assets/img/logo_transparent.png"/>
-      </ion-card>
+      <!-- </ion-card> -->
 
-    <form  #form="ngForm" (ngSubmit)="register(form)">
-        <ion-grid>
-          <ion-row color="primary" justify-content-center>
-            <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-              <div text-center>
-                <h3>Create your account!</h3>
-              </div>
+      <form #form="ngForm" (ngSubmit)="register(form)">
+        <ion-grid fixed>
+          <!-- <ion-row color="primary" justify-content-center>
+            <ion-col >
+                <h3 style="text-align: center;">Create your account!</h3>
               <div padding>
                 <ion-item>
                   <ion-input  name="name" type="text" placeholder="Name" [(ngModel)]="name" required></ion-input>
@@ -31,19 +26,40 @@
                 <ion-item>
                   <ion-input name="confirm" type="password" placeholder="Confirm Password" [(ngModel)]="cpassword" required></ion-input>
                 </ion-item>
-              </div>
-              <div padding>
-                <ion-button  size="large" type="submit"  expand="block" (click)="register()" routerLink="/menu">REGISTER</ion-button>
+                <ion-button type="submit" expand="block" (click)="register()">REGISTER</ion-button>
               </div>
             </ion-col>
-          </ion-row>
-        </ion-grid>
-      </form>
+          </ion-row > -->
+        
 
-      <ion-row>
-          <div text-center>
-            <a routerLink="/login">Login</a>
-          </div>
+        <ion-row>
+          <ion-col size="10" offset="1">
+            <ion-item>
+              <ion-input  name="name" type="text" placeholder="Name" [(ngModel)]="name" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="10" offset="1">
+            <ion-item>
+              <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="email" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="10" offset="1">
+            <ion-item>
+              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="10" offset="1">
+            <ion-item>
+              <ion-input name="confirm" type="password" placeholder="Confirm Password" [(ngModel)]="cpassword" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="10" offset="1">
+            <ion-button expand="block" (click)="register()">REGISTER</ion-button>
+          </ion-col>
         </ion-row>
-
+      </ion-grid>
+      </form>
+      
 </ion-content>
+
+<!-- <ion-button type="submit" (click)="register()">REGISTER</ion-button> -->
