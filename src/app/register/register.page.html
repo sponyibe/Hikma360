@@ -8,7 +8,7 @@
         <img src="assets/img/logo_transparent.png"/>
       <!-- </ion-card> -->
 
-      <form #form="ngForm" (ngSubmit)="register(form)">
+      <form [formGroup]="registrationForm" (ngSubmit)="register()">
         <ion-grid fixed>
           <!-- <ion-row color="primary" justify-content-center>
             <ion-col >
@@ -35,22 +35,28 @@
         <ion-row>
           <ion-col size="10" offset="1">
             <ion-item>
-              <ion-input  name="name" type="text" placeholder="Name" [(ngModel)]="name" required></ion-input>
+              <ion-input  name="username" type="text" placeholder="Name" formControlName="username" required></ion-input>
             </ion-item>
+            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'username')">Please enter a username</div>
           </ion-col>
+         
           <ion-col size="10" offset="1">
             <ion-item>
-              <ion-input name="email" type="email" placeholder="your@email.com" [(ngModel)]="email" required></ion-input>
+              <ion-input name="Useremail" type="email" placeholder="Email Address" formControlName="useremail" required></ion-input>
             </ion-item>
+            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'useremail')">Please a valid email address</div>
           </ion-col>
+       
           <ion-col size="10" offset="1">
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="password" required></ion-input>
+              <ion-input name="Password" type="password" placeholder="Password" formControlName="userpassword" required></ion-input>
             </ion-item>
+            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'userpassword')">Password must have uppercase,lowercase and numbers</div>
           </ion-col>
+          
           <ion-col size="10" offset="1">
             <ion-item>
-              <ion-input name="confirm" type="password" placeholder="Confirm Password" [(ngModel)]="cpassword" required></ion-input>
+              <ion-input name="confirm" type="password" placeholder="Confirm Password" formControlName="confirmpassword" required></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="10" offset="1">
