@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Certifyingorganization, CertifyingOrganizationService } from '../services/certifyingorganization.service';
 import { Subscription } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
+//import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class HalalOrganizationPage{
   public certifyingorganizations: Certifyingorganization[];
-  // public loadedCertifyingOrganizationList: Certifyingorganization[];
+  public loadedCertifyingOrganizationList: Certifyingorganization[];
   private subscription: Subscription;
 
 
@@ -20,19 +21,38 @@ export class HalalOrganizationPage{
   // ngOnInit() {
   // }
 
-  async ionViewWillEnter() { 
+  ngOnInit() { 
 
     this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
       this.certifyingorganizations = certifyingorganization;
       console.log(this.certifyingorganizations)
-      // this.loadedCertifyingOrganizationList = certifyingorganization;
+      this.loadedCertifyingOrganizationList = certifyingorganization;
     });
   }
 
-  // initializeItems(): void{
-  //   this.certifyingorganization = this.loadedCertifyingOrganizationList
-  // }
+  initializeItems(): void{
+     this.certifyingorganizations = this.loadedCertifyingOrganizationList;
+   }
+
+   filterList(evt) {
+    this.initializeItems();
+  
+    const searchTerm = evt.srcElement.value;
+  
+    if (!searchTerm) {
+      return;
+    }
+  
+    this.certifyingorganizations = this.certifyingorganizations.filter(certifyingorganization => {
+      if (certifyingorganization.OrganisationsCertified && searchTerm) {
+        if (certifyingorganization.OrganisationsCertified.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
 
   ionViewWillLeave(){
     console.log("Leave init")

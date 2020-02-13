@@ -27,7 +27,7 @@ export interface Certifyingbodies {
     private certifyingbodies: Observable<Certifyingbodies[]>
     
     constructor(db: AngularFirestore) {
-      this.certifyingbodiesCollection = db.collection<Certifyingbodies>('certifyingbodies');
+      this.certifyingbodiesCollection = db.collection<Certifyingbodies>('certifyingbodies',ref=>ref.orderBy('Organisation'));
   
       this.certifyingbodies =  this.certifyingbodiesCollection.snapshotChanges().pipe(
         map(actions => {
