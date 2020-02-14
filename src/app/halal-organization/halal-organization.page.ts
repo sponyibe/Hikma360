@@ -23,10 +23,10 @@ export class HalalOrganizationPage{
 
   ngOnInit() { 
 
-    this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
+    this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
       this.certifyingorganizations = certifyingorganization;
-      console.log(this.certifyingorganizations)
+      // console.log(this.certifyingorganizations)
       this.loadedCertifyingOrganizationList = certifyingorganization;
     });
   }
@@ -39,14 +39,15 @@ export class HalalOrganizationPage{
     this.initializeItems();
   
     const searchTerm = evt.srcElement.value;
-  
+
     if (!searchTerm) {
       return;
     }
   
-    this.certifyingorganizations = this.certifyingorganizations.filter(certifyingorganization => {
-      if (certifyingorganization.OrganisationsCertified && searchTerm) {
-        if (certifyingorganization.OrganisationsCertified.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+    this.certifyingorganizations = this.certifyingorganizations.filter(org => {
+      if (org.OrganisationsCertified && searchTerm) {
+      if(org.OrganisationsCertified.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)
+        {
           return true;
         }
         return false;
