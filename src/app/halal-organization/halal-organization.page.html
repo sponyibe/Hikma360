@@ -4,6 +4,7 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar showcancelbutton="" (ionChange)="filterList($event)"></ion-searchbar>
 
   <ion-list>
     <ng-container *ngIf="!certifyingorganizations || certifyingorganizations.length == 0">

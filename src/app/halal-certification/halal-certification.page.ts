@@ -29,7 +29,7 @@ export class HalalCertificationPage implements OnInit{
     .subscribe(certifyingbodies =>{
 
       this.certifyingbodies = certifyingbodies;
-      console.log(this.certifyingbodies)
+      // console.log(this.certifyingbodies)
       // this.loadedCertifyingBodiesList = certifyingbodies;
     });
   }
