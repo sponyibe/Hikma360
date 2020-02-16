@@ -23,13 +23,13 @@ export class HalalCertificationPage implements OnInit{
   }
 
   async ionViewDidEnter() { 
-    console.log("certyfting codies")
+    console.log("certifying bodies")
  
     this.subscription = this.certifyingbodiesService.getCertifyingBodies()
     .subscribe(certifyingbodies =>{
 
       this.certifyingbodies = certifyingbodies;
-      console.log(this.certifyingbodies)
+      // console.log(this.certifyingbodies)
       // this.loadedCertifyingBodiesList = certifyingbodies;
     });
   }

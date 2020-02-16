@@ -20,8 +20,8 @@ export class AddStorePage implements OnInit {
 
   favourites: Favourites = {
   itemPurchased: "",
-  Store: [{Name: 'ghh',
-  datePurchased: 'hjjj',
+  Store: [{Name: 'testName',
+  datePurchased: 'testDate',
   pricePerUnit: 4,
   priceRating: 4,
   quality:2,
@@ -47,7 +47,7 @@ export class AddStorePage implements OnInit {
     this.isUpdatingStore = false;
 
     if (this.id) {
-      console.log(this.id)
+      // console.log(this.id)
       this.favouritesService.getFavouritesDetails(this.id).subscribe(store => {
         this.favourites = store;
         this.favourites.Store = store.Store
@@ -55,21 +55,25 @@ export class AddStorePage implements OnInit {
       });
     }
     if (this.index) {
-      console.log(this.index)
+      // console.log(this.index)
       this.isUpdatingStore = true;
 
       this.favouritesService.getStoreDetails(this.id,this.index).subscribe(store => {
         this.favourites.Store[this.index] = store;
-        console.log(this.favourites.Store[this.index]);
+        // console.log(this.favourites.Store[this.index]);
 
         this.store = this.favourites.Store[this.index];
       });
     }
+
+    // const now = new Date();
+    // this.store.datePurchased = now.toISOString();
+    // console.log(this.store.datePurchased)
   }
 
   addStore() {
     this.favourites.Store.push(this.store)
-    console.log(this.favourites.Store);
+    // console.log(this.favourites.Store);
     this.favouritesService.addStore(this.favourites).then(() =>{
       if (this.favourites.Store.length >= 3) {
         this.calculateOurPriceRating(this.favourites)
@@ -95,7 +99,7 @@ export class AddStorePage implements OnInit {
 
   deleteStore(){
     this.favouritesService.deleteFavouriteSortedStore(this.favourites, this.index).then(() =>{
-      this.router.navigateByUrl('/favourite-store/' + this.id);
+      this.navCtrl.navigateBack('/favourite-store/' + this.id);
       this.showToast('Store deleted');
     }, err =>{
       this.showToast('There was a problem deleting the store');
@@ -155,7 +159,7 @@ export class AddStorePage implements OnInit {
     for (let index = 0; index < store.Store.length; index++) {
       this.store = this.lowestPrice(store.Store, index+1);
 
-      console.log('List of stores in function ' + store.Store[index].Name)
+      // console.log('List of stores in function ' + store.Store[index].Name)
   
       if (index+1 == 1 ) {
         this.store.ourPriceRating = 5

@@ -6,6 +6,23 @@
 <ion-content>
 
   <ion-list>
+    <!-- <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-input attribute="search" clearInput [(ngModel)]="searchOrg" placeholder="Search"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button size="small" Expand="block" (click)="searchOrgList()">
+            Search
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
     <ng-container *ngIf="!certifyingorganizations || certifyingorganizations.length == 0">
       <div *ngFor="let n of [0,1,2,3,4,5]" padding>
         <ion-skeleton-text animated></ion-skeleton-text>

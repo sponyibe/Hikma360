@@ -16,8 +16,14 @@
       <p><strong>Telephone: </strong>{{groceryStore.PhoneNumber}}</p>
       <p><strong>Hours of Operation: </strong>{{groceryStore.HoursofOperation}}</p>
       <p *ngIf="groceryStore.CertifedBy"> <strong>Certified By: </strong>{{groceryStore.CertifedBy}}</p>
-      <p><strong>Cuisine Type: </strong>{{groceryStore.StoreType}}</p>
-      <p><strong></strong> {{groceryStore.Rating}}</p>
+      <p><strong>Store Type: </strong>{{groceryStore.StoreType}}</p>
+      <p><ngb-rating [(rate)]="groceryStore.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>{{groceryStore.Rating}}</p>
       <a *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
+
+  <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&#8902;</span>&#8902;
+    </span>
+  </ng-template>
 </ion-content>

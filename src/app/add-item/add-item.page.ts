@@ -21,7 +21,7 @@ export class AddItemPage implements OnInit {
   constructor(private afAuth: AngularFireAuth ,private navParams: NavParams, private modalCtrl: ModalController, private favouritesService: FavouritesService, private toastCtrl: ToastController, private router:Router) {
     if (this.afAuth.auth.currentUser){
       this.favourite.userId = this.afAuth.auth.currentUser.uid
-      console.log(this.favourite.userId)
+      // console.log(this.favourite.userId)
     }
    }
 

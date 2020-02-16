@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../../environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -31,13 +31,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AddItemPageModule,
+    AngularFireStorageModule,
     NgbModule.forRoot()
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    AngularFireStorage,
-//    AngularFireAuthGuard,
     Camera,
     Network,
     Geolocation,

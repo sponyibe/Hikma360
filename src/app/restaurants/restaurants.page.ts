@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './restaurants.page.html',
   styleUrls: ['./restaurants.page.scss'],
 })
-export class RestaurantsPage implements OnInit {
+export class RestaurantsPage {
 
   private subscription: Subscription;
   public places: Restaurant[];
@@ -33,10 +33,6 @@ export class RestaurantsPage implements OnInit {
     public router: Router, 
     private platform: Platform) { }
 
-  ngOnInit() {
-
-  }
-
   ionViewWillEnter() {
 
     this.platform.ready().then(() => {
@@ -56,7 +52,7 @@ export class RestaurantsPage implements OnInit {
       return;
     }
 
-    this.subscription = this.locationService.getLocations()
+    this.locationService.getLocations()
       .subscribe(restaurantList => {
         // this.places = restaurantList;
         this.places = this.applyHaversine(restaurantList)
@@ -70,15 +66,15 @@ export class RestaurantsPage implements OnInit {
         this.dataList = this.data.slice(0, 25);
         this.numOfItemsDisplaying = 25;
 
-        if (this.data.length <= 0) {
-          this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
-        }
+        // if (this.data.length <= 0) {
+        //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
+        // }
         this.filtered = this.data.slice(0);
       });
 
   }
 
-  searchList(){
+  searchRestaurantList(){
     console.log(this.top)
     console.log(this.search)
     this.dataList = this.filtered;
@@ -90,7 +86,7 @@ export class RestaurantsPage implements OnInit {
       this.dataList = this.filtered.filter( type =>
         type.CuisneType.toLowerCase() == this.search.toLowerCase()
       )
-      console.log(this.dataList);
+      // console.log(this.dataList);
     }
     if(this.top == "rating"){
       const sample = this.filtered.filter(
@@ -99,7 +95,7 @@ export class RestaurantsPage implements OnInit {
       this.dataList = this.filtered.filter( type =>
         type.Rating == this.search
       )
-      console.log(this.dataList);
+      // console.log(this.dataList);
     }
     if(this.top == "name"){
       const sample = this.filtered.filter(
@@ -108,7 +104,7 @@ export class RestaurantsPage implements OnInit {
       this.dataList = this.filtered.filter( type =>
         type.Name.toLowerCase() == this.search.toLowerCase()
       )
-      console.log(this.dataList);
+      // console.log(this.dataList);
     }
   }
 

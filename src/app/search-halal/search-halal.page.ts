@@ -1,12 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
+import { LoadingController, ActionSheetController, AlertController} from '@ionic/angular';
 
 
 import { Observable } from 'rxjs'
-import { tap, filter } from 'rxjs/operators';
+import { tap, filter, map } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 
@@ -27,13 +27,13 @@ export class SearchHalalPage {
   task: AngularFireUploadTask;
 
   // Firestore data
-  result$: Observable<any>;
+  result$;
 
   //loading: Loading;
   image: string;
 
   public croppedImage = "";
-  public isLoading = false;
+  public isLoading;
 
   public ingredient: Ingredient[];
   public loadedIngredientList: Ingredient[];
@@ -53,15 +53,14 @@ export class SearchHalalPage {
   constructor(private storage: AngularFireStorage,
     private afs: AngularFirestore,
     private camera: Camera,
-    private loading: LoadingController,
+    private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
     private ingservice: IngredientService
   ) {
 
-    // this.loading = this.loadingCtrl.create({
-    //   content: 'Running AI vision analysis...'
-    // });
+    this.isLoading = this.loadingCtrl.create({ message: 'loading...' })
+
   }
 
   ionViewWillEnter(){
@@ -95,12 +94,10 @@ export class SearchHalalPage {
 
         if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
           this.isHalal = false;
-          console.log(this.isHalal);
           break;
         }
         else {         
           this.isHalal = true;
-          console.log(this.isHalal);
         }
       }
       if (this.isHalal == false) {
@@ -112,7 +109,7 @@ export class SearchHalalPage {
       this.presentAlert('This is Halal', this.searchTerm)
     }
     if(this.isHalal == false){
-      this.presentAlert("It Isn't Halal", this.searchTerm)
+      this.presentAlert("This isn't Halal", this.searchTerm)
     }
   }
 
@@ -157,23 +154,25 @@ export class SearchHalalPage {
     // this.hideCropping = false;
 
     // Show loader
-    //this.loading.present();
+    this.showLoader();
 
     // const timestamp = new Date().getTime().toString();
     const docId = this.afs.createId();
+    console.log(docId)
 
     const path = `${docId}.jpg`;
 
     // Make a reference to the future location of the firestore document
-    const photoRef = this.afs.collection('photos').doc(docId)
+    const photoRef = this.afs.collection('halalCheck').doc(docId)
 
     // Firestore observable, dismiss loader when data is available
-    this.result$ = photoRef.valueChanges()
-      .pipe(
-        filter(data => !!data),
-        tap()
-      );
-
+    photoRef.valueChanges().subscribe( data => {
+       this.result$ = data
+       console.log(this.result$)
+       if(this.result$){
+         this.hideLoader()
+       }
+     })
 
     // The main task
     // this.image = 'data:image/jpg;base64,' + this.imageBase64;
@@ -206,4 +205,23 @@ export class SearchHalalPage {
     await alert.present();
   }
 
+  showLoader() {
+    this.isLoading = this.loadingCtrl.create({
+      message: 'Analyzing List...',
+      spinner: 'dots'
+    }).then((res) => {
+      res.present();
+ 
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+    // this.hideLoader();
+  }
+
+  hideLoader() {
+    setTimeout(() => {
+      this.loadingCtrl.dismiss();
+    }, 4000);
+  }
 }

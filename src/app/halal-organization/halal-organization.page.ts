@@ -14,6 +14,9 @@ export class HalalOrganizationPage{
   // public loadedCertifyingOrganizationList: Certifyingorganization[];
   private subscription: Subscription;
 
+  public searchOrgTerm;
+  public filtered: Certifyingorganization[];
+
 
   constructor(private certifyingorganizationService : CertifyingOrganizationService, private loadingCtrl: LoadingController ) { }
 
@@ -25,13 +28,32 @@ export class HalalOrganizationPage{
     this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
       this.certifyingorganizations = certifyingorganization;
-      console.log(this.certifyingorganizations)
+      // console.log(this.certifyingorganizations)
       // this.loadedCertifyingOrganizationList = certifyingorganization;
+      this.filtered = this.certifyingorganizations.slice(0)
     });
   }
 
   // initializeItems(): void{
   //   this.certifyingorganization = this.loadedCertifyingOrganizationList
+  // }
+
+  // searchOrgList(){
+  //   this.certifyingorganizations = this.filtered;
+
+  //   console.log(this.filtered)
+
+  //   console.log(this.certifyingorganizations)
+
+  //   let sample = this.filtered.filter(
+  //     (thing, i, arr) => arr.findIndex(t => t.OrganisationsCertified === thing.OrganisationsCertified) === i);
+
+  //   sample = this.filtered.filter( type =>{
+  //     console.log(type.OrganisationsCertified)
+  //     type.OrganisationsCertified.toLowerCase() == this.searchOrgTerm.toLowerCase()
+  //   })
+  //   console.log(sample);
+
   // }
 
   ionViewWillLeave(){

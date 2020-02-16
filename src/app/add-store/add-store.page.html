@@ -10,23 +10,23 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked">Store Name</ion-label>
-    <ion-input [(ngModel)]="store.Name"></ion-input>
+    <ion-input [(ngModel)]="store.Name" required></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Item Purchased</ion-label>
-    <ion-input>{{ favourites.itemPurchased }}</ion-input>
+    <ion-label position="stacked" >Item Purchased</ion-label>
+    <ion-input readonly="true">{{ favourites.itemPurchased }}</ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Price/unit</ion-label>
-    <ion-input [(ngModel)]="store.pricePerUnit"></ion-input>
+    <ion-input [(ngModel)]="store.pricePerUnit" required></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Date Purchased</ion-label>
     <ion-label>MM DD YY</ion-label>
-    <ion-datetime [(ngModel)]="store.datePurchased" displayFormat="MM DD YY" placeholder="Select Date">
+    <ion-datetime [(ngModel)]="store.datePurchased" readonly="true" displayFormat="YYYY MM DD" placeholder="Select Date">
     </ion-datetime>
   </ion-item>
 

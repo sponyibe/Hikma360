@@ -8,6 +8,32 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-select  [(ngModel)]="option" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Category">
+            <ion-select-option value="name">name</ion-select-option>
+            <ion-select-option value="rating">rating</ion-select-option>
+            <ion-select-option value="storeType">Store Type</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-input attribute="search" clearInput [(ngModel)]="searchGroceryStores" placeholder="Search"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button size="small" Expand="block" (click)="searchList()">
+          Search
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ng-container *ngIf="!data || data.length == 0">
     <ion-list>
       <div *ngFor="let n of [0,1,2,3,4,5]" padding>
