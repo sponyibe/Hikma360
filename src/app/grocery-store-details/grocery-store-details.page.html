@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="success">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/grocery-stores"></ion-back-button>
+      <ion-back-button routerLink="/grocery-stores"></ion-back-button>
     </ion-buttons>
     <ion-title>Store Details</ion-title>
   </ion-toolbar>
@@ -9,7 +9,8 @@
 
 <ion-content padding>
   <ion-icon name="basket"></ion-icon>
-  <div class="card">
+  <div class="details">
+    <div class="card">
       <h4 style="text-align:center;">{{groceryStore.Name}}</h4>
       <p><strong>Address: </strong> <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
       <p><strong>City: </strong>{{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
@@ -19,6 +20,8 @@
       <p><strong>Store Type: </strong>{{groceryStore.StoreType}}</p>
       <p><ngb-rating [(rate)]="groceryStore.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>{{groceryStore.Rating}}</p>
       <a *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
+ 
+    </div>
   </div>
 
   <ng-template #t let-fill="fill">

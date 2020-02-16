@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="success">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/restaurants"></ion-back-button>
+      <ion-back-button routerLink="/restaurants"></ion-back-button>
     </ion-buttons>
     <ion-title>Restaurant Details</ion-title>
   </ion-toolbar>
@@ -9,7 +9,8 @@
 
 <ion-content padding>
      <ion-icon name="restaurant"></ion-icon>
-  <div class="card">
+  <div class="details">
+    <div class="card">
       <h4 style="text-align:center;">{{restaurants.Name}}</h4>
       <p><strong> Address: </strong> <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
       <p><strong>City: </strong> {{restaurants.SubRegions}}, {{restaurants.Region}}</p>
@@ -20,6 +21,7 @@
       <p><strong>Price Range: </strong> {{restaurants.PriceRange}}</p>
       <p><ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating> {{restaurants.Rating}} </p>
       <a *ngIf="restaurants.Website" (click)="openWebsite()">Visit the Website</a>
+    </div>
   </div>
 
   <ng-template #t let-fill="fill">

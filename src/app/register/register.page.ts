@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 
 import { Router, Routes } from '@angular/router';
-import { auth } from "firebase/app";
-import { NavController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController} from '@ionic/angular';
+
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -20,18 +18,34 @@ export class RegisterPage implements OnInit {
   password: string = ""
   cpassword: string = ""
 
-  constructor(public navCtrl: NavController,public router:Router, public afAuth: AngularFireAuth) { }
+  registrationForm: FormGroup;
 
+  constructor(public navCtrl: NavController,public router:Router, public afAuth: AngularFireAuth) { 
+        this.registrationForm = new FormGroup({
+        username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z]+$')]),
+        useremail: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
+        userpassword: new FormControl('', Validators.compose([
+          Validators.minLength(5),
+          Validators.required,
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') //this is for the letters (both uppercase and lowercase) and numbers validation
+       ])),
+       confirmpassword: new FormControl('', Validators.required)
+      })
+  }
+  
   ngOnInit() {
   }
 
   async register() {
-    const {email, password, cpassword} = this
-    if(password !== cpassword){
-      return console.error("Passwowrd don't match")
+    console.log(this.registrationForm.value.username);
+    //const {email, password, cpassword} = this
+    if(this.registrationForm.value.userpassword !== this.registrationForm.value.confirmpassword){
+      return console.error("Passwowrd don't match");
+      
     }
     try{
-      const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(this.registrationForm.value.useremail, this.registrationForm.value.userpassword)
+    //  console.log("email: "+email);
       console.log(res)
       if (res) {
         console.log("Successfully registered!");
