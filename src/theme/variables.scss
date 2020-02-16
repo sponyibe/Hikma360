@@ -76,4 +76,34 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --ion-font-family: 'My Custom Font';
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/Roboto/Roboto-Light.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../assets/fonts/Roboto/Roboto-LightItalic.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../assets/fonts/Roboto/Roboto-BoldItalic.ttf');
 }

@@ -8,22 +8,56 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-select  [(ngModel)]="top" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Category">
+            <ion-select-option value="cuisine">Cuisine Type</ion-select-option>
+            <ion-select-option value="rating">Rating</ion-select-option>
+            <ion-select-option value="name">Name</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-input attribute="search" clearInput [(ngModel)]="search" placeholder="Search"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button size="small" Expand="block" (click)="searchRestaurantList()">
+          Search
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ng-container *ngIf="!dataList || dataList.length == 0">
     <ion-list>
-        <ng-container *ngIf="!data || data.length == 0">
-            <div *ngFor="let n of [0,1,2,3,4,5]" padding>
-              <ion-skeleton-text animated></ion-skeleton-text>
-              <p>
-                <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
-              </p>
-            </div>
-          </ng-container>
-
-      <ion-item button *ngFor="let restaurant of data" [routerLink]="['/restaurant-details', restaurant.id]">
-        <ion-label>{{ restaurant.Name }}
-          <p>{{ restaurant.distance }} km</p>
-          <p>{{ restaurant.Address }}</p>
-        </ion-label>
-      </ion-item>
+      <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <p>
+          <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
+        </p>
+      </div>
     </ion-list>
+  </ng-container>
 
+  <ion-list>
+    <ion-item button *ngFor="let restaurant of dataList" [routerLink]="['/restaurant-details', restaurant.id]">
+      <ion-label>{{ restaurant.Name }}
+        <p>{{ restaurant.distance }} km</p>
+        <p><strong>Address: </strong>{{ restaurant.Address }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more restaurants...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

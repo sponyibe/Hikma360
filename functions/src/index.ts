@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 
 // Firebase
 import * as admin from 'firebase-admin';
-//import * as algoliasearch from 'algoliasearch'
+// import * as algoliasearch from 'algoliasearch'
 
 admin.initializeApp();
 
@@ -12,14 +12,14 @@ const vision = require('@google-cloud/vision');
 
 // Cloud Vision
 const visionClient = new vision.ImageAnnotatorClient();
-//const client = algoliasearch(env.algolia.appid, env.algolia.apikey, env.algolia.indexname);
+// const client = algoliasearch(env.algolia.appid, env.algolia.apikey, env.algolia.indexname);
 //const coll = client.initIndex('dev_Items');
 
 
 // Dedicated bucket for cloud function invocation
 const bucketName = 'hikma-96b46-image-search';
 
-export const HalalChecker = functions.storage
+export const imageTagger = functions.storage
 
   .bucket(bucketName)
   .object()
@@ -33,7 +33,7 @@ export const HalalChecker = functions.storage
 
     const docId = filePath.split('.jpg')[0];
 
-    const docRef = admin.firestore().collection('photos').doc(docId);
+    const docRef = admin.firestore().collection('halalCheck').doc(docId);
     const items = admin.firestore().collection('Ingredients');
     //let query; 
 
@@ -43,7 +43,7 @@ export const HalalChecker = functions.storage
     // Map the data to desired format
     //var nonHalal: boolean;
     const textfound = results[0].textAnnotations.map((obj: { description: string }) => obj.description.toLowerCase().toString());
-    const textArray = textfound[0].split(',');
+    const textArray = textfound[0].match(/(?:[^,.:(][^,.:(]+|\([^)]+\))+/g);
     const textDetected = trimArray(textArray);
 
     for (let index = 0; index < textDetected.length; index++) {
@@ -55,7 +55,7 @@ export const HalalChecker = functions.storage
           if (snapshot.empty) {
             console.log('no match');
             nonHalal = false;
-            return;
+            return docRef.set({ nonHalal, textDetected });
           }
           snapshot.forEach(doc => {
             console.log(doc.data());

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationsService, Restauarant } from "../services/locations.service";
+import { LocationsService, Restaurant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Subscription  } from 'rxjs';
-import { AlertController, NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,45 +10,102 @@ import { Router } from '@angular/router';
   templateUrl: './restaurants.page.html',
   styleUrls: ['./restaurants.page.scss'],
 })
-export class RestaurantsPage implements OnInit{
+export class RestaurantsPage {
 
   private subscription: Subscription;
-  // place: Observable<Restauarant[]>;
-  places: Restauarant[];
-  data: Restauarant[];
+  public places: Restaurant[];
+  public data: Restaurant[];
+  public dataList: Restaurant[];
+  private numOfItemsDisplaying: number;
 
   usersLocation = {
     lat: 0,
     lng: 0
   }
 
-  constructor(public locationService: LocationsService, public geolocation: Geolocation, private alertController: AlertController , public router:Router, private nav: NavController) { }
+  public top: string;
+  public search;
+  public filtered: Restaurant[];
 
-  ngOnInit() {
-    //console.log("OnInit")
-  }
+  constructor(public locationService: LocationsService,
+    public geolocation: Geolocation,
+    private alertController: AlertController,
+    public router: Router, 
+    private platform: Platform) { }
 
-  ionViewDidEnter() { 
+  ionViewWillEnter() {
 
-    this.geolocation.getCurrentPosition().then((position) => {
-      this.usersLocation.lat = position.coords.latitude
-      this.usersLocation.lng = position.coords.longitude
+    this.platform.ready().then(() => {
+      this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => {
+        this.usersLocation.lat = position.coords.latitude
+        this.usersLocation.lng = position.coords.longitude
+      });
     });
-       
-    this.subscription = this.locationService.getLocations()
+
+    if (this.locationService.restaurantData) {
+      console.log("In here")
+      this.data = this.locationService.restaurantData;
+
+      this.dataList = this.data.slice(0, 24);
+      this.numOfItemsDisplaying = 25;
+      this.filtered = this.data.slice(0);
+      return;
+    }
+
+    this.locationService.getLocations()
       .subscribe(restaurantList => {
-        //this.places = restaurantList;
-        //console.log(restaurantList)
+        // this.places = restaurantList;
         this.places = this.applyHaversine(restaurantList)
 
         this.places.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
         this.data = this.places.filter(i => i.distance < 100)
-        if(this.data.length <= 0){
-          this.presentAlert("Sorry, there are no reataurants within 100km of your current location")
-        }
+
+        this.locationService.restaurantData = this.data;
+        this.dataList = this.data.slice(0, 25);
+        this.numOfItemsDisplaying = 25;
+
+        // if (this.data.length <= 0) {
+        //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
+        // }
+        this.filtered = this.data.slice(0);
       });
+
+  }
+
+  searchRestaurantList(){
+    console.log(this.top)
+    console.log(this.search)
+    this.dataList = this.filtered;
+
+    if(this.top == "cuisine"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.CuisneType === thing.CuisneType) === i);
+
+      this.dataList = this.filtered.filter( type =>
+        type.CuisneType.toLowerCase() == this.search.toLowerCase()
+      )
+      // console.log(this.dataList);
+    }
+    if(this.top == "rating"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
+
+      this.dataList = this.filtered.filter( type =>
+        type.Rating == this.search
+      )
+      // console.log(this.dataList);
+    }
+    if(this.top == "name"){
+      const sample = this.filtered.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
+
+      this.dataList = this.filtered.filter( type =>
+        type.Name.toLowerCase() == this.search.toLowerCase()
+      )
+      // console.log(this.dataList);
+    }
   }
 
   async presentAlert(msg: string) {
@@ -61,7 +118,7 @@ export class RestaurantsPage implements OnInit{
     await alert.present();
   }
 
-  applyHaversine(locations: Restauarant[]) {
+  applyHaversine(locations: Restaurant[]) {
 
     console.log(this.usersLocation)
 
@@ -112,9 +169,25 @@ export class RestaurantsPage implements OnInit{
     return x * Math.PI / 180;
   }
 
-  ionViewWillLeave(){
-    console.log("Leave init")
-    this.subscription.unsubscribe()
+  loadData(event) {
+    setTimeout(() => {
+      console.log('Done');
+      this.dataList = this.dataList.concat(this.data.slice(this.numOfItemsDisplaying, this.numOfItemsDisplaying + 24));
+      this.numOfItemsDisplaying += 25;
+
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.dataList.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
   }
+
+  // ionViewWillUnload() {
+  //   console.log("Leave init")
+  //   this.subscription.unsubscribe()
+  // }
 
 }

@@ -1,55 +1,112 @@
 import { Component, OnInit } from '@angular/core';
 import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Observable, Subscription  } from 'rxjs';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { load } from '@angular/core/src/render3';
+import { Subscription } from 'rxjs';
+import { LoadingController, AlertController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-grocery-stores',
   templateUrl: './grocery-stores.page.html',
   styleUrls: ['./grocery-stores.page.scss'],
 })
-export class GroceryStoresPage implements OnInit {
+export class GroceryStoresPage {
 
   private subscription: Subscription;
-  /// groceryStore: Observable<GroceryStores[]>;
-  groceryStores: GroceryStores[];
-  data: GroceryStores[];
+  public groceryStores: GroceryStores[];
+  public data: GroceryStores[];
+  public storeList: GroceryStores[];
+  private numOfItemsToDisplay: number;
+
   usersLocation = {
     lat: 0,
     lng: 0
   }
-  constructor(public groceryStoreService: GroceryStoresService, private alertController: AlertController , public geolocation: Geolocation, private loadingCtrl: LoadingController) { }
 
-  ngOnInit() {
-    //console.log("OnInit")
+  public option: string;
+  public searchGroceryStores;
+  public filteredList: GroceryStores[];
+
+  constructor(public groceryStoreService: GroceryStoresService,
+    private alertController: AlertController,
+    public geolocation: Geolocation,
+    private platform: Platform) {
+
   }
 
-  async ionViewDidEnter() { 
-    
-    this.geolocation.getCurrentPosition().then((position) => {
-      this.usersLocation.lat = position.coords.latitude
-      this.usersLocation.lng = position.coords.longitude
+  ionViewWillEnter() {
+
+    this.platform.ready().then(() => {
+      this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((pos) => {
+        this.usersLocation.lat = pos.coords.latitude
+        this.usersLocation.lng = pos.coords.longitude
+      });
     });
-     
-    this.subscription = this.groceryStoreService.getGroceryStores()
+
+    if (this.groceryStoreService.groceryStoresData) {
+      this.data = this.groceryStoreService.groceryStoresData;
+
+      this.storeList = this.data.slice(0, 24);
+      this.numOfItemsToDisplay = 25;
+      this.filteredList = this.data.slice(0);
+      return;
+    }
+
+    this.groceryStoreService.getGroceryStores()
       .subscribe(groceryStoresList => {
-        //this.places = restaurantList;
-        // console.log(groceryStoresList)
         this.groceryStores = this.applyHaversine(groceryStoresList)
 
         this.groceryStores.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
         });
         this.data = this.groceryStores.filter(i => i.distance < 100)
-        if(this.data.length <= 0){
-          this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
-        }
+
+        this.groceryStoreService.groceryStoresData = this.data;
+        this.storeList = this.data.slice(0, 25);
+        this.numOfItemsToDisplay = 25;
+
+        // if(this.data.length <= 0){
+        //   this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
+        // }
+        this.filteredList = this.data.slice(0);
       });
+
   }
 
-async presentAlert(msg: string) {
+  searchList() {
+    console.log(this.option)
+    console.log(this.searchGroceryStores)
+    this.storeList = this.filteredList;
+
+    if (this.option == "storeType") {
+      const sample = this.filteredList.filter(
+        (thing, i, arr) => arr.findIndex(t => t.StoreType === thing.StoreType) === i);
+
+      this.storeList = this.filteredList.filter(type =>
+        type.StoreType.toLowerCase() == this.searchGroceryStores.toLowerCase()
+      )
+      // console.log(this.storeList);
+    }
+    if (this.option == "rating") {
+      const sample = this.filteredList.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
+
+      this.storeList = this.filteredList.filter(type =>
+        type.Rating == this.searchGroceryStores
+      )
+      // console.log(this.storeList);
+    }
+    if (this.option == "name") {
+      const sample = this.filteredList.filter(
+        (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
+
+      this.storeList = this.filteredList.filter(type =>
+        type.Name.toLowerCase() == this.searchGroceryStores.toLowerCase()
+      )
+      // console.log(this.storeList);
+    }
+  }
+
+  async presentAlert(msg: string) {
     const alert = await this.alertController.create({
       header: 'Alert',
       message: msg,
@@ -62,11 +119,6 @@ async presentAlert(msg: string) {
   applyHaversine(locations: GroceryStores[]) {
 
     console.log(this.usersLocation)
-
-    // let usersLocation = {
-    //   lat: 43.5134464,
-    //   lng: -80.1988607
-    // };
 
     locations.map((location) => {
 
@@ -115,9 +167,25 @@ async presentAlert(msg: string) {
     return x * Math.PI / 180;
   }
 
-  ionViewWillLeave(){
-    console.log("Leave init")
-    this.subscription.unsubscribe()
+  loadStoresData(event) {
+    setTimeout(() => {
+      console.log('Done');
+      this.storeList = this.storeList.concat(this.data.slice(this.numOfItemsToDisplay, this.numOfItemsToDisplay + 24));
+      this.numOfItemsToDisplay += 25;
+
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.storeList.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
   }
+
+  // ionViewWillLeave() {
+  //   console.log("Leave init")
+  //   this.subscription.unsubscribe()
+  // }
 
 }

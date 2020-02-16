@@ -8,95 +8,75 @@
 </ion-header>
 
 <ion-content padding>
-  <div id="accordion">
-    <div class="card">
-      <div class="card-header" role="tab" id="headongOne">
-        <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-          <h5 class="mb-0"> 
-              What is Hikma360?
-          </h5>
-        </a>
-        
-      </div>
-  
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
-          Hikma360 is an information app for halal and non-halal consumers. We do that with the following features:
-          <ion-list>
-            <ion-item>
-              A "search halal" feature allows you to check if a food item, product or ingredient is halal or not.
-            </ion-item>
+  <ngb-accordion [closeOthers]="true">
+    <ngb-panel id="static-1">
+      <ng-template ngbPanelTitle>
+        <span>What is Hikma360?</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        Hikma360 is an information app for halal and non-halal consumers. We do that with the following features:
+        <ion-list>
+          <ion-item>
+            A "search halal" feature allows you to check if a food item, product or ingredient is halal or not.
+          </ion-item>
 
-            <ion-item>
-              A "favourites store" feature that shows you the most desirable grocery stores to purchase a specified food item, over a period of time, based on information entered by you that is analyzed by our algorithm.
-            </ion-item>
+          <ion-item>
+            A "favourites store" feature that shows you the most desirable grocery stores to purchase a specified food item, over a period of time, based on information entered by you that is analyzed by our algorithm.
+          </ion-item>
 
-            <ion-item>
-              A closest halal "restaurant/grocery store" feature that shows you the closest halal restaurants/grocery stores to you. We currently only offer this feature for those in the GTA.
-            </ion-item>
+          <ion-item>
+            A closet halal "restaurant/grocery store" feature that shows you the closest halal restaurants/grocery
+            stores to you. We currently only offer this feature for those in the GTA.
+          </ion-item>
 
-            <ion-item>
-              A "list of certifying bodies" feature that shows you the list of halal certification bodies in Cananda and information on their certifying standards as well as the brands they've certified!
-            </ion-item>
+          <ion-item>
+            A "list of certifying bodies" feature that shows you the list of halal certification bodies in Canada and
+            information on their certifying standards as well as the brands they've certified!
+          </ion-item>
 
-            <ion-item>
-              Finally, we provide information on the Halal dietary guidelines in our "Halal 101" feature that clarifies misconceptions about halal.
-            </ion-item>
-          </ion-list>
-        </div>
-      </div>
-    </div>
+          <ion-item>
+            Finally, we provide information on the Halal dietary guidelines in our "Halal 101" feature that clarifies
+            misconceptions about halal.
+          </ion-item>
+        </ion-list>
 
-    <div class="card">
-      <div class="card-header" id="headingTwo" role="tab">
-          <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            <h5 class="mb-0" >
-            Do I need to create an account?
-            </h5>
-          </a>
-      </div>
-      <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
-        <div class="card-body">
-          Creating an account is necessary, especially if you intend on using the favourites feature.
-        </div>
-      </div>
-    </div>
+      </ng-template>
+    </ngb-panel>
 
-    
-    <div class="card">
-      <div class="card-header" id="headingThree" role="tab">
-          <a data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            <h5 class="mb-0">
-                How do I use the favourites feature?
-            </h5>
-          </a>
-      </div>
-      <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
-        <div class="card-body">
-          To use the favourites feature, you must create an account. After this, you can add a grocery store that you have visited by clicking the add button at the bottom right of the screen. Add in the items you purchased and fill out the requirements. For this feature to work, you must enter multiple grocery stores.
-        </div>
-      </div>
-    </div>
+    <ngb-panel id="static-2">
+      <ng-template ngbPanelTitle>
+        <span>Do I need to create an account?</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        Creating an account is necessary, especially if you intend on using the favourites feature.
+      </ng-template>
+    </ngb-panel>
 
+    <ngb-panel id="static-3">
+      <ng-template ngbPanelTitle>
+        <span>How do I use the favourites feature?</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        To use the favourites feature, you must create an account. After this, you can add a grocery store that you have visited by clicking the add button at the bottom right of the screen. Add in the items you purchased and fill out the requirements. For this feature to work, you must enter multiple grocery stores.
+      </ng-template>
+    </ngb-panel>
 
-   
-    <div class="card">
-      <div class="card-header" id="headingFive" role="tab">
-          <a data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-            <h5 class="mb-0">
-                How do I contact support or leave feedback?
-            </h5>
-          </a>
-      </div>
-      <div id="collapseFive" class="collapse show" aria-labelledby="headingFive" data-parent="#accordion">
-        <div class="card-body">
-          You can contact support through the email link provided: <a href="mailto:sebiyeon@uoguelph.ca?" target="_top">Send Mail</a>
-        </div>
-      </div>
-    </div>
+    <ngb-panel id="static-4">
+      <ng-template ngbPanelTitle>
+        <span>How do I contact support?</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        You can contact support through the email link provided: <a href="mailto:sebiyeon@uoguelph.ca?" target="_top">Send Mail</a>
+      </ng-template>
+    </ngb-panel>
 
-
-  </div>
-
-
+    <ngb-panel id="static-5">
+      <ng-template ngbPanelTitle>
+        <span>How do I leave feedback?</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        You can leave feedback by sending an email to: <a href="mailto:sebiyeon@uoguelph.ca?" target="_top">Hikma360@gmail.com</a>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
 </ion-content>

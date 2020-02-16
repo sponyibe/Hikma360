@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { LocationsService, Restauarant } from "../services/locations.service";
+import { LocationsService, Restaurant } from "../services/locations.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -17,11 +17,11 @@ export class RestaurantDetailsPage implements OnInit {
     private inAppBrowser: InAppBrowser
   ) {}
 
-  public places: Observable<Restauarant[]>;
+  public places: Observable<Restaurant[]>;
 
-  //public restaurant: Restauarant[];
+  //public restaurant: Restaurant[];
 
-  restaurants: Restauarant = {
+  restaurants: Restaurant = {
     Name: '',
     Address: '',
     Region: '',
@@ -30,7 +30,7 @@ export class RestaurantDetailsPage implements OnInit {
     Longitude: 0,
     PhoneNumber: '',
     HoursOfOperation: '',
-    CertifedBy: '',
+    CertifiedBy: '',
     CuisneType: '',
     PriceRange: '',
     Rating: 0,
