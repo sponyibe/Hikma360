@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
           <ion-back-button routerLink="/tabs/halal-organization"></ion-back-button>
         </ion-buttons>
-    <ion-title>Certified Organisations</ion-title>
+    <ion-title>Certified Organizations</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
       <p *ngIf=certifyingorganization.EmailAddress><b>Email: </b>{{ certifyingorganization.EmailAddress }}</p>
       <p *ngIf=certifyingorganization.CertifyingBody><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
       <p *ngIf=certifyingorganization.OutletType><b>Outlet Type: </b>{{ certifyingorganization.OutletType }}</p>
-      <p><b>Products: </b>{{ certifyingorganization.Products }}</p>
+      <p *ngIf=certifyingorganization.Products><b>Products: </b>{{ certifyingorganization.Products }}</p>
       <p><b>Telephone: </b>{{ certifyingorganization.Telephone }}</p>
       <a *ngIf="certifyingorganization.Website" (click)="openWebsite()">Visit the Website</a>
   </div>
