@@ -1,17 +1,16 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, ActionSheetController, AlertController} from '@ionic/angular';
+import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
 
 
-import { Observable } from 'rxjs'
-import { tap, filter, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment'
 
+import * as algoliasearch from 'algoliasearch';
+// const algoliasearch = require('algoliasearch');
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
-
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 
 import { Ingredient, IngredientService } from "../services/ingredient.service";
-
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 @Component({
@@ -30,7 +29,7 @@ export class SearchHalalPage {
   result$;
 
   //loading: Loading;
-  image: string;
+  public image: string;
 
   public croppedImage = "";
   public isLoading;
@@ -46,7 +45,9 @@ export class SearchHalalPage {
   public message: string;
 
   public imageBase64: string;
-  public brokenDownSearch
+  public brokenDownSearch;
+  public client: any;
+  public index: any;
 
   @ViewChild(ImageCropperComponent) angularCropper: ImageCropperComponent;
 
@@ -58,12 +59,13 @@ export class SearchHalalPage {
     private alertController: AlertController,
     private ingservice: IngredientService
   ) {
-
+    this.client = algoliasearch(environment.algolia.appid, environment.algolia.apikey);
+    this.index = this.client.initIndex("dev_Ingredients");
     this.isLoading = this.loadingCtrl.create({ message: 'loading...' })
 
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.ingservice.getIngredients()
       .subscribe(ingredients => {
         this.ingredient = ingredients;
@@ -71,15 +73,31 @@ export class SearchHalalPage {
       });
   }
 
+  newSearch(){
+
+    this.index.search({
+      query: this.searchTerm,
+      attributesToRetrieve: ['nonhalal']
+    }).
+    then((data) => {
+      console.log(data.hits[0])
+      if(data.hits.length < 1){
+        this.presentAlert('This is Halal', this.searchTerm)
+      }
+      else{
+        this.presentAlert("This isn't Halal", this.searchTerm)
+      }
+    });
+  }
+
   //For Try 3
   initializeItems() {
     this.ingredient = this.loadedIngredientList
+    console.log(JSON.stringify(this.ingredient))
   }
 
   getList() {
     this.initializeItems();
-
-    this.brokenDownSearch = this.searchTerm.split(" ");
 
     if (this.brokenDownSearch.length > 1) {
       this.brokenDownSearch.push(this.searchTerm);
@@ -96,7 +114,7 @@ export class SearchHalalPage {
           this.isHalal = false;
           break;
         }
-        else {         
+        else {
           this.isHalal = true;
         }
       }
@@ -105,10 +123,10 @@ export class SearchHalalPage {
       }
     }
 
-    if(this.isHalal == true){
+    if (this.isHalal == true) {
       this.presentAlert('This is Halal', this.searchTerm)
     }
-    if(this.isHalal == false){
+    if (this.isHalal == false) {
       this.presentAlert("This isn't Halal", this.searchTerm)
     }
   }
@@ -122,29 +140,31 @@ export class SearchHalalPage {
   }
 
   async selectSource() {
-    let actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Use Library',
-          handler: () => {
-            this.captureAndUpload(this.camera.PictureSourceType.PHOTOLIBRARY);
-            // this.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
-            this.hideCropping = true;
+    try {
+      let actionSheet = await this.actionSheetCtrl.create({
+        buttons: [
+          {
+            text: 'Use Library',
+            handler: () => {
+              this.captureAndUpload(this.camera.PictureSourceType.PHOTOLIBRARY);
+              this.hideCropping = true;
+            }
+          }, {
+            text: 'Capture Image',
+            handler: () => {
+              this.captureAndUpload(this.camera.PictureSourceType.CAMERA);
+              this.hideCropping = true;
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel'
           }
-        }, {
-          text: 'Capture Image',
-          handler: () => {
-            // this.sourceType = this.camera.PictureSourceType.CAMERA;
-            this.captureAndUpload(this.camera.PictureSourceType.CAMERA);
-            this.hideCropping = true;
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel'
-        }
-      ]
-    });
-    await actionSheet.present();
+        ]
+      });
+      await actionSheet.present();
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async startUpload() {
@@ -166,34 +186,35 @@ export class SearchHalalPage {
     const photoRef = this.afs.collection('halalCheck').doc(docId)
 
     // Firestore observable, dismiss loader when data is available
-    photoRef.valueChanges().subscribe( data => {
-       this.result$ = data
-       console.log(this.result$)
-       if(this.result$){
-         this.hideLoader()
-       }
-     })
+    photoRef.valueChanges().subscribe(data => {
+      this.result$ = data
+      console.log(this.result$)
+      if (this.result$) {
+        this.hideLoader()
+      }
+    })
 
     // The main task
-    // this.image = 'data:image/jpg;base64,' + this.imageBase64;
     this.task = this.storage.ref(path).putString(this.imageBase64, 'data_url');
   }
 
   // Gets the pic from the native camera then starts the upload
-  async captureAndUpload(sourceType: PictureSourceType) {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: sourceType,
-      correctOrientation: true
-    }
+  captureAndUpload(sourceType: PictureSourceType) {
+      const options: CameraOptions = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        sourceType: sourceType,
+        correctOrientation: true
+      }
 
     this.camera.getPicture(options).then((ImageData) => {
       this.image = 'data:image/png;base64,' + ImageData;
-    });
-  }
+    }, (err) => {
+      console.log(err)
+    })
+}
 
   async presentAlert(msg: string, item: string) {
     const alert = await this.alertController.create({
@@ -211,7 +232,7 @@ export class SearchHalalPage {
       spinner: 'dots'
     }).then((res) => {
       res.present();
- 
+
       res.onDidDismiss().then((dis) => {
         console.log('Loading dismissed!');
       });

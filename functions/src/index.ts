@@ -6,14 +6,14 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
-// const env = functions.config();
-// const algoliasearch = require('algoliasearch');
+const env = functions.config();
+const algoliasearch = require('algoliasearch');
 const vision = require('@google-cloud/vision');
 
 // Cloud Vision
 const visionClient = new vision.ImageAnnotatorClient();
-// const client = algoliasearch(env.algolia.appid, env.algolia.apikey, env.algolia.indexname);
-//const coll = client.initIndex('dev_Items');
+const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
+const coll = client.initIndex('dev_Ingredients');
 
 
 // Dedicated bucket for cloud function invocation
@@ -43,8 +43,9 @@ export const imageTagger = functions.storage
     // Map the data to desired format
     //var nonHalal: boolean;
     const textfound = results[0].textAnnotations.map((obj: { description: string }) => obj.description.toLowerCase().toString());
-    const textArray = textfound[0].match(/(?:[^,.:(][^,.:(]+|\([^)]+\))+/g);
-    const textDetected = trimArray(textArray);
+    const textDetected = textfound[0].match(/([a-zA-Z0-9][\s]*)+/g);///(?:[^,.:(][^,.:(]+|\([^)]+\))+/g);
+    // const textDetected = trimArray(textArray);
+    console.log(textDetected);
 
     for (let index = 0; index < textDetected.length; index++) {
       console.log(textDetected[index]);
@@ -81,14 +82,15 @@ export const imageTagger = functions.storage
 
     //return docRef.set({ textDetected });
   });
-function trimArray(arr: Array<string>) {
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  }
-  return arr;
-}
 
-/* exports.indexItems = functions.firestore
+// function trimArray(arr: Array<string>) {
+//   for (let i = 0; i < arr.length; i++) {
+//     arr[i] = arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+//   }
+//   return arr;
+// }
+
+exports.indexItems = functions.firestore
   .document('Ingredients/{itemId}')
   .onCreate((snap, context) => {
     const data = snap.data();
@@ -101,20 +103,13 @@ function trimArray(arr: Array<string>) {
     })
   });
 
-  exports.unindexItems = functions.firestore
-  .document('Ingredients/{itemId}')
-  .onDelete((snap, context) => {
-    const objectId = snap.id;
+  // exports.unindexItems = functions.firestore
+  // .document('Ingredients/{itemId}')
+  // .onDelete((snap, context) => {
+  //   const objectId = snap.id;
 
-    //Delete an Id from the algolia index
-    return coll.deleteObject({
-      objectId
-    })
-  }); */
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+  //   //Delete an Id from the algolia index
+  //   return index.deleteObject({
+  //     objectId
+  //   })
+  // });
