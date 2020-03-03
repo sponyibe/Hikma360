@@ -65,10 +65,6 @@ export class AddStorePage implements OnInit {
         this.store = this.favourites.Store[this.index];
       });
     }
-
-    // const now = new Date();
-    // this.store.datePurchased = now.toISOString();
-    // console.log(this.store.datePurchased)
   }
 
   addStore() {
