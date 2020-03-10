@@ -16,6 +16,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { AddItemPageModule } from './add-item/add-item.module';
@@ -41,6 +42,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     Network,
     Geolocation,
     InAppBrowser,
+    Diagnostic,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],

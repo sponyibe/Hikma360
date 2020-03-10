@@ -37,11 +37,14 @@ export class RestaurantsPage {
     private platform: Platform) { }
 
   ionViewWillEnter() {
+    
 
     this.platform.ready().then(() => {
       this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => {
         this.usersLocation.lat = position.coords.latitude
         this.usersLocation.lng = position.coords.longitude
+
+        this.presentAlert(this.usersLocation.lat, this.usersLocation.lng)
       });
     });
 
@@ -54,10 +57,13 @@ export class RestaurantsPage {
       return;
     }
 
-    this.locationService.getLocations()
+    console.log('before loading')
+    this.subscription = this.locationService.getLocations()
       .subscribe(restaurantList => {
         // this.places = restaurantList;
         this.places = this.applyHaversine(restaurantList)
+
+        console.log('got data')
 
         this.places.sort((locationA, locationB) => {
           return locationA.distance - locationB.distance;
@@ -72,7 +78,9 @@ export class RestaurantsPage {
         //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
         // }
         this.filtered = this.data.slice(0);
-      });
+      })
+
+      console.log('after subscribe')
   }
 
   searchRestaurantList(){
@@ -111,10 +119,10 @@ export class RestaurantsPage {
     }
   }
 
-  async presentAlert(msg: string) {
+  async presentAlert(msg: number, secondCoord: number) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      message: msg,
+      message: 'longitude: ' + msg.toString() + ',' + 'Laititude: ' + secondCoord.toString(),
       buttons: ['OK']
     });
 

@@ -1,11 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+
 
 
 import { environment } from '../../../environments/environment'
-
 import * as algoliasearch from 'algoliasearch';
-// const algoliasearch = require('algoliasearch');
+
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
@@ -57,7 +58,8 @@ export class SearchHalalPage {
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
-    private ingservice: IngredientService
+    private ingservice: IngredientService,
+    private diagnostic: Diagnostic
   ) {
     this.client = algoliasearch(environment.algolia.appid, environment.algolia.apikey);
     this.index = this.client.initIndex("dev_Ingredients");
@@ -73,21 +75,21 @@ export class SearchHalalPage {
       });
   }
 
-  newSearch(){
+  newSearch() {
 
     this.index.search({
       query: this.searchTerm,
       attributesToRetrieve: ['nonhalal', 'notes']
     }).
-    then((data) => {
-      // console.log(data.hits)
-      if(data.hits.length < 1){
-        this.presentAlert('This is Halal', this.searchTerm, 'None')
-      }
-      else{
-        this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
-      }
-    });
+      then((data: any) => {
+        // console.log(data.hits)
+        if (data.hits.length < 1) {
+          this.presentAlert('This is Halal', this.searchTerm, 'None')
+        }
+        else {
+          this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
+        }
+      });
   }
 
   //For Try 3
@@ -200,25 +202,25 @@ export class SearchHalalPage {
 
   // Gets the pic from the native camera then starts the upload
   captureAndUpload(sourceType: PictureSourceType) {
-      const options: CameraOptions = {
-        quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        sourceType: sourceType,
-        correctOrientation: true
-      }
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: sourceType,
+      correctOrientation: true
+    }
 
     this.camera.getPicture(options).then((ImageData) => {
       this.image = 'data:image/png;base64,' + ImageData;
     }, (err) => {
       console.log(err)
     })
-}
+  }
 
   async presentAlert(msg: string, item: string, notes: string) {
     const alert = await this.alertController.create({
-      header: 'Is ' + item + ' Halal?', 
+      header: 'Is ' + item + ' Halal?',
       message: msg + '<br><strong> Additional notes</strong>:' + notes,
       buttons: ['OK'],
     });
