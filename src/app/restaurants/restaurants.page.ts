@@ -85,7 +85,7 @@ export class RestaurantsPage {
   loadData(event) {
     setTimeout(() => {
       console.log('Done');
-      this.dataList = this.dataList.concat(this.data.slice(this.numOfItemsDisplaying, this.numOfItemsDisplaying + 24));
+      this.dataList = this.dataList.concat(this.locationService.restaurantData.slice(this.numOfItemsDisplaying, this.numOfItemsDisplaying + 24));
       this.numOfItemsDisplaying += 25;
 
       event.target.complete();

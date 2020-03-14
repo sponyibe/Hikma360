@@ -57,13 +57,13 @@ export class GroceryStoresPage {
             // this.data = this.groceryStores.filter(i => i.distance < 100)
     
             this.groceryStoreService.groceryStoresData = [...this.groceryStores];
-            this.storeList = this.data.slice(0, 25);
+            this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 25);
             this.numOfItemsToDisplay = 25;
     
             // if(this.data.length <= 0){
             //   this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
             // }
-            this.filteredList = this.data.slice(0);
+            // this.filteredList = this.data.slice(0);
           });
       });
     });
@@ -171,7 +171,7 @@ export class GroceryStoresPage {
   loadStoresData(event) {
     setTimeout(() => {
       console.log('Done');
-      this.storeList = this.storeList.concat(this.data.slice(this.numOfItemsToDisplay, this.numOfItemsToDisplay + 24));
+      this.storeList = this.storeList.concat(this.groceryStoreService.groceryStoresData.slice(this.numOfItemsToDisplay, this.numOfItemsToDisplay + 24));
       this.numOfItemsToDisplay += 25;
 
       event.target.complete();
