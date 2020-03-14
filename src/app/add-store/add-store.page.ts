@@ -101,7 +101,7 @@ export class AddStorePage implements OnInit {
         this.navCtrl.navigateBack('/favourite-store/' + this.id);
         this.showToast('Store added');
       }, err => {
-        this.showToast('There was a problems adding your favourite store: ' + err);
+        this.showToast('There was a problem adding your favourite store: ' + err);
       });
     }
   }
