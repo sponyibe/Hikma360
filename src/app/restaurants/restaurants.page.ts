@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocationsService, Restaurant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Subscription } from 'rxjs';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-restaurants',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./restaurants.page.scss'],
 })
 export class RestaurantsPage {
+
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   private subscription: Subscription;
   public places: Restaurant[];
@@ -24,7 +27,7 @@ export class RestaurantsPage {
   }
 
   public top: string;
-  public search;
+  public search: any;
   public filtered: Restaurant[];
 
   constructor(public locationService: LocationsService,
@@ -43,7 +46,6 @@ export class RestaurantsPage {
     });
 
     if (this.locationService.restaurantData) {
-      console.log("In here")
       this.data = this.locationService.restaurantData;
 
       this.dataList = this.data.slice(0, 24);
@@ -71,13 +73,14 @@ export class RestaurantsPage {
         // }
         this.filtered = this.data.slice(0);
       });
-
   }
 
   searchRestaurantList(){
     console.log(this.top)
     console.log(this.search)
     this.dataList = this.filtered;
+
+    this.toggleInfiniteScroll()
 
     if(this.top == "cuisine"){
       const sample = this.filtered.filter(
@@ -183,6 +186,21 @@ export class RestaurantsPage {
         event.target.disabled = true;
       }
     }, 500);
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  }
+
+  clearSearch(){
+    this.toggleInfiniteScroll()
+    this.top = ""
+    this.search = ""
+    this.data = this.locationService.restaurantData;
+
+    this.dataList = this.data.slice(0, 24);
+    this.numOfItemsDisplaying = 25;
+    // this.filtered = this.data.slice(0);
   }
 
   // ionViewWillUnload() {

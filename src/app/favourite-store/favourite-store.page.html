@@ -9,9 +9,12 @@
 
 <ion-content>
   
-  <ion-list>
+  <ion-list lines="full">
     <ion-item button *ngFor="let store of favourites.Store; let i = index"
       [routerLink]="['/add-store', favourites.id, i]">
+      <ion-icon *ngIf="i === 0" class="Best" slot="start" name="star"></ion-icon> 
+      <ion-icon *ngIf="i === 1" class="SecondBest" slot="start" name="star"></ion-icon> 
+      <ion-icon *ngIf="i === 2" class="ThirdBest" slot="start" name="star"></ion-icon> 
       <ion-label>{{ store.Name }}</ion-label>
     </ion-item>
   </ion-list>

@@ -8,11 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list lines="full">
       <ion-item button *ngFor="let item of favesLoggedIn" [routerLink]="['/favourite-store', item.id]">
         <ion-label>{{item.itemPurchased}}</ion-label>
       </ion-item>
   </ion-list>
+  
 
   <div><i> Click on the '+' icon to begin adding items</i></div>
 
