@@ -26,6 +26,10 @@ export class HalalOrganizationPage{
 
   ngOnInit() { 
 
+  }
+
+  async ionViewDidEnter(){
+
     this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
       this.certifyingorganizations = certifyingorganization;
@@ -58,26 +62,11 @@ export class HalalOrganizationPage{
     });
   }
 
-  // searchOrgList(){
-  //   this.certifyingorganizations = this.filtered;
-
-  //   console.log(this.filtered)
-
-  //   console.log(this.certifyingorganizations)
-
-  //   let sample = this.filtered.filter(
-  //     (thing, i, arr) => arr.findIndex(t => t.OrganisationsCertified === thing.OrganisationsCertified) === i);
-
-  //   sample = this.filtered.filter( type =>{
-  //     console.log(type.OrganisationsCertified)
-  //     type.OrganisationsCertified.toLowerCase() == this.searchOrgTerm.toLowerCase()
-  //   })
-  //   console.log(sample);
-
-  // }
+  
 
   ionViewWillLeave(){
     console.log("Leave init")
     // this.subscription.unsubscribe()
   }
 }
+
