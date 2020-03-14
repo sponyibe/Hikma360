@@ -46,7 +46,7 @@ export class RestaurantsPage {
         this.usersLocation.lng = position.coords.longitude
 
         if (this.locationService.restaurantData) {
-          this.dataList = this.locationService.restaurantData;
+          this.dataList = [...this.locationService.restaurantData];
     
           this.dataList = this.locationService.restaurantData.slice(0, 24);
           this.numOfItemsDisplaying = 25;

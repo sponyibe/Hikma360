@@ -39,37 +39,38 @@ export class GroceryStoresPage {
       this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((pos) => {
         this.usersLocation.lat = pos.coords.latitude
         this.usersLocation.lng = pos.coords.longitude
+
+        if (this.groceryStoreService.groceryStoresData) {
+          this.storeList = [...this.groceryStoreService.groceryStoresData];
+    
+          this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 24);
+          this.numOfItemsToDisplay = 25;
+          // this.filteredList = this.data.slice(0);
+          return;
+        }
+    
+        this.groceryStoreService.getGroceryStores()
+          .subscribe(groceryStoresList => {
+            this.groceryStores = this.applyHaversine(groceryStoresList)
+    
+            this.groceryStores.sort(this.compare);
+            // this.data = this.groceryStores.filter(i => i.distance < 100)
+    
+            this.groceryStoreService.groceryStoresData = [...this.groceryStores];
+            this.storeList = this.data.slice(0, 25);
+            this.numOfItemsToDisplay = 25;
+    
+            // if(this.data.length <= 0){
+            //   this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
+            // }
+            this.filteredList = this.data.slice(0);
+          });
       });
     });
+  }
 
-    if (this.groceryStoreService.groceryStoresData) {
-      this.data = this.groceryStoreService.groceryStoresData;
-
-      this.storeList = this.data.slice(0, 24);
-      this.numOfItemsToDisplay = 25;
-      this.filteredList = this.data.slice(0);
-      return;
-    }
-
-    this.groceryStoreService.getGroceryStores()
-      .subscribe(groceryStoresList => {
-        this.groceryStores = this.applyHaversine(groceryStoresList)
-
-        this.groceryStores.sort((locationA, locationB) => {
-          return locationA.distance - locationB.distance;
-        });
-        this.data = this.groceryStores.filter(i => i.distance < 100)
-
-        this.groceryStoreService.groceryStoresData = this.data;
-        this.storeList = this.data.slice(0, 25);
-        this.numOfItemsToDisplay = 25;
-
-        // if(this.data.length <= 0){
-        //   this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
-        // }
-        this.filteredList = this.data.slice(0);
-      });
-
+  compare(a, b) {
+    return a.distance - b.distance
   }
 
   searchList() {
