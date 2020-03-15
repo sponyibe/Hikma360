@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { Observable } from "rxjs";
+// import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-restaurants',
@@ -33,7 +35,7 @@ export class RestaurantsPage {
   constructor(public locationService: LocationsService,
     public geolocation: Geolocation,
     private alertController: AlertController,
-    public router: Router, 
+    public router: Router,
     private platform: Platform) { }
 
   ionViewWillEnter() {
@@ -42,79 +44,100 @@ export class RestaurantsPage {
       this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => {
         this.usersLocation.lat = position.coords.latitude
         this.usersLocation.lng = position.coords.longitude
+
+        if (this.locationService.restaurantData) {
+          this.dataList = [...this.locationService.restaurantData];
+    
+          this.dataList = this.locationService.restaurantData.slice(0, 24);
+          this.numOfItemsDisplaying = 25;
+          // this.filtered = this.data.slice(0);
+          return;
+        }
+    
+        console.log('before loading')
+        this.subscription = this.locationService.getLocations()
+          .subscribe(restaurantList => {
+            // this.places = restaurantList;
+            this.places = this.applyHaversine(restaurantList)
+    
+            this.places.sort(this.compare);
+            // this.data = [...this.places.filter(i => i.distance < 100)]
+    
+            this.locationService.restaurantData = [...this.places];
+            this.dataList = this.locationService.restaurantData.slice(0, 25);
+            this.numOfItemsDisplaying = 25;
+    
+            // if (this.data.length <= 0) {
+            //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
+            // }
+            // this.filtered = this.data.slice(0);
+          })
       });
     });
 
-    if (this.locationService.restaurantData) {
-      this.data = this.locationService.restaurantData;
-
-      this.dataList = this.data.slice(0, 24);
-      this.numOfItemsDisplaying = 25;
-      this.filtered = this.data.slice(0);
-      return;
-    }
-
-    this.locationService.getLocations()
-      .subscribe(restaurantList => {
-        // this.places = restaurantList;
-        this.places = this.applyHaversine(restaurantList)
-
-        this.places.sort((locationA, locationB) => {
-          return locationA.distance - locationB.distance;
-        });
-        this.data = this.places.filter(i => i.distance < 100)
-
-        this.locationService.restaurantData = this.data;
-        this.dataList = this.data.slice(0, 25);
-        this.numOfItemsDisplaying = 25;
-
-        // if (this.data.length <= 0) {
-        //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
-        // }
-        this.filtered = this.data.slice(0);
-      });
+    
   }
 
-  searchRestaurantList(){
+  compare(a, b) {
+    return a.distance - b.distance
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      console.log('Done');
+      this.dataList = this.dataList.concat(this.locationService.restaurantData.slice(this.numOfItemsDisplaying, this.numOfItemsDisplaying + 24));
+      this.numOfItemsDisplaying += 25;
+
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.dataList.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  searchRestaurantList() {
     console.log(this.top)
     console.log(this.search)
     this.dataList = this.filtered;
 
     this.toggleInfiniteScroll()
 
-    if(this.top == "cuisine"){
+    if (this.top == "cuisine") {
       const sample = this.filtered.filter(
         (thing, i, arr) => arr.findIndex(t => t.CuisneType === thing.CuisneType) === i);
 
-      this.dataList = this.filtered.filter( type =>
+      this.dataList = this.filtered.filter(type =>
         type.CuisneType.toLowerCase() == this.search.toLowerCase()
       )
       // console.log(this.dataList);
     }
-    if(this.top == "rating"){
+    if (this.top == "rating") {
       const sample = this.filtered.filter(
         (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
 
-      this.dataList = this.filtered.filter( type =>
+      this.dataList = this.filtered.filter(type =>
         type.Rating == this.search
       )
       // console.log(this.dataList);
     }
-    if(this.top == "name"){
+    if (this.top == "name") {
       const sample = this.filtered.filter(
         (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
 
-      this.dataList = this.filtered.filter( type =>
+      this.dataList = this.filtered.filter(type =>
         type.Name.toLowerCase() == this.search.toLowerCase()
       )
       // console.log(this.dataList);
     }
   }
 
-  async presentAlert(msg: string) {
+  async presentAlert(msg, secondCoord: number) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      message: msg,
+      message: 'longitude: ' + msg.toString() + ',' + 'Laititude: ' + secondCoord.toString(),
       buttons: ['OK']
     });
 
@@ -123,10 +146,8 @@ export class RestaurantsPage {
 
   applyHaversine(locations: Restaurant[]) {
 
-    console.log(this.usersLocation)
-
+    // console.log(this.usersLocation)
     locations.map((location) => {
-
 
       let placeLocation = {
         lat: location.Latitude,
@@ -172,27 +193,11 @@ export class RestaurantsPage {
     return x * Math.PI / 180;
   }
 
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      this.dataList = this.dataList.concat(this.data.slice(this.numOfItemsDisplaying, this.numOfItemsDisplaying + 24));
-      this.numOfItemsDisplaying += 25;
-
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.dataList.length == 1000) {
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
-
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
-  clearSearch(){
+  clearSearch() {
     this.toggleInfiniteScroll()
     this.top = ""
     this.search = ""
@@ -203,9 +208,11 @@ export class RestaurantsPage {
     // this.filtered = this.data.slice(0);
   }
 
-  // ionViewWillUnload() {
-  //   console.log("Leave init")
-  //   this.subscription.unsubscribe()
-  // }
+  ionViewWillUnload() {
+    console.log("Leave init")
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+  }
 
 }

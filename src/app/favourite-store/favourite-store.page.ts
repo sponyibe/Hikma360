@@ -46,7 +46,7 @@ export class FavouriteStorePage implements OnInit {
     // }
   }
 
-  ionViewDidEnter(){
+  ionViewWillEnter(){
     let id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id){
       this.favouritesService.getFavouritesDetails(id).subscribe(store => {
