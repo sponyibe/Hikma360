@@ -83,11 +83,14 @@ export class SearchHalalPage {
     }).
       then((data: any) => {
         // console.log(data.hits)
-        if (data.hits.length < 1) {
-          this.presentAlert('This is Halal', this.searchTerm, 'None')
+        if (data.hits.length) {
+          this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
+        }
+        else if (!this.getList()) {
+          this.presentAlert("This isn't Halal", this.searchTerm, 'None')
         }
         else {
-          this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
+          this.presentAlert('This is Halal', this.searchTerm, 'None')
         }
       });
   }
@@ -98,40 +101,47 @@ export class SearchHalalPage {
     // console.log(JSON.stringify(this.ingredient))
   }
 
-  // getList() {
-  //   this.initializeItems();
+  getList() {
+    this.initializeItems();
 
-  //   if (this.brokenDownSearch.length > 1) {
-  //     this.brokenDownSearch.push(this.searchTerm);
-  //   }
+    this.brokenDownSearch = this.searchTerm.split(' ')
 
-  //   console.log(this.brokenDownSearch);
+    if (this.brokenDownSearch.length > 1) {
+      this.brokenDownSearch.push(this.searchTerm);
+    }
 
-  //   for (let i = 0; i < this.brokenDownSearch.length; i++) {
+    console.log(this.brokenDownSearch);
 
-  //     for (let index = 0; index < this.ingredient.length; index++) {
-  //       this.ingredient[index].nonhalal.toLowerCase()
+    // Loop through the individual search terms
+    for (let i = 0; i < this.brokenDownSearch.length; i++) {
 
-  //       if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
-  //         this.isHalal = false;
-  //         break;
-  //       }
-  //       else {
-  //         this.isHalal = true;
-  //       }
-  //     }
-  //     if (this.isHalal == false) {
-  //       break;
-  //     }
-  //   }
+      // Loop through the database
+      for (let index = 0; index < this.ingredient.length; index++) {
+        this.ingredient[index].nonhalal.toLowerCase()
 
-  //   if (this.isHalal == true) {
-  //     this.presentAlert('This is Halal', this.searchTerm)
-  //   }
-  //   if (this.isHalal == false) {
-  //     this.presentAlert("This isn't Halal", this.searchTerm)
-  //   }
-  // }
+        // The item is in the DB so it's false
+        if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
+          this.isHalal = false;
+          break;
+        }
+        // The item is not in the DB so it's true
+        else {
+          this.isHalal = true;
+        }
+      }
+      // Once one of the search terms have been found break.
+      if (this.isHalal === false) {
+        break;
+      }
+    }
+
+    if(!this.isHalal){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 
   saveCroppedImage() {
     this.imageBase64 = (this.angularCropper.crop() as ImageCroppedEvent).base64;

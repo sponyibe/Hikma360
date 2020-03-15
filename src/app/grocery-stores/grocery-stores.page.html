@@ -34,7 +34,7 @@
     </ion-row>
   </ion-grid>
 
-  <ng-container *ngIf="!data || data.length == 0">
+  <ng-container *ngIf="!storeList || storeList.length == 0">
     <ion-list>
       <div *ngFor="let n of [0,1,2,3,4,5]" padding>
         <ion-skeleton-text animated></ion-skeleton-text>
