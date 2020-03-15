@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Events } from '@ionic/angular';
+import { Events,ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { AuthGuardService } from '../services/auth-guard.service'
 import { Router } from '@angular/router';
@@ -38,7 +38,7 @@ export class MenuPage implements OnInit {
 
   ];
 
-  constructor(public afAuth: AngularFireAuth, public ev: Events, private authService: AuthService, private agService: AuthGuardService,public router:Router) {
+  constructor(public afAuth: AngularFireAuth, public ev: Events, private authService: AuthService, private agService: AuthGuardService,public router:Router,public toastCtrl: ToastController) {
     ev.subscribe('loggedIn', stateData => {
       console.log(stateData);
       this.authState = stateData
@@ -56,6 +56,7 @@ export class MenuPage implements OnInit {
   logout() {
     this.authService.logout().then(value => {
       if (value){
+        this.presentToast();
         this.router.navigateByUrl('/menu/home');
         this.authState = false;
       }
@@ -63,6 +64,13 @@ export class MenuPage implements OnInit {
         console.log("error")
       }
     })
+  }
+
+   async presentToast(){
+    let toast = await this.toastCtrl.create({message: 'Logged out',
+    duration: 3000,
+    position: 'bottom'});
+    toast.present();
   }
 
 

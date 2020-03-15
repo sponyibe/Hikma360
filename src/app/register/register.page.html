@@ -44,14 +44,14 @@
             <ion-item>
               <ion-input name="Useremail" type="email" placeholder="Email Address" formControlName="useremail" required></ion-input>
             </ion-item>
-            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'useremail')">Please a valid email address</div>
+            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'useremail')">Please enter a valid email address</div>
           </ion-col>
        
           <ion-col size="10" offset="1">
             <ion-item>
               <ion-input name="Password" type="password" placeholder="Password" formControlName="userpassword" required></ion-input>
             </ion-item>
-            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'userpassword')">Password must have uppercase,lowercase and numbers</div>
+            <div style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.hasError('required', 'userpassword')">Password must have uppercase letters, lowercase letters and numbers</div>
           </ion-col>
           
           <ion-col size="10" offset="1">
