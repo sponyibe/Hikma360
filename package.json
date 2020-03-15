@@ -23,6 +23,7 @@
     "@angular/router": "^7.2.2",
     "@ionic-native/camera": "^5.14.0",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/diagnostic": "^5.22.0",
     "@ionic-native/geolocation": "^5.15.0",
     "@ionic-native/in-app-browser": "^5.17.0",
     "@ionic-native/network": "^5.17.1",
@@ -40,8 +41,10 @@
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-inappbrowser": "^3.1.0",
+    "cordova-plugin-ios-camera-permissions": "^1.2.0",
     "cordova-plugin-network-information": "^2.0.2",
     "cordova-plugin-youtube-video-player": "^2.3.0",
+    "cordova.plugins.diagnostic": "^5.0.1",
     "core-js": "^2.5.4",
     "firebase": "^6.6.2",
     "firebase-admin": "^8.6.0",
@@ -94,10 +97,16 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-camera": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-ios-camera-permissions": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova.plugins.diagnostic": {
+        "ANDROID_SUPPORT_VERSION": "28.+"
+      }
     },
     "platforms": [
       "ios",

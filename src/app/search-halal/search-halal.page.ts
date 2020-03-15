@@ -1,11 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+
 
 
 import { environment } from '../../../environments/environment'
-
 import * as algoliasearch from 'algoliasearch';
-// const algoliasearch = require('algoliasearch');
+
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
@@ -57,7 +58,8 @@ export class SearchHalalPage {
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
-    private ingservice: IngredientService
+    private ingservice: IngredientService,
+    private diagnostic: Diagnostic
   ) {
     this.client = algoliasearch(environment.algolia.appid, environment.algolia.apikey);
     this.index = this.client.initIndex("dev_Ingredients");
@@ -73,63 +75,63 @@ export class SearchHalalPage {
       });
   }
 
-  newSearch(){
+  newSearch() {
 
     this.index.search({
       query: this.searchTerm,
-      attributesToRetrieve: ['nonhalal']
+      attributesToRetrieve: ['nonhalal', 'notes']
     }).
-    then((data) => {
-      console.log(data.hits[0])
-      if(data.hits.length < 1){
-        this.presentAlert('This is Halal', this.searchTerm)
-      }
-      else{
-        this.presentAlert("This isn't Halal", this.searchTerm)
-      }
-    });
+      then((data: any) => {
+        // console.log(data.hits)
+        if (data.hits.length < 1) {
+          this.presentAlert('This is Halal', this.searchTerm, 'None')
+        }
+        else {
+          this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
+        }
+      });
   }
 
   //For Try 3
   initializeItems() {
     this.ingredient = this.loadedIngredientList
-    console.log(JSON.stringify(this.ingredient))
+    // console.log(JSON.stringify(this.ingredient))
   }
 
-  getList() {
-    this.initializeItems();
+  // getList() {
+  //   this.initializeItems();
 
-    if (this.brokenDownSearch.length > 1) {
-      this.brokenDownSearch.push(this.searchTerm);
-    }
+  //   if (this.brokenDownSearch.length > 1) {
+  //     this.brokenDownSearch.push(this.searchTerm);
+  //   }
 
-    console.log(this.brokenDownSearch);
+  //   console.log(this.brokenDownSearch);
 
-    for (let i = 0; i < this.brokenDownSearch.length; i++) {
+  //   for (let i = 0; i < this.brokenDownSearch.length; i++) {
 
-      for (let index = 0; index < this.ingredient.length; index++) {
-        this.ingredient[index].nonhalal.toLowerCase()
+  //     for (let index = 0; index < this.ingredient.length; index++) {
+  //       this.ingredient[index].nonhalal.toLowerCase()
 
-        if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
-          this.isHalal = false;
-          break;
-        }
-        else {
-          this.isHalal = true;
-        }
-      }
-      if (this.isHalal == false) {
-        break;
-      }
-    }
+  //       if (this.brokenDownSearch[i].toLowerCase() == this.ingredient[index].nonhalal.toLowerCase()) {
+  //         this.isHalal = false;
+  //         break;
+  //       }
+  //       else {
+  //         this.isHalal = true;
+  //       }
+  //     }
+  //     if (this.isHalal == false) {
+  //       break;
+  //     }
+  //   }
 
-    if (this.isHalal == true) {
-      this.presentAlert('This is Halal', this.searchTerm)
-    }
-    if (this.isHalal == false) {
-      this.presentAlert("This isn't Halal", this.searchTerm)
-    }
-  }
+  //   if (this.isHalal == true) {
+  //     this.presentAlert('This is Halal', this.searchTerm)
+  //   }
+  //   if (this.isHalal == false) {
+  //     this.presentAlert("This isn't Halal", this.searchTerm)
+  //   }
+  // }
 
   saveCroppedImage() {
     this.imageBase64 = (this.angularCropper.crop() as ImageCroppedEvent).base64;
@@ -178,7 +180,7 @@ export class SearchHalalPage {
 
     // const timestamp = new Date().getTime().toString();
     const docId = this.afs.createId();
-    console.log(docId)
+    // console.log(docId)
 
     const path = `${docId}.jpg`;
 
@@ -200,26 +202,26 @@ export class SearchHalalPage {
 
   // Gets the pic from the native camera then starts the upload
   captureAndUpload(sourceType: PictureSourceType) {
-      const options: CameraOptions = {
-        quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        sourceType: sourceType,
-        correctOrientation: true
-      }
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: sourceType,
+      correctOrientation: true
+    }
 
     this.camera.getPicture(options).then((ImageData) => {
       this.image = 'data:image/png;base64,' + ImageData;
     }, (err) => {
       console.log(err)
     })
-}
+  }
 
-  async presentAlert(msg: string, item: string) {
+  async presentAlert(msg: string, item: string, notes: string) {
     const alert = await this.alertController.create({
       header: 'Is ' + item + ' Halal?',
-      message: msg,
+      message: msg + '<br><strong> Additional notes</strong>:' + notes,
       buttons: ['OK'],
     });
 
