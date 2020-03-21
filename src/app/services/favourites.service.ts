@@ -6,6 +6,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { Timestamp, FieldValue } from '@firebase/firestore-types';
 import * as firebase from 'firebase/app'
 
+
 export interface Store {
   Name: string,
   datePurchased: string,
@@ -113,5 +114,9 @@ export class FavouritesService {
   clearStore(store:Favourites, userId): Promise<void> {
     console.log(store)
       return this.afs.collection('Favourites').doc(store.id).set({ Store: [], itemPurchased: store.itemPurchased, userId: userId });
+  }
+
+  deleteItem(id) {
+    return this.afs.collection('Favourites').doc(id).delete();
   }
 }

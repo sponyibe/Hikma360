@@ -21,20 +21,20 @@ export class HalalOrganizationPage{
 
   constructor(private certifyingorganizationService : CertifyingOrganizationService, private loadingCtrl: LoadingController ) { }
 
-  // ngOnInit() {
-  // }
-
-  ngOnInit() { 
-
-  }
-
   async ionViewWillEnter(){
 
-    this.certifyingorganizationService.getCertifyingOrganization()
+    if(this.certifyingorganizationService.certifyingOrganizationsData){
+      this.certifyingorganizations = [...this.certifyingorganizationService.certifyingOrganizationsData]
+      this.loadedCertifyingOrganizationList = [...this.certifyingorganizations];
+    }
+
+    this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
       this.certifyingorganizations = certifyingorganization;
       // console.log(this.certifyingorganizations)
       this.loadedCertifyingOrganizationList = certifyingorganization;
+
+      this.certifyingorganizationService.certifyingOrganizationsData = [...this.certifyingorganizations]
     });
   }
 
@@ -62,11 +62,11 @@ export class HalalOrganizationPage{
     });
   }
 
-  
-
   ionViewWillLeave(){
-    console.log("Leave init")
-    // this.subscription.unsubscribe()
+    if(this.subscription){
+      console.log("Leave init")
+      this.subscription.unsubscribe()
+    }
   }
 }
 
