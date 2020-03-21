@@ -28,7 +28,7 @@ export class HalalOrganizationPage{
 
   }
 
-  async ionViewDidEnter(){
+  async ionViewWillEnter(){
 
     this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
