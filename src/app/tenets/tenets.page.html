@@ -93,19 +93,29 @@
 
     <ion-slide>
       <h2>Understanding Halal by ECVOntario</h2>
+      <div>
+          <div *ngIf="!platform.is('ios')">
+              <embed width="420" height="315" src="https://www.youtube.com/embed/YGgJm16o-5M">
+          </div>
 
-      <div showWhen ="android">
-      <embed width="420" height="315" src="https://www.youtube.com/embed/YGgJm16o-5M">
+          <div *ngIf="platform.is('ios')">
+               <a href = "https://youtu.be/YGgJm16o-5M">
+                   <ion-card>
+                       <img src="assets/img/IMG_8709.jpg"/>
+                    </ion-card>
+                </a>
+          </div>
+
       </div>
       
-      
+    <!----  
       <div showWhen ="ios">
         <a href = "https://youtu.be/YGgJm16o-5M">
         <ion-card>
              <img src="assets/img/IMG_8709.jpg"/>
         </ion-card>
         </a>
-      </div>
+      </div>-->
     
     </ion-slide>
   </ion-slides>
