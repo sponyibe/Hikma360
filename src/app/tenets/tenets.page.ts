@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: "app-tenets",
@@ -7,7 +8,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   styleUrls: ["./tenets.page.scss"]
 })
 export class TenetsPage implements OnInit {
-  constructor() {}
+  constructor(public platform : Platform) {}
 
   ngOnInit() {}
 }

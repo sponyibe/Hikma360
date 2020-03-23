@@ -35,6 +35,7 @@ const routes: Routes = [
   { path: 'menu/image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
   { path: 'faq', loadChildren: './faq/faq.module#FaqPageModule' },
   { path: 'recover', loadChildren: './recover/recover.module#RecoverPageModule' },
+  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
 
 ];
 

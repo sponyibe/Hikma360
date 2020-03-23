@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ToastController, NavController } from "@ionic/angular";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { dateValidator } from '../Validators/date'
+import { dateValidator } from '../storeValidation/date'
 import { FavouritesService, Favourites, Store } from "../services/favourites.service";
 
 @Component({
