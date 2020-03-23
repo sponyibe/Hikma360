@@ -12,7 +12,7 @@ import { FilterGroceryStoresPage } from '../filter-grocery-stores/filter-grocery
   templateUrl: './restaurants.page.html',
   styleUrls: ['./restaurants.page.scss'],
 })
-export class RestaurantsPage{
+export class RestaurantsPage implements OnInit{
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('searchBar') searchBar: IonSearchbar;
@@ -39,9 +39,11 @@ export class RestaurantsPage{
     private platform: Platform,
     public modalCtrl: ModalController) { }
 
-  ionViewWillEnter() {
-
+  ngOnInit(){
     this.presentAlert('We currently only display restaurants based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest restaurant in the GTA')
+  }
+
+  ionViewWillEnter() {
 
     this.platform.ready().then(() => {
       this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => {

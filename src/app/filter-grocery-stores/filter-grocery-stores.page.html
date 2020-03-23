@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="success">
-    <ion-title>filter {{passedPage}}</ion-title>
+    <ion-title>Filter {{passedPage}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,7 @@
     <p *ngIf="numToAdd == 35" class="ion-padding more" (click)="viewLess()">view less</p>
   </ion-list>
 
-  <ion-list inset="true"> 
+  <ion-list inset="true">
     <ion-radio-group #ratingGroup allow-empty-selection name="auto" value="rating">
       <ion-list-header>
         <ion-label>Rating</ion-label>
@@ -61,8 +61,19 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button (click)="filterSearch()" expand="block" shape="round">
-    Search
-  </ion-button>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="close()" expand="block" fill="outline" shape="round">
+          close
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="filterSearch()" expand="block" shape="round">
+          Search
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-footer>

@@ -117,4 +117,8 @@ export class FilterGroceryStoresPage implements OnInit {
       this.modalCtrl.dismiss(null);
     }
   }
+
+  close(){
+    this.modalCtrl.dismiss(null);
+  }
 }
