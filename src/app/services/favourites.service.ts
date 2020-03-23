@@ -38,8 +38,7 @@ export class FavouritesService {
   private favourites: Observable<Favourites[]>
 
   constructor(private afAuth: AngularFireAuth ,private afs: AngularFirestore ) {
-    // console.log(this.afAuth.auth.currentUser.uid)
-    // , ref => ref.where('userId', '==', 'GzfmvEI7yhU34kvI11K5LbRY8Sa2')
+
     this.favouritesCollection = afs.collection<Favourites>('Favourites');
 
     this.favourites = this.favouritesCollection.snapshotChanges().pipe(
@@ -85,21 +84,18 @@ export class FavouritesService {
     return this.favouritesCollection.add(item)
   }
 
-  // deleteFavouriteStore(id: string): Promise<void> {
-  //   return this.favouritesCollection.doc(id).delete();
-  // }
-
   deleteFavouriteItem(id: string): Promise<void> {
     return this.favouritesCollection.doc(id).delete();
+  }
+
+  updateFavouriteItem(id:string,item: string): Promise<void> {
+    console.log(id, item)
+    return this.favouritesCollection.doc(id).update({itemPurchased: item})
   }
 
   deleteFavouriteSortedStore(store: Favourites, index: number): Promise<void> {
     return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayRemove(store.Store[index])})
   }
-
-  // updateFavouriteSortedStore(store: Favourites, index: number): Promise<void> {
-  //   return this.afs.collection('Favourites').doc(store.id).update({ Store: firebase.firestore.FieldValue.arrayUnion(store.Store[index])})
-  // }
 
   addStore(store:Favourites): Promise<void> {
     let addedStore = store.Store.length-1
@@ -114,9 +110,5 @@ export class FavouritesService {
   clearStore(store:Favourites, userId): Promise<void> {
     console.log(store)
       return this.afs.collection('Favourites').doc(store.id).set({ Store: [], itemPurchased: store.itemPurchased, userId: userId });
-  }
-
-  deleteItem(id) {
-    return this.afs.collection('Favourites').doc(id).delete();
   }
 }

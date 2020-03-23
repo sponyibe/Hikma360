@@ -34,7 +34,8 @@ const routes: Routes = [
   { path: 'menu/search-halal', loadChildren: './search-halal/search-halal.module#SearchHalalPageModule' },
   { path: 'menu/image-search', loadChildren: './image-search/image-search.module#ImageSearchPageModule' },
   { path: 'faq', loadChildren: './faq/faq.module#FaqPageModule' },
-  { path: 'recover', loadChildren: './recover/recover.module#RecoverPageModule' },
+  { path: 'recover', loadChildren: './recover/recover.module#RecoverPageModule' },  { path: 'filter-grocery-stores', loadChildren: './filter-grocery-stores/filter-grocery-stores.module#FilterGroceryStoresPageModule' },
+
 
 ];
 

@@ -11,22 +11,24 @@ import { Router } from '@angular/router';
 })
 export class AddItemPage implements OnInit {
 
-  passedText: ''
+  passedItem: ''
+  passedId: ''
 
   favourite: Favourites = {
     itemPurchased: '',
     Store: [],
     userId: ''
   };
+
   constructor(private afAuth: AngularFireAuth ,private navParams: NavParams, private modalCtrl: ModalController, private favouritesService: FavouritesService, private toastCtrl: ToastController, private router:Router) {
     if (this.afAuth.auth.currentUser){
       this.favourite.userId = this.afAuth.auth.currentUser.uid
-      // console.log(this.favourite.userId)
     }
    }
 
   ngOnInit() {
-    this.passedText = this.navParams.get('sampleText');
+    this.favourite.itemPurchased = this.navParams.get('updateItem');
+    this.passedId = this.navParams.get('updateItemId');
   }
 
   addItem(){
@@ -38,11 +40,22 @@ export class AddItemPage implements OnInit {
       this.showToast('There was a problem adding your item');
     });
   }
+
+  updateItems(){
+    this.favouritesService.updateFavouriteItem(this.passedId,this.favourite.itemPurchased).then(() =>{
+      this.router.navigateByUrl('/favourites');
+      this.showToast('Item added');
+      this.closeModal();
+    }, err => {
+      this.showToast('There was a problem adding your item');
+    })
+  }
   
   showToast(msg: string){
     this.toastCtrl.create({
       message: msg,
-      duration: 2000
+      duration: 2000,
+      cssClass: 'toast-class'
     }).then(toast => toast.present());
   }
 

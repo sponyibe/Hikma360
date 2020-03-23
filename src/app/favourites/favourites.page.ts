@@ -40,7 +40,7 @@ export class FavouritesPage implements OnInit {
   }
 
 
-  async addItemModal() {
+  async addItemModal(test) {
     const modal = await this.modalCtrl.create({
       component: AddItemPage,
       componentProps: {
@@ -50,25 +50,27 @@ export class FavouritesPage implements OnInit {
     modal.present();
   }
 
-  update(test) {
+  async update(test) {
     this.itemList.closeSlidingItems();
     console.log(test)
 
+    const modal = await this.modalCtrl.create({
+      component: AddItemPage,
+      componentProps: {
+        'updateItem': test.itemPurchased,
+        'updateItemId': test.id
+      }
+    });
+    modal.present();
+
   }
-
-  // delete(test) {
-  //   this.itemList.closeSlidingItems();
-  //   console.log(test)
-  //   this.favouritesService.deleteItem(test.id)
-
-  // }
 
   async delete(test) {
     this.itemList.closeSlidingItems();
     console.log(test)
 
     const alert = await this.alertController.create({
-      header: 'Delete Item',
+      header: 'Are you sure?',
       message: 'This action cannot be undone',
       buttons: [
         {
@@ -78,7 +80,7 @@ export class FavouritesPage implements OnInit {
         }, {
           text: 'Delete',
           handler: () => {
-            this.favouritesService.deleteItem(test.id)
+            this.favouritesService.deleteFavouriteItem(test.id)
           }
         }
       ]

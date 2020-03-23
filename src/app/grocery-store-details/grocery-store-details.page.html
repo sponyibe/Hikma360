@@ -18,7 +18,7 @@
       <p><strong>Hours of Operation: </strong>{{groceryStore.HoursofOperation}}</p>
       <p *ngIf="groceryStore.CertifedBy"> <strong>Certified By: </strong>{{groceryStore.CertifedBy}}</p>
       <p><strong>Store Type: </strong>{{groceryStore.StoreType}}</p>
-      <p><ngb-rating [(rate)]="groceryStore.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>{{groceryStore.Rating}}</p>
+      <p><ngb-rating [(rate)]="groceryStore.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating></p>
       <a *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
  
     </div>

@@ -23,6 +23,7 @@ import { AddItemPageModule } from './add-item/add-item.module';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilterGroceryStoresPageModule } from './filter-grocery-stores/filter-grocery-stores.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    FilterGroceryStoresPageModule,
     AddItemPageModule,
     AngularFireStorageModule,
     NgbModule.forRoot()

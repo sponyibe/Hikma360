@@ -2,20 +2,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocationsService, Restaurant } from "../services/locations.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Subscription } from 'rxjs';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform, ModalController, IonSearchbar } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { Observable } from "rxjs";
-// import { async } from '@angular/core/testing';
+import { FilterGroceryStoresPage } from '../filter-grocery-stores/filter-grocery-stores.page';
 
 @Component({
   selector: 'app-restaurants',
   templateUrl: './restaurants.page.html',
   styleUrls: ['./restaurants.page.scss'],
 })
-export class RestaurantsPage {
+export class RestaurantsPage{
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild('searchBar') searchBar: IonSearchbar;
 
   private subscription: Subscription;
   public places: Restaurant[];
@@ -36,21 +36,26 @@ export class RestaurantsPage {
     public geolocation: Geolocation,
     private alertController: AlertController,
     public router: Router,
-    private platform: Platform) { }
+    private platform: Platform,
+    public modalCtrl: ModalController) { }
 
   ionViewWillEnter() {
+
+    this.presentAlert('We currently only display restaurants based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest restaurant in the GTA')
 
     this.platform.ready().then(() => {
       this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => {
         this.usersLocation.lat = position.coords.latitude
         this.usersLocation.lng = position.coords.longitude
 
-        if (this.locationService.restaurantData) {
-          this.dataList = [...this.locationService.restaurantData];
-    
-          this.dataList = this.locationService.restaurantData.slice(0, 24);
-          this.numOfItemsDisplaying = 25;
-          this.filtered = this.locationService.restaurantData.slice(0);
+        if(this.filtered){
+          console.log(this.filtered)
+          this.dataList = [...this.filtered]
+          return;
+        }
+
+        else if (this.locationService.restaurantData) {
+          this.fastLoadRestaurants()
           return;
         }
     
@@ -72,9 +77,7 @@ export class RestaurantsPage {
             this.filtered = this.places.slice(0);
           })
       });
-    });
-
-    
+    });    
   }
 
   compare(a, b) {
@@ -96,43 +99,67 @@ export class RestaurantsPage {
     }, 500);
   }
 
-  searchRestaurantList() {
-    console.log(this.top)
-    console.log(this.search)
-    this.dataList = this.filtered;
-
-    this.infiniteScroll.disabled = true;
-
-    if (this.top == "cuisine") {
-      const sample = this.filtered.filter(
-        (thing, i, arr) => arr.findIndex(t => t.CuisneType === thing.CuisneType) === i);
-
-      this.dataList = this.filtered.filter(type =>
-        type.CuisneType.toLowerCase() == this.search.toLowerCase()
-      )
-    }
-    if (this.top == "rating") {
-      const sample = this.filtered.filter(
-        (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
-
-      this.dataList = this.filtered.filter(type =>
-        type.Rating == this.search
-      )
-    }
-    if (this.top == "name") {
-      const sample = this.filtered.filter(
-        (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
-
-      this.dataList = this.filtered.filter(type =>
-        type.Name.toLowerCase() == this.search.toLowerCase()
-      )
-    }
+  initializeRestaurantList(): void {
+    this.dataList = this.locationService.restaurantData.slice(0);
   }
 
-  async presentAlert(msg, secondCoord: number) {
+  fastLoadRestaurants(){
+    console.log('in fastLoad')
+    this.dataList = [...this.locationService.restaurantData];
+
+    this.dataList = this.locationService.restaurantData.slice(0, 24);
+    this.numOfItemsDisplaying = 25;
+  }
+
+  async searchModal() {
+    const modal = await this.modalCtrl.create({
+      component: FilterGroceryStoresPage,
+      componentProps: {
+        'stores': this.locationService.restaurantData,
+        'page': 'Restaurants'
+      }
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if(data['data'] === null){
+        this.fastLoadRestaurants()
+        this.infiniteScroll.disabled = false;
+        this.searchBar.disabled = false;
+      }else{
+        this.infiniteScroll.disabled = true;
+        this.searchBar.disabled = true;
+        this.dataList = data['data']
+        return this.filtered = data['data']
+      }
+    });
+    return await modal.present();
+  }
+
+  searchRestaurantByName(evt){
+    this.initializeRestaurantList();
+
+    const searchTerm = evt.srcElement.value;
+
+    if (!searchTerm) {
+      return;
+    }
+
+    this.dataList = this.dataList.filter(grocer => {
+      if (grocer.Name && searchTerm) {
+        if (grocer.Name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
+
+  
+
+  async presentAlert(msg) {
     const alert = await this.alertController.create({
-      header: 'Alert',
-      message: 'longitude: ' + msg.toString() + ',' + 'Laititude: ' + secondCoord.toString(),
+      header: 'Notice',
+      message: msg,
       buttons: ['OK']
     });
 

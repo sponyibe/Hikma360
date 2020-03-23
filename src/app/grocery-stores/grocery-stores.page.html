@@ -8,30 +8,15 @@
 </ion-header>
 
 <ion-content>
-  <p>We currently only display grocery stores based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest grocery store in the GTA<p>
-
+  <ion-fab vertical="top" horizontal="start">
+    <ion-fab-button size="small">
+      <ion-icon name="options" (click)="searchModal()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="6">
-        <ion-item>
-          <ion-select  [(ngModel)]="option" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Category">
-            <ion-select-option value="name">Name</ion-select-option>
-            <ion-select-option value="rating">Rating</ion-select-option>
-            <ion-select-option value="storeType">Store Type</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-input attribute="search" clearInput [(ngModel)]="searchGroceryStores" placeholder="Search"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-button size="small" Expand="block" (click)="searchList()">
-          Search
-        </ion-button>
+      <ion-col offset="2" size="10">
+        <ion-searchbar #search showcancelbutton="" (ionChange)="filterListByName($event)"></ion-searchbar>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -48,7 +33,8 @@
   </ng-container>
 
   <ion-list>
-    <ion-item button *ngFor="let groceryStores of storeList" [routerLink]="['/grocery-store-details', groceryStores.id]">
+    <ion-item button *ngFor="let groceryStores of storeList"
+      [routerLink]="['/grocery-store-details', groceryStores.id]">
       <ion-label>{{ groceryStores.Name }}
         <p>{{ groceryStores.distance }} km</p>
         <p><strong>Address: </strong>{{ groceryStores.Address }}</p>
@@ -57,9 +43,7 @@
   </ion-list>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadStoresData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more grocery stores...">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more grocery stores...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

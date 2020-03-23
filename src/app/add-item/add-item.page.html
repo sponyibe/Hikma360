@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="primary">
     <ion-title>Add an Item</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,25 +8,28 @@
 
   <p>Add a food item you would like to keep track of. e.g <i>Chicken, Fish</i></p>
 
-
   <ion-item>
-    <ion-label position="floating">Item</ion-label>
+    <ion-label position="floating">Item add</ion-label>
     <ion-input [(ngModel)]="favourite.itemPurchased"></ion-input>
   </ion-item>
-
 </ion-content>
 
 <ion-footer>
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button class="block" (click)="closeModal()">
+        <ion-button class="block" color="primary" (click)="closeModal()">
           Cancel
         </ion-button>
       </ion-col>
-      <ion-col>
+      <ion-col *ngIf="!passedId">
         <ion-button class="block" color="success" (click)="addItem()">
           Add
+        </ion-button>
+      </ion-col>
+      <ion-col *ngIf="passedId">
+        <ion-button class="block" color="success" (click)="updateItems()">
+          Update
         </ion-button>
       </ion-col>
     </ion-row>
