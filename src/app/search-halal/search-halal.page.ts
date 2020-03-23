@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
-
+import { Subscription } from 'rxjs';
 
 
 import { environment } from '../../../environments/environment'
@@ -45,6 +45,7 @@ export class SearchHalalPage {
   public sourceType: number;
   public message: string;
 
+  private subscription: Subscription;
   public imageBase64: string;
   public brokenDownSearch;
   public client: any;
@@ -68,7 +69,7 @@ export class SearchHalalPage {
   }
 
   ionViewWillEnter() {
-    this.ingservice.getIngredients()
+    this.subscription = this.ingservice.getIngredients()
       .subscribe(ingredients => {
         this.ingredient = ingredients;
         this.loadedIngredientList = ingredients;
@@ -231,7 +232,7 @@ export class SearchHalalPage {
   async presentAlert(msg: string, item: string, notes: string) {
     const alert = await this.alertController.create({
       header: 'Is ' + item + ' Halal?',
-      message: msg + '<br><strong> Additional notes</strong>:' + notes,
+      message: msg + '<br><strong> Additional notes</strong>: ' + notes,
       buttons: ['OK'],
     });
 
@@ -256,5 +257,11 @@ export class SearchHalalPage {
     setTimeout(() => {
       this.loadingCtrl.dismiss();
     }, 4000);
+  }
+
+  ionViewWillLeave() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 }

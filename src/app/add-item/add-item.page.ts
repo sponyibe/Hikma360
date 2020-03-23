@@ -32,7 +32,7 @@ export class AddItemPage implements OnInit {
   addItem(){
     this.favouritesService.addFavouriteItem(this.favourite).then(() =>{
       this.router.navigateByUrl('/favourites');
-      this.showToast('Store added');
+      this.showToast('Item added');
       this.closeModal();
     }, err => {
       this.showToast('There was a problem adding your item');

@@ -23,7 +23,7 @@ export class RestaurantsPage {
   public dataList: Restaurant[];
   private numOfItemsDisplaying: number;
 
-  usersLocation = {
+  public usersLocation = {
     lat: 0,
     lng: 0
   }
@@ -50,11 +50,10 @@ export class RestaurantsPage {
     
           this.dataList = this.locationService.restaurantData.slice(0, 24);
           this.numOfItemsDisplaying = 25;
-          // this.filtered = this.data.slice(0);
+          this.filtered = this.locationService.restaurantData.slice(0);
           return;
         }
     
-        console.log('before loading')
         this.subscription = this.locationService.getLocations()
           .subscribe(restaurantList => {
             // this.places = restaurantList;
@@ -70,7 +69,7 @@ export class RestaurantsPage {
             // if (this.data.length <= 0) {
             //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
             // }
-            // this.filtered = this.data.slice(0);
+            this.filtered = this.places.slice(0);
           })
       });
     });
@@ -84,7 +83,6 @@ export class RestaurantsPage {
 
   loadData(event) {
     setTimeout(() => {
-      console.log('Done');
       this.dataList = this.dataList.concat(this.locationService.restaurantData.slice(this.numOfItemsDisplaying, this.numOfItemsDisplaying + 24));
       this.numOfItemsDisplaying += 25;
 
@@ -103,7 +101,7 @@ export class RestaurantsPage {
     console.log(this.search)
     this.dataList = this.filtered;
 
-    this.toggleInfiniteScroll()
+    this.infiniteScroll.disabled = true;
 
     if (this.top == "cuisine") {
       const sample = this.filtered.filter(
@@ -112,7 +110,6 @@ export class RestaurantsPage {
       this.dataList = this.filtered.filter(type =>
         type.CuisneType.toLowerCase() == this.search.toLowerCase()
       )
-      // console.log(this.dataList);
     }
     if (this.top == "rating") {
       const sample = this.filtered.filter(
@@ -121,7 +118,6 @@ export class RestaurantsPage {
       this.dataList = this.filtered.filter(type =>
         type.Rating == this.search
       )
-      // console.log(this.dataList);
     }
     if (this.top == "name") {
       const sample = this.filtered.filter(
@@ -130,7 +126,6 @@ export class RestaurantsPage {
       this.dataList = this.filtered.filter(type =>
         type.Name.toLowerCase() == this.search.toLowerCase()
       )
-      // console.log(this.dataList);
     }
   }
 
@@ -208,7 +203,7 @@ export class RestaurantsPage {
     // this.filtered = this.data.slice(0);
   }
 
-  ionViewWillUnload() {
+  ionViewWillLeave() {
     console.log("Leave init")
     if (this.subscription) {
       this.subscription.unsubscribe()
