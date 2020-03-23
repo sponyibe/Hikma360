@@ -8,34 +8,16 @@
 </ion-header>
 
 <ion-content>
-  <p>We currently only display restaurants based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest restaurant in the GTA<p>
+  <ion-fab vertical="top" horizontal="start">
+    <ion-fab-button size="small">
+      <ion-icon name="options" (click)="searchModal()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="6">
-        <ion-item>
-          <ion-select  [(ngModel)]="top" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Category">
-            <ion-select-option value="cuisine">Cuisine Type</ion-select-option>
-            <ion-select-option value="rating">Rating</ion-select-option>
-            <ion-select-option value="name">Name</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-input attribute="search" clearInput [(ngModel)]="search" placeholder="Search"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <ion-button size="small" Expand="block" (click)="searchRestaurantList()">
-          Search
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button size="small" fill="outline" Expand="block" (click)="clearSearch()">
-          Clear
-        </ion-button>
+      <ion-col offset="2" size="10">
+        <ion-searchbar #searchBar showcancelbutton="" (ionChange)="searchRestaurantByName($event)"></ion-searchbar>
       </ion-col>
     </ion-row>
   </ion-grid>

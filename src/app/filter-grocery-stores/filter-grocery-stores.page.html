@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title>Filter {{passedPage}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list inset="true">
+    <ion-radio-group #storeTypeGroup allow-empty-selection name="storeType">
+      <ion-list-header>
+        <ion-label>Store Type</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let type of more">
+        <ion-label>{{ type }}</ion-label>
+        <ion-radio slot="end" value="{{ type }}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    <p *ngIf="numToAdd < 35" class="ion-padding more" (click)="addMore()">view more</p>
+    <p *ngIf="numToAdd == 35" class="ion-padding more" (click)="viewLess()">view less</p>
+  </ion-list>
+
+  <ion-list inset="true">
+    <ion-radio-group #ratingGroup allow-empty-selection name="auto" value="rating">
+      <ion-list-header>
+        <ion-label>Rating</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          <ngb-rating class="star" [rate]="5"></ngb-rating>
+        </ion-label>
+        <ion-radio slot="end" value="5"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ngb-rating class="star" [class.filled]="fill === 100" [rate]="4"></ngb-rating>
+        </ion-label>
+        <ion-radio slot="end" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ngb-rating class="star" [rate]="3"></ngb-rating>
+        </ion-label>
+        <ion-radio slot="end" value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ngb-rating class="star" [rate]="2"></ngb-rating>
+        </ion-label>
+        <ion-radio slot="end" value="2"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ngb-rating class="star" [rate]="1"></ngb-rating>
+        </ion-label>
+        <ion-radio slot="end" value="1"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="close()" expand="block" fill="outline" shape="round">
+          close
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="filterSearch()" expand="block" shape="round">
+          Search
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-footer>

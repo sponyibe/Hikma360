@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Subscription } from 'rxjs';
-import { LoadingController, AlertController, Platform } from '@ionic/angular';
+import { LoadingController, AlertController, Platform, ModalController, IonInfiniteScroll, IonSearchbar } from '@ionic/angular';
+import { FilterGroceryStoresPage } from '../filter-grocery-stores/filter-grocery-stores.page';
 
 @Component({
   selector: 'app-grocery-stores',
   templateUrl: './grocery-stores.page.html',
   styleUrls: ['./grocery-stores.page.scss'],
 })
-export class GroceryStoresPage {
+export class GroceryStoresPage implements OnInit{
+
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild('search') searchBar: IonSearchbar
 
   private subscription: Subscription;
   public groceryStores: GroceryStores[];
@@ -28,9 +32,14 @@ export class GroceryStoresPage {
 
   constructor(public groceryStoreService: GroceryStoresService,
     private alertController: AlertController,
+    private modalCtrl: ModalController,
     public geolocation: Geolocation,
     private platform: Platform) {
 
+  }
+
+  ngOnInit(){
+    this.presentAlert('We currently only display grocery stores based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest grocery store in the GTA')
   }
 
   ionViewWillEnter() {
@@ -40,30 +49,28 @@ export class GroceryStoresPage {
         this.usersLocation.lat = pos.coords.latitude
         this.usersLocation.lng = pos.coords.longitude
 
-        if (this.groceryStoreService.groceryStoresData) {
-          this.storeList = [...this.groceryStoreService.groceryStoresData];
-    
-          this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 24);
-          this.numOfItemsToDisplay = 25;
-          // this.filteredList = this.data.slice(0);
+        if(this.filteredList){
+          console.log(this.filteredList)
+          this.storeList = [...this.filteredList]
           return;
         }
-    
-        this.groceryStoreService.getGroceryStores()
+
+        else if (this.groceryStoreService.groceryStoresData) {
+          console.log('in else if')
+          this.fastLoad()
+          return;
+        }
+
+        this.subscription = this.groceryStoreService.getGroceryStores()
           .subscribe(groceryStoresList => {
             this.groceryStores = this.applyHaversine(groceryStoresList)
-    
+
             this.groceryStores.sort(this.compare);
             // this.data = this.groceryStores.filter(i => i.distance < 100)
-    
+
             this.groceryStoreService.groceryStoresData = [...this.groceryStores];
             this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 25);
             this.numOfItemsToDisplay = 25;
-    
-            // if(this.data.length <= 0){
-            //   this.presentAlert("Sorry, there are no grocery stores within 100km of your current location")
-            // }
-            // this.filteredList = this.data.slice(0);
           });
       });
     });
@@ -73,43 +80,64 @@ export class GroceryStoresPage {
     return a.distance - b.distance
   }
 
-  searchList() {
-    console.log(this.option)
-    console.log(this.searchGroceryStores)
-    this.storeList = this.filteredList;
+  initializeItems(): void {
+    this.storeList = this.groceryStoreService.groceryStoresData.slice(0);
+  }
 
-    if (this.option == "storeType") {
-      const sample = this.filteredList.filter(
-        (thing, i, arr) => arr.findIndex(t => t.StoreType === thing.StoreType) === i);
+  fastLoad(){
+    console.log('in fastLoad')
+    this.storeList = [...this.groceryStoreService.groceryStoresData];
 
-      this.storeList = this.filteredList.filter(type =>
-        type.StoreType.toLowerCase() == this.searchGroceryStores.toLowerCase()
-      )
-      // console.log(this.storeList);
+    this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 24);
+    this.numOfItemsToDisplay = 25;
+  }
+
+  filterListByName(event) {
+    this.initializeItems();
+
+    const searchTerm = event.srcElement.value;
+
+    if (!searchTerm) {
+      return;
     }
-    if (this.option == "rating") {
-      const sample = this.filteredList.filter(
-        (thing, i, arr) => arr.findIndex(t => t.Rating === thing.Rating) === i);
 
-      this.storeList = this.filteredList.filter(type =>
-        type.Rating == this.searchGroceryStores
-      )
-      // console.log(this.storeList);
-    }
-    if (this.option == "name") {
-      const sample = this.filteredList.filter(
-        (thing, i, arr) => arr.findIndex(t => t.Name === thing.Name) === i);
+    this.storeList = this.storeList.filter(grocer => {
+      if (grocer.Name && searchTerm) {
+        if (grocer.Name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
 
-      this.storeList = this.filteredList.filter(type =>
-        type.Name.toLowerCase() == this.searchGroceryStores.toLowerCase()
-      )
-      // console.log(this.storeList);
-    }
+  async searchModal() {
+    const modal = await this.modalCtrl.create({
+      component: FilterGroceryStoresPage,
+      componentProps: {
+        'stores': this.groceryStoreService.groceryStoresData,
+        'page': 'Grocery Stores'
+      }
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if(data['data'] === null){
+        this.fastLoad()
+        this.infiniteScroll.disabled = false;
+        this.searchBar.disabled = false;
+      }else{
+        this.infiniteScroll.disabled = true;
+        this.searchBar.disabled = true;
+        this.storeList = data['data']
+        return this.filteredList = data['data']
+      }
+    });
+    return await modal.present();
   }
 
   async presentAlert(msg: string) {
     const alert = await this.alertController.create({
-      header: 'Alert',
+      header: 'Notice',
       message: msg,
       buttons: ['OK']
     });
@@ -118,8 +146,6 @@ export class GroceryStoresPage {
   }
 
   applyHaversine(locations: GroceryStores[]) {
-
-    console.log(this.usersLocation)
 
     locations.map((location) => {
 
@@ -184,9 +210,11 @@ export class GroceryStoresPage {
     }, 500);
   }
 
-  // ionViewWillLeave() {
-  //   console.log("Leave init")
-  //   this.subscription.unsubscribe()
-  // }
+  ionViewWillLeave() {
+    console.log("Leave init")
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+  }
 
 }

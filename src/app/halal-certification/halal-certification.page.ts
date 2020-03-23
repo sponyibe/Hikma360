@@ -10,25 +10,28 @@ import { load } from '@angular/core/src/render3';
   templateUrl: './halal-certification.page.html',
   styleUrls: ['./halal-certification.page.scss'],
 })
-export class HalalCertificationPage implements OnInit{
+export class HalalCertificationPage{
 
   public certifyingbodies: Certifyingbodies[];
-  // public loadedCertifyingBodiesList: Certifyingbodies[];
+  public loadedCertifyingBodiesList: Certifyingbodies[];
   private subscription: Subscription;
 
   constructor(private certifyingbodiesService : CertifyingBodiesService, private loadingCtrl: LoadingController) { }
 
-  ngOnInit() {
-    
-  }
+  async ionViewWillEnter() { 
 
-  async ionViewDidEnter() { 
-    console.log("certifying bodies")
- 
+    if(this.certifyingbodiesService.certifyingBodiesData){
+      this.certifyingbodies = [...this.certifyingbodiesService.certifyingBodiesData]
+    }
+
+
     this.subscription = this.certifyingbodiesService.getCertifyingBodies()
     .subscribe(certifyingbodies =>{
+      console.log('In certifying bodies')
 
       this.certifyingbodies = certifyingbodies;
+
+      this.certifyingbodiesService.certifyingBodiesData = [...this.certifyingbodies]
       // console.log(this.certifyingbodies)
       // this.loadedCertifyingBodiesList = certifyingbodies;
     });
@@ -39,8 +42,10 @@ export class HalalCertificationPage implements OnInit{
   // }
 
   ionViewWillLeave(){
-    console.log("Leave init")
-    this.subscription.unsubscribe()
+    if(this.subscription){
+      console.log("Leave init")
+      this.subscription.unsubscribe()
+    }
   }
 
 }

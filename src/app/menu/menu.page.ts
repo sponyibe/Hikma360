@@ -73,7 +73,8 @@ export class MenuPage implements OnInit {
 
    async presentToast(){
     let toast = await this.toastCtrl.create({message: 'Logged out',
-    duration: 3000,
+    duration: 2000,
+    cssClass: 'toast-class',
     position: 'bottom'});
     toast.present();
   }

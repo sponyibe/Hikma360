@@ -25,6 +25,8 @@ export interface Certifyingbodies {
     private certifyingbodiesCollection: AngularFirestoreCollection<Certifyingbodies>;
   
     private certifyingbodies: Observable<Certifyingbodies[]>
+
+    public certifyingBodiesData: Certifyingbodies[]
     
     constructor(db: AngularFirestore) {
       this.certifyingbodiesCollection = db.collection<Certifyingbodies>('certifyingbodies',ref=>ref.orderBy('Organisation'));
