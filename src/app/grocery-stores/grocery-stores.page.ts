@@ -50,13 +50,11 @@ export class GroceryStoresPage implements OnInit{
         this.usersLocation.lng = pos.coords.longitude
 
         if(this.filteredList){
-          console.log(this.filteredList)
           this.storeList = [...this.filteredList]
           return;
         }
 
         else if (this.groceryStoreService.groceryStoresData) {
-          console.log('in else if')
           this.fastLoad()
           return;
         }
@@ -85,7 +83,6 @@ export class GroceryStoresPage implements OnInit{
   }
 
   fastLoad(){
-    console.log('in fastLoad')
     this.storeList = [...this.groceryStoreService.groceryStoresData];
 
     this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 24);
@@ -98,7 +95,11 @@ export class GroceryStoresPage implements OnInit{
     const searchTerm = event.srcElement.value;
 
     if (!searchTerm) {
+      this.fastLoad()
+      this.infiniteScroll.disabled = false
       return;
+    }else{
+      this.infiniteScroll.disabled = true
     }
 
     this.storeList = this.storeList.filter(grocer => {
@@ -149,7 +150,6 @@ export class GroceryStoresPage implements OnInit{
 
     locations.map((location) => {
 
-
       let placeLocation = {
         lat: location.Latitude,
         lng: location.Longitude
@@ -196,7 +196,6 @@ export class GroceryStoresPage implements OnInit{
 
   loadStoresData(event) {
     setTimeout(() => {
-      console.log('Done');
       this.storeList = this.storeList.concat(this.groceryStoreService.groceryStoresData.slice(this.numOfItemsToDisplay, this.numOfItemsToDisplay + 24));
       this.numOfItemsToDisplay += 25;
 
@@ -211,7 +210,6 @@ export class GroceryStoresPage implements OnInit{
   }
 
   ionViewWillLeave() {
-    console.log("Leave init")
     if (this.subscription) {
       this.subscription.unsubscribe()
     }

@@ -84,7 +84,6 @@ export class FilterGroceryStoresPage implements OnInit {
 
   addMore() {
     if (this.numToAdd >= this.uniqueArr.length) {
-      console.log('here out')
     } else {
       this.more = this.more.concat(this.uniqueArr.slice(this.numToAdd, this.numToAdd + 5))
       this.numToAdd += 5
@@ -101,17 +100,14 @@ export class FilterGroceryStoresPage implements OnInit {
 
     if(this.storeTypeGroup.value){
       this.storeTypeSelected(this.storeTypeGroup.value)
-      console.log('in here - type')
       search = true;
     }
-    if(this.ratingGroup.value >= 1){
+    if(this.ratingGroup.value >= 0){
       this.ratingSelected(this.ratingGroup.value)
       search = true;
-      console.log('in here - rating')
     }
 
     if (search) {
-      console.log(true)
       this.modalCtrl.dismiss(this.passedInfoCopy);
     } else {
       this.modalCtrl.dismiss(null);

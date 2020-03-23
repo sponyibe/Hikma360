@@ -51,7 +51,6 @@ export class RestaurantsPage implements OnInit{
         this.usersLocation.lng = position.coords.longitude
 
         if(this.filtered){
-          console.log(this.filtered)
           this.dataList = [...this.filtered]
           return;
         }
@@ -106,7 +105,6 @@ export class RestaurantsPage implements OnInit{
   }
 
   fastLoadRestaurants(){
-    console.log('in fastLoad')
     this.dataList = [...this.locationService.restaurantData];
 
     this.dataList = this.locationService.restaurantData.slice(0, 24);
@@ -143,7 +141,11 @@ export class RestaurantsPage implements OnInit{
     const searchTerm = evt.srcElement.value;
 
     if (!searchTerm) {
+      this.fastLoadRestaurants()
+      this.infiniteScroll.disabled = false
       return;
+    }else{
+      this.infiniteScroll.disabled = true
     }
 
     this.dataList = this.dataList.filter(grocer => {

@@ -19,7 +19,7 @@
       <p *ngIf="restaurants.CertifedBy"><strong>Certified By: </strong> {{restaurants.CertifedBy}}</p>
       <p><strong>Cuisine Type: </strong> {{restaurants.CuisneType}}</p>
       <p><strong>Price Range: </strong> {{restaurants.PriceRange}}</p>
-      <p><ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating> {{restaurants.Rating}} </p>
+      <p><ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating></p>
       <a *ngIf="restaurants.Website" (click)="openWebsite()">Visit the Website</a>
     </div>
   </div>
