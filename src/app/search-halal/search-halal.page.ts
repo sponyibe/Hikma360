@@ -83,9 +83,14 @@ export class SearchHalalPage {
       attributesToRetrieve: ['nonhalal', 'notes']
     }).
       then((data: any) => {
-        // console.log(data.hits)
+        console.log(data.hits)
         if (data.hits.length) {
+          if(data.hits[0].nonhalal.toLowerCase() != this.searchTerm.toLowerCase()){
+            console.log(data.hits[0].nonhalal)
+            this.presentAlert('if you meant ' + data.hits[0].nonhalal + ' It is not Halal', this.searchTerm, data.hits[0].notes)
+          }else{
           this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
+          }
         }
         else if (!this.getList()) {
           this.presentAlert("This isn't Halal", this.searchTerm, 'None')
