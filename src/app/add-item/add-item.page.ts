@@ -44,7 +44,7 @@ export class AddItemPage implements OnInit {
   updateItems(){
     this.favouritesService.updateFavouriteItem(this.passedId,this.favourite.itemPurchased).then(() =>{
       this.router.navigateByUrl('/favourites');
-      this.showToast('Item added');
+      this.showToast('Item updated');
       this.closeModal();
     }, err => {
       this.showToast('There was a problem adding your item');
