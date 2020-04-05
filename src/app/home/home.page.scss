@@ -1,5 +1,6 @@
 .card-background-page {
-    
+    --background : linear-gradient(#141414 30%,#000000);
+}
     ion-card {
     position: relative;
     text-align: center;
@@ -25,5 +26,9 @@
     width: 100%;
     color: #fff;
     }
+
+    .headpic{
+        width: 60px;
+        height: 60px;
+    }
     
-}

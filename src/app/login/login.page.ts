@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { NavController, NavParams, Events } from '@ionic/angular';
+import { NavController, NavParams, Events,ToastController } from '@ionic/angular';
 import { Router, Routes } from '@angular/router';
 import { AuthService } from '../services/auth.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(public navCtrl: NavController,public router:Router, public authService: AuthService, private ev: Events) {
+  constructor(public navCtrl: NavController,public router:Router, public authService: AuthService, private ev: Events, public toastCtrl: ToastController) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z]+$')]),
       userpassword: new FormControl('', Validators.compose([
@@ -37,9 +37,18 @@ export class LoginPage implements OnInit {
         this.ev.publish('loggedIn', value);
       }
       else{
+        this.loginError();
         console.log("error")
       }
     })
   }
+
+  async loginError(){
+    let toast = await this.toastCtrl.create({message: 'Your Email or Password is incorrect. Please try again',
+    duration: 3000,
+    position: 'bottom'});
+    toast.present();
+  }
+ 
 
 }

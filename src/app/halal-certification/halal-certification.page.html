@@ -20,7 +20,7 @@
       <ion-label>
         {{ certifyingbody.Organisation }}
         <p><b>Address: </b>{{ certifyingbody.Address }}</p>
-        <p><b>Phone: </b>{{ certifyingbody.Telephone }}</p>
+        <p *ngIf="certifyingbody.Telephone"><b>Phone: </b>{{ certifyingbody.Telephone }}</p>
       </ion-label>
     </ion-item>
 
