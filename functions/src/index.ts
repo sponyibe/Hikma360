@@ -1,29 +1,33 @@
 import * as functions from 'firebase-functions';
+let serviceAccount = require('../environments/newKey.json');
 
 // Firebase
 import * as admin from 'firebase-admin';
-// import * as algoliasearch from 'algoliasearch'
 
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
-const env = functions.config();
-const algoliasearch = require('algoliasearch');
+// const env = functions.config();
+// const algoliasearch = require('algoliasearch');
 const vision = require('@google-cloud/vision');
 
 // Cloud Vision
 const visionClient = new vision.ImageAnnotatorClient();
-const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
-const coll = client.initIndex('dev_Ingredients');
-
+// const client = algoliasearch(env.aslgolia.appid, env.algolia.apikey);
+// const coll = client.initIndex('dev_Ingredients');
 
 // Dedicated bucket for cloud function invocation
-const bucketName = 'hikma-96b46-image-search';
+const bucketName = 'hikma-96b46-vision';
 
 export const imageTagger = functions.storage
 
   .bucket(bucketName)
   .object()
   .onFinalize(async (object, _context) => {
+
+    // const arrHalal: Array<string> = []
+    const arrNonHalal: Array<string> = []
 
     // File data
     const filePath = object.name || '';
@@ -41,67 +45,54 @@ export const imageTagger = functions.storage
     const results = await visionClient.textDetection(imageUri);
 
     // Map the data to desired format
-    //var nonHalal: boolean;
+    let nonHalal: boolean = false;
     const textfound = results[0].textAnnotations.map((obj: { description: string }) => obj.description.toLowerCase().toString());
-    const textDetected = textfound[0].match(/([a-zA-Z0-9][\s]*)+/g);///(?:[^,.:(][^,.:(]+|\([^)]+\))+/g);
-    // const textDetected = trimArray(textArray);
+    const textArray = textfound[0].match(/([a-zA-Z0-9][\s]*)+/g);///(?:[^,.:(][^,.:(]+|\([^)]+\))+/g);
+    const textDetected = trimArray(textArray);
     console.log(textDetected);
 
-    for (let index = 0; index < textDetected.length; index++) {
-      console.log(textDetected[index]);
-      let nonHalal: boolean;
-      //let list: Array<any> = [];
-      items.where('nonhalal', '==', textDetected[index]).get()
+    for (const element of textDetected) {
+      // console.log(textDetected[index]);
+      await items.where('nonhalal', '==', element).get()
         .then(snapshot => {
           if (snapshot.empty) {
-            console.log('no match');
-            nonHalal = false;
-            return docRef.set({ nonHalal, textDetected });
+            console.log('no match')
           }
           snapshot.forEach(doc => {
             console.log(doc.data());
-            // list.push(doc.data);
-            // console.log('array: ', list)
+            // console.log('matching document to ' + textDetected[index]);
             nonHalal = true;
-            return docRef.set({ nonHalal, textDetected });
+            arrNonHalal.push(element)
           });
-          return docRef.set({ nonHalal, textDetected });
+          console.log("before exit: arrhalal => " + arrNonHalal)
+          return docRef.set({ nonHalal, arrNonHalal });
         })
         .catch(err => {
           console.log('Error getting documents', err);
         });
     }
-    // query.then(res => {
-    //     console.log(res);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // })
-
-    //const hotdog = textDetected.includes(query);
-
-    //return docRef.set({ textDetected });
+    console.log("before set: nonHalal => " + nonHalal, "arrhalal => " + arrNonHalal)
   });
 
-// function trimArray(arr: Array<string>) {
-//   for (let i = 0; i < arr.length; i++) {
-//     arr[i] = arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-//   }
-//   return arr;
-// }
+function trimArray(arr: Array<string>) {
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  }
+  return arr;
+}
 
-exports.indexItems = functions.firestore
-  .document('Ingredients/{itemId}')
-  .onCreate((snap, context) => {
-    const data = snap.data();
-    const objectId = snap.id;
+// exports.indexItems = functions.firestore
+//   .document('Ingredients/{itemId}')
+//   .onCreate((snap, context) => {
+//     const data = snap.data();
+//     const objectId = snap.id;
 
-    //Add the data to the algolia index
-    return coll.addObject({
-      objectId,
-      ...data
-    })
-  });
+//     //Add the data to the algolia index
+//     return coll.addObject({
+//       objectId,
+//       ...data
+//     })
+//   });
 
   // exports.unindexItems = functions.firestore
   // .document('Ingredients/{itemId}')

@@ -39,7 +39,7 @@ export class GroceryStoresPage implements OnInit{
   }
 
   ngOnInit(){
-    this.presentAlert('We currently only display grocery stores based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest grocery store in the GTA')
+    this.presentAlert('We currently only display grocery stores based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest grocery store in the GTA.')
   }
 
   ionViewWillEnter() {
