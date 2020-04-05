@@ -40,7 +40,7 @@ export class RestaurantsPage implements OnInit{
     public modalCtrl: ModalController) { }
 
   ngOnInit(){
-    this.presentAlert('We currently only display restaurants based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest restaurant in the GTA')
+    this.presentAlert('We currently only display restaurants based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest restaurant in the GTA.')
   }
 
   ionViewWillEnter() {

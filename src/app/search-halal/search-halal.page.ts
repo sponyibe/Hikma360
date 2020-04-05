@@ -206,7 +206,7 @@ export class SearchHalalPage {
     // Firestore observable, dismiss loader when data is available
     photoRef.valueChanges().subscribe(data => {
       this.result$ = data
-      console.log(this.result$)
+      // console.log(this.result$)
       if (this.result$) {
         this.hideLoader()
       }
