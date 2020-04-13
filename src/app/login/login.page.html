@@ -1,6 +1,9 @@
 <ion-content>
    
         <img src="assets/img/logo_transparent.png" class="center"/>
+        <ion-header *ngIf="!hasVerifiedEmail" padding class="verify-email">
+          <p style="color:red">Please check your email and verify your account</p>
+        </ion-header>
       
 
       <form [formGroup]="loginForm" (ngSubmit)="login()">

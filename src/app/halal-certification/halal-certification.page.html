@@ -19,7 +19,7 @@
       [routerLink]="['/certification-details', certifyingbody.id]">
       <ion-label>
         {{ certifyingbody.Organisation }}
-        <p><b>Address: </b>{{ certifyingbody.Address }}</p>
+        <p *ngIf="certifyingbody.Address"><b>Address: </b>{{ certifyingbody.Address }}</p>
         <p *ngIf="certifyingbody.Telephone"><b>Phone: </b>{{ certifyingbody.Telephone }}</p>
       </ion-label>
     </ion-item>

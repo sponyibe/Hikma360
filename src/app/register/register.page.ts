@@ -4,7 +4,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { Router, Routes } from '@angular/router';
 import { NavController,ToastController} from '@ionic/angular';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -19,11 +19,14 @@ export class RegisterPage implements OnInit {
   cpassword: string = ""
 
   registrationForm: FormGroup;
+ // cbox= new FormControl(undefined,[Validators.required]);
   //hasVerifiedEmail = true;
 
   constructor(public navCtrl: NavController,public router:Router, public afAuth: AngularFireAuth,public toastCtrl: ToastController) { 
         this.registrationForm = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z]+$')]),
+     //   cbox: new FormControl([false, RegisterPage.mustBeTruthy]),
+        cbox: new FormControl(undefined,[Validators.requiredTrue]),
         useremail: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
         userpassword: new FormControl('', Validators.compose([
           Validators.minLength(5),
@@ -53,10 +56,14 @@ export class RegisterPage implements OnInit {
         this.registerToast();
         this.afAuth.auth.currentUser.sendEmailVerification();
        // this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
-            this.router.navigateByUrl('/menu/home');
+           this.router.navigateByUrl('/login');
       }
     }catch(error){
-      console.dir(error)
+      console.dir(error);
+      let toast = await this.toastCtrl.create({message: error,
+        duration: 5000,
+        position: 'bottom'});
+        toast.present();
     }
   }
 
@@ -66,4 +73,5 @@ export class RegisterPage implements OnInit {
     position: 'middle'});
     toast.present();
   }
+
 }

@@ -38,7 +38,7 @@ export class RecoverPage implements OnInit {
 
   async presentToast(){
     let toast = await this.toastCtrl.create({message: 'Password reset email sent',
-    duration: 1000,
+    duration: 4000,
     position: 'bottom'});
     toast.present();
   }

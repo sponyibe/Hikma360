@@ -11,8 +11,8 @@
   <div class="card">
       <h4 style="text-align:center;">{{ certifyingorganization.OrganisationsCertified}}</h4>
       <p *ngIf=certifyingorganization.Brands><b>Brands: </b>{{ certifyingorganization.Brands }}</p>
-      <p><b>Address: </b>{{ certifyingorganization.Address }}</p>
-      <p><b>City: </b>{{ certifyingorganization.City }}</p>
+      <p *ngIf=certifyingorganization.Address><b>Address: </b>{{ certifyingorganization.Address }}</p>
+      <p *ngIf=certifyingorganization.City><b>City: </b>{{ certifyingorganization.City }}</p>
       <p *ngIf=certifyingorganization.EmailAddress><b>Email: </b>{{ certifyingorganization.EmailAddress }}</p>
       <p *ngIf=certifyingorganization.CertifyingBody><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
       <p *ngIf=certifyingorganization.OutletType><b>Outlet Type: </b>{{ certifyingorganization.OutletType }}</p>
