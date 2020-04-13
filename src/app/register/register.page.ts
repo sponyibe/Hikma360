@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 
 import { Router, Routes } from '@angular/router';
-import { NavController} from '@ionic/angular';
+import { NavController,ToastController} from '@ionic/angular';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -19,8 +19,9 @@ export class RegisterPage implements OnInit {
   cpassword: string = ""
 
   registrationForm: FormGroup;
+  //hasVerifiedEmail = true;
 
-  constructor(public navCtrl: NavController,public router:Router, public afAuth: AngularFireAuth) { 
+  constructor(public navCtrl: NavController,public router:Router, public afAuth: AngularFireAuth,public toastCtrl: ToastController) { 
         this.registrationForm = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z]+$')]),
         useremail: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
@@ -49,10 +50,20 @@ export class RegisterPage implements OnInit {
       console.log(res)
       if (res) {
         console.log("Successfully registered!");
-        this.router.navigateByUrl('/menu/home');
+        this.registerToast();
+        this.afAuth.auth.currentUser.sendEmailVerification();
+       // this.hasVerifiedEmail = this.afAuth.auth.currentUser.emailVerified;
+            this.router.navigateByUrl('/menu/home');
       }
     }catch(error){
       console.dir(error)
     }
+  }
+
+  async registerToast(){
+    let toast = await this.toastCtrl.create({message: 'Successfully Registered! Please check your email and verify your account.',
+    duration: 5000,
+    position: 'middle'});
+    toast.present();
   }
 }
