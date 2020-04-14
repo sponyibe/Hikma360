@@ -15,7 +15,7 @@ export class RegisterPage implements OnInit {
 
   name: string = ""
   email: string = ""
-  password: string = ""
+ // password: string = ""
   cpassword: string = ""
 
   registrationForm: FormGroup;
@@ -28,12 +28,18 @@ export class RegisterPage implements OnInit {
      //   cbox: new FormControl([false, RegisterPage.mustBeTruthy]),
         cbox: new FormControl(undefined,[Validators.requiredTrue]),
         useremail: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
-        userpassword: new FormControl('', Validators.compose([
+        password: new FormControl('', Validators.compose([
           Validators.minLength(5),
           Validators.required,
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') //this is for the letters (both uppercase and lowercase) and numbers validation
        ])),
-       confirmpassword: new FormControl('', Validators.required)
+       confirmpassword: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(5),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+      ])),
+    }, { 
+      validators: this.password.bind(this)
       })
   }
   
@@ -43,12 +49,13 @@ export class RegisterPage implements OnInit {
   async register() {
     console.log(this.registrationForm.value.username);
     //const {email, password, cpassword} = this
-    if(this.registrationForm.value.userpassword !== this.registrationForm.value.confirmpassword){
+    if(this.registrationForm.value.password !== this.registrationForm.value.confirmpassword){
       return console.error("Passwowrd don't match");
+     // this.errorToast();
       
     }
     try{
-      const res = await this.afAuth.auth.createUserWithEmailAndPassword(this.registrationForm.value.useremail, this.registrationForm.value.userpassword)
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(this.registrationForm.value.useremail, this.registrationForm.value.password)
     //  console.log("email: "+email);
       console.log(res)
       if (res) {
@@ -60,10 +67,11 @@ export class RegisterPage implements OnInit {
       }
     }catch(error){
       console.dir(error);
-      let toast = await this.toastCtrl.create({message: error,
-        duration: 5000,
-        position: 'bottom'});
-        toast.present();
+     // let toast = await this.toastCtrl.create({message: error,
+       // duration: 5000,
+        //position: 'middle'});
+      //  toast.present();
+      this.errorToast();
     }
   }
 
@@ -72,6 +80,19 @@ export class RegisterPage implements OnInit {
     duration: 5000,
     position: 'middle'});
     toast.present();
+  }
+  async errorToast(){
+    let toast = await this.toastCtrl.create({message: 'Check your credentials and ensure your passowrds match.',
+    duration: 5000,
+    position: 'middle'});
+    toast.present();
+  }
+  
+  password(formGroup: FormGroup){
+    const { value:password } = formGroup.get('password');
+    const { value: confirmpassword } = formGroup.get("confirmpassword");
+    return password === confirmpassword ? null : { passwordNotMatch : true};
+
   }
 
 }
