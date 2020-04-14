@@ -8,18 +8,23 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="card">
-      <h4 style="text-align:center;">{{ certifyingorganization.OrganisationsCertified}}</h4>
+  <ion-card color="light">
+  <ion-icon name="briefcase"></ion-icon>
+    <ion-card-header>
+      <ion-card-subtitle>{{ certifyingorganization.City }}</ion-card-subtitle>
+      <ion-card-title>{{ certifyingorganization.OrganisationsCertified}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- <h4 style="text-align:center;"></h4> -->
       <p *ngIf=certifyingorganization.Brands><b>Brands: </b>{{ certifyingorganization.Brands }}</p>
-      <p><b>Address: </b>{{ certifyingorganization.Address }}</p>
-      <p><b>City: </b>{{ certifyingorganization.City }}</p>
+      <p><b>Address: </b><a href="https://google.ca/maps/place/{{ certifyingorganization.Address }}">{{ certifyingorganization.Address }}</a></p>
+      <!-- <p><b>City: </b></p> -->
       <p *ngIf=certifyingorganization.EmailAddress><b>Email: </b>{{ certifyingorganization.EmailAddress }}</p>
       <p *ngIf=certifyingorganization.CertifyingBody><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
       <p *ngIf=certifyingorganization.OutletType><b>Outlet Type: </b>{{ certifyingorganization.OutletType }}</p>
       <p *ngIf=certifyingorganization.Products><b>Products: </b>{{ certifyingorganization.Products }}</p>
       <p><b>Telephone: </b>{{ certifyingorganization.Telephone }}</p>
-      <a *ngIf="certifyingorganization.Website" (click)="openWebsite()">Visit the Website</a>
-  </div>
-
-
+      <a href="" *ngIf="certifyingorganization.Website" (click)="openWebsite()">Visit the Website</a>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

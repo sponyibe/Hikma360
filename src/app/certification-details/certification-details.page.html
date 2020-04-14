@@ -1,22 +1,28 @@
 <ion-header>
   <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-          <ion-back-button routerLink="/tabs/halal-certification"></ion-back-button>
-        </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/tabs/halal-certification"></ion-back-button>
+    </ion-buttons>
     <ion-title>Certifying Bodies</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-<div class ="card">
-    <h4 style="text-align:center;">{{ certifyingbodies.Organisation }}</h4>
-    <p *ngIf=certifyingbodies.Address><b>Address: </b>{{ certifyingbodies.Address }}</p>
-    <p *ngIf=certifyingbodies.Telephone><b>Phone: </b>{{ certifyingbodies.Telephone }}</p>
-    <p *ngIf=certifyingbodies.Email><b>Email: </b>{{ certifyingbodies.Email }}</p>
-    <p *ngIf=certifyingbodies.Slaughter><b>Slaughter Method: </b> {{ certifyingbodies.Slaughter }}</p>
-    <p *ngIf=certifyingbodies.StatedConditions><b>Stated Conditions: </b>{{ certifyingbodies.StatedConditions }}</p>
-    <p *ngIf=certifyingbodies.Others><b>Others: </b>{{ certifyingbodies.Others }} </p>
-    <a *ngIf="certifyingbodies.Website" (click)="openWebsite()">Visit the Website</a>
-</div>
+  <ion-card color="light">
+  <ion-icon name="book"></ion-icon>
+    <ion-card-header>
+      <ion-card-title>{{ certifyingbodies.Organisation }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- <h4 style="text-align:center;"></h4> -->
+      <p *ngIf=certifyingbodies.Address><strong>Address: </strong> <a href="https://google.ca/maps/place/{{ certifyingbodies.Address }}">{{ certifyingbodies.Address }}</a></p>
+      <p *ngIf=certifyingbodies.Telephone><b>Phone: </b>{{ certifyingbodies.Telephone }}</p>
+      <p *ngIf=certifyingbodies.Email><b>Email: </b>{{ certifyingbodies.Email }}</p>
+      <p *ngIf=certifyingbodies.Slaughter><b>Slaughter Method: </b> {{ certifyingbodies.Slaughter }}</p>
+      <p *ngIf=certifyingbodies.StatedConditions><b>Stated Conditions: </b>{{ certifyingbodies.StatedConditions }}</p>
+      <p *ngIf=certifyingbodies.Others><b>Others: </b>{{ certifyingbodies.Others }} </p>
+      <a href="" *ngIf="certifyingbodies.Website" (click)="openWebsite()">Visit the Website</a>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
