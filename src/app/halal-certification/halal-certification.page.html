@@ -6,7 +6,7 @@
 
 <ion-content>
   <ng-container *ngIf="!certifyingbodies || certifyingbodies.length == 0">
-    <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+    <div *ngFor="let n of [0,1,2,3,4,5]" class="ion-padding">
       <ion-skeleton-text animated></ion-skeleton-text>
       <p>
         <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>
@@ -19,7 +19,7 @@
       [routerLink]="['/certification-details', certifyingbody.id]">
       <ion-label>
         {{ certifyingbody.Organisation }}
-        <p><b>Address: </b>{{ certifyingbody.Address }}</p>
+        <p *ngIf="certifyingbody.Address"><b>Address: </b>{{ certifyingbody.Address }}</p>
         <p *ngIf="certifyingbody.Telephone"><b>Phone: </b>{{ certifyingbody.Telephone }}</p>
       </ion-label>
     </ion-item>

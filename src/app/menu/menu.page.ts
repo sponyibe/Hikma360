@@ -39,6 +39,11 @@ export class MenuPage implements OnInit {
       title: 'FAQ',
       url: '/faq',
       icon: 'help'
+    },
+    {
+      title: 'Legal',
+      url:'/legal',
+      icon: 'book'
     }
 
   ];

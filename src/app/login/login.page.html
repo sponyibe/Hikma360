@@ -1,40 +1,67 @@
-<ion-content>
+<!--<ion-header>
+  <ion-toolbar color="success">
+    <ion-icon size="large" name="md-arrow-back" routerLink="/menu/home"></ion-icon>
+  </ion-toolbar>
+</ion-header>-->
 
-  <img src="assets/img/logo_transparent.png" class="center" />
+<ion-content class="ion-padding">
+  <br>
+  <ion-toolbar color="dark">
+    <ion-icon size="large" name="md-arrow-back" routerLink="/menu/home"></ion-icon>
+  </ion-toolbar>
+ 
+   
+        <img src="assets/img/logo_transparent.png" class="center"/>
+        <ion-header *ngIf="!hasVerifiedEmail" padding class="verify-email">
+          <p style="color:red">Please check your email and verify your account</p>
+        </ion-header>
+      
 
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <ion-grid>
+          <ion-row color="primary" class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+              <div class="ion-padding">
+                <ion-item>
+                  <ion-input name="email" type="email" placeholder="Email Address" formControlName="username" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input name="password" type="password" placeholder="Password" formControlName="userpassword" required></ion-input>
+                </ion-item>
+                <br>
+                <p style="color:white" class="buttons" routerLink="/recover">Forgot Password?</p>
+              </div>
+            </ion-col>
+           
+          </ion-row>
 
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <ion-grid>
-      <ion-row color="primary" class="ion-justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-padding">
-            <ion-item>
-              <ion-input name="email" type="email" placeholder="Email Address" formControlName="username" required>
-              </ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" formControlName="userpassword" required>
-              </ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-      </ion-row>
+         <ion-row class="buttons">
+          <ion-col size="12">
+            <ion-button class="block" color="secondary" (click)="login()">Login</ion-button>
+          </ion-col>
+          <ion-col size="7">
+            <p style="color:white" class="block">Don't have an account?<p>
+          </ion-col>
+          <ion-col  class="block" size="5">
+            <p style="color:#ffc409"class="block" routerLink="/register"><u>Sign Up</u></p>
+          </ion-col>
+        </ion-row>
 
-      <ion-row class="buttons" class="ion-padding">
-        <ion-col size="12">
-          <ion-button class="block" (click)="login()">Login</ion-button>
-        </ion-col>
-        <ion-col size="6">
-          <ion-button class="block" routerLink="/menu/home">Homepage</ion-button>
-        </ion-col>
-        <ion-col size="6">
-          <ion-button class="block" routerLink="/register">Register</ion-button>
-        </ion-col>
-        <ion-col>
-          <p style="color:white; text-align:center" routerLink="/recover">Forgot Password?</p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
-
+        <ion-row class="ion-padding">
+          <p><u>Back to Home</u></p>
+        </ion-row>
+        <!---- <ion-row class="buttons" padding>
+            <ion-col size="12">
+              <ion-button class="block" (click)="login()">Login</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button class="block" routerLink="/menu/home">Homepage</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button class="block" routerLink="/register">Register</ion-button>
+            </ion-col>
+          </ion-row>-->
+        </ion-grid>
+      </form>
+      
 </ion-content>

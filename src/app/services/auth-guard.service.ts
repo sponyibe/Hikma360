@@ -56,7 +56,7 @@ export class AuthGuardService implements CanActivate {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      message: 'Please login',
+      message: 'Please login or create an account to access the Favourite Stores feature.',
       buttons: ['OK'],
     });
 

@@ -3,11 +3,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 import { AuthGuardService } from './services/auth-guard.service';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['menu/home']);
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'menu/home', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
@@ -37,6 +37,10 @@ const routes: Routes = [
   { path: 'recover', loadChildren: './recover/recover.module#RecoverPageModule' },
   { path: 'filter-grocery-stores', loadChildren: './filter-grocery-stores/filter-grocery-stores.module#FilterGroceryStoresPageModule' },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
+  { path: 'legal', loadChildren: './legal/legal.module#LegalPageModule' },
+  { path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyPageModule' },
+  { path: 'terms', loadChildren: './terms/terms.module#TermsPageModule' },
+  { path: 'register-terms', loadChildren: './register-terms/register-terms.module#RegisterTermsPageModule' },
 
 ];
 

@@ -11,10 +11,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   loginForm: FormGroup;
+  hasVerifiedEmail = true;
 
-  constructor(public navCtrl: NavController,public router:Router, public authService: AuthService, private ev: Events, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController,public router:Router, public authService: AuthService, private ev: Events, public toastCtrl: ToastController,public afAuth: AngularFireAuth) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z]+$')]),
       userpassword: new FormControl('', Validators.compose([
@@ -31,10 +31,15 @@ export class LoginPage implements OnInit {
 
 
   login(){
+    //this.hasVerifiedEmail= this.afAuth.auth.currentUser.emailVerified;
     this.authService.login(this.loginForm.value.username, this.loginForm.value.userpassword).then(value => {
       if (value){
-        this.router.navigateByUrl('/menu/home');
-        this.ev.publish('loggedIn', value);
+          //this.router.navigateByUrl('/menu/home');
+          this.hasVerifiedEmail= this.afAuth.auth.currentUser.emailVerified;
+          this.ev.publish('loggedIn', value);
+          if(this.hasVerifiedEmail){
+            this.router.navigateByUrl('/menu/home');
+          }
       }
       else{
         this.loginError();
@@ -46,6 +51,7 @@ export class LoginPage implements OnInit {
   async loginError(){
     let toast = await this.toastCtrl.create({message: 'Your Email or Password is incorrect. Please try again',
     duration: 3000,
+    cssClass: 'toast-class',
     position: 'bottom'});
     toast.present();
   }
