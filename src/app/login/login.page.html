@@ -1,4 +1,15 @@
-<ion-content>
+<!--<ion-header>
+  <ion-toolbar color="success">
+    <ion-icon size="large" name="md-arrow-back" routerLink="/menu/home"></ion-icon>
+  </ion-toolbar>
+</ion-header>-->
+
+<ion-content padding>
+  <br>
+  <ion-toolbar color="success">
+    <ion-icon size="large" name="md-arrow-back" routerLink="/menu/home"></ion-icon>
+  </ion-toolbar>
+ 
    
         <img src="assets/img/logo_transparent.png" class="center"/>
         <ion-header *ngIf="!hasVerifiedEmail" padding class="verify-email">
@@ -17,11 +28,29 @@
                 <ion-item>
                   <ion-input name="password" type="password" placeholder="Password" formControlName="userpassword" required></ion-input>
                 </ion-item>
+                <br>
+                <p style="color:white" class="buttons" routerLink="/recover">Forgot Password?</p>
               </div>
             </ion-col>
+           
           </ion-row>
 
-          <ion-row class="buttons" padding>
+         <ion-row class="buttons">
+          <ion-col size="12">
+            <ion-button class="block" (click)="login()">Login</ion-button>
+          </ion-col>
+          <ion-col size="7">
+            <p style="color:white" class="block">Don't have an account?<p>
+          </ion-col>
+          <ion-col  class="block" size="5">
+            <p style="color:#ffc409"class="block" routerLink="/register"><u>Sign Up</u></p>
+          </ion-col>
+        </ion-row>
+
+        <ion-row padding>
+          <p><u>Back to Home</u></p>
+        </ion-row>
+        <!---- <ion-row class="buttons" padding>
             <ion-col size="12">
               <ion-button class="block" (click)="login()">Login</ion-button>
             </ion-col>
@@ -31,10 +60,7 @@
             <ion-col size="6">
               <ion-button class="block" routerLink="/register">Register</ion-button>
             </ion-col>
-             <ion-col> 
-              <p style="color:white; text-align:center" routerLink="/recover">Forgot Password?</p>
-            </ion-col>
-          </ion-row>
+          </ion-row>-->
         </ion-grid>
       </form>
       

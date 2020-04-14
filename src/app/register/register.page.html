@@ -30,28 +30,29 @@
        
           <ion-col size="10" offset="1">
             <ion-item>
-              <ion-input name="Password" type="password" placeholder="Password" formControlName="userpassword" required></ion-input>
+              <ion-input name="Password" type="password" placeholder="Password" formControlName="password" required></ion-input>
             </ion-item>
-            <p style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.controls.userpassword.errors && registrationForm.controls.userpassword.dirty">Password must have uppercase letters, lowercase letters and numbers</p>
+            <p style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.controls.password.errors && registrationForm.controls.password.dirty">Password must have uppercase letters, lowercase letters and numbers</p>
           </ion-col>
           
           <ion-col size="10" offset="1">
             <ion-item>
               <ion-input name="confirm" type="password" placeholder="Confirm Password" formControlName="confirmpassword" required></ion-input>
             </ion-item>
+            <p style="color: red; padding-top: 0.2rem" *ngIf="registrationForm.controls.confirmpassword.errors && registrationForm.controls.confirmpassword.dirty && registrationForm.hasError('passwordNotMatch')">Passwords don't match</p>
           </ion-col>
 
          <ion-col size="11" offset="1">
           <!---- <p style="color:white" routerLink="/register-terms">Read Terms and Conditions</p>-->
            <ion-item>
              I accept the
-            <ion-label item-right>Terms&Conditions</ion-label>
+            <ion-label item-right>Terms & Conditions</ion-label>
             <ion-checkbox formControlName="cbox" required></ion-checkbox>
            </ion-item>
          </ion-col>
         
          <ion-col size="11" offest="1">
-         <p style="color:white; text-align:center" routerLink="/register-terms"><u>Read Terms and Conditions</u></p>
+         <p style="color:white" class="buttons" routerLink="/register-terms"><u>Read Terms & Conditions</u></p>
          </ion-col>
 
           <ion-col size="10" offset="1">

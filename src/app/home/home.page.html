@@ -5,39 +5,47 @@
 
       </ion-menu-button>
     </ion-buttons>
-    <ion-title>
-        Home
-    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 
 <ion-content class="card-background-page">
-
-
-  <ion-card routerLink="/restaurants">
+  <br>
+   <div class="title">
+    <h2>Discover Halal.</h2>
+  </div>
+  
+  <ion-card class="section" routerLink="/restaurants">
     <img src="assets/img/restaurant.jpg"/>
-    <div class="card-title">Restaurants</div>
-    <!-- <div class="card-subtitle">Go</div> -->
+    <div class="card-title">
+      <p>Restaurants</p>
+    </div>
   </ion-card>
+  
+  <!--<div class="title">
+    <h1>Grocery Stores.</h1>
+  </div>-->
 
-  <ion-card routerLink="/grocery-stores">
+  <ion-card class="section" routerLink="/grocery-stores">
     <img src="assets/img/groceries.jpg"/>
-    <div class="card-title">Grocery Stores</div>
-    <!-- <div class="card-subtitle">Go</div> -->
+   <div class="card-title">Grocery Stores</div>
   </ion-card>
 
-  <ion-card routerLink="/tenets">
+  <!--<div class="title">
+    <h1>Halal 101.</h1>
+  </div>-->
+  <ion-card class="section" routerLink="/tenets">
     <img src="assets/img/halal101.jpg"/>
-    <div class="card-title">Halal 101</div>
-    <!-- <div class="card-subtitle">Go</div> -->
+   <div class="card-title">Halal 101</div>
   </ion-card>
 
-  <ion-card routerLink="/tabs/halal-certification">
+  <!--<div class="title">
+    <h1>Halal Certification.</h1>
+  </div>-->
+  <ion-card class="section" routerLink="/tabs/halal-certification">
     <img src="assets/img/certificates.jpg"/>
     <div class="card-title">Halal Certification</div>
-    <!-- <div class="card-subtitle">Go</div> -->
   </ion-card>
 
   
