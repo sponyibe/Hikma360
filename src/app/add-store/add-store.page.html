@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/menu/home"></ion-back-button>
     </ion-buttons>
@@ -40,24 +40,24 @@
       <ion-item>
         <ion-label position="stacked">Quality Rating</ion-label>
         <ion-range min="0" snaps="true" max="5" pin="true" formControlName="quality" [(ngModel)]="store.quality">
-          <ion-icon color="warning" slot="start" name="thumbs-down"></ion-icon>
-          <ion-icon color="warning" slot="end" name="thumbs-up"></ion-icon>
+          <ion-icon color="danger" slot="start" name="thumbs-down"></ion-icon>
+          <ion-icon color="success" slot="end" name="thumbs-up"></ion-icon>
         </ion-range>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Customer Service Rating</ion-label>
         <ion-range min="0" snaps="true" max="5" pin="true" formControlName="customerService" [(ngModel)]="store.customerService">
-          <ion-icon slot="start" name="sad"></ion-icon>
-          <ion-icon slot="end" name="happy"></ion-icon>
+          <ion-icon color="danger" slot="start" name="sad"></ion-icon>
+          <ion-icon color="success" slot="end" name="happy"></ion-icon>
         </ion-range>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Price Rating</ion-label>
         <ion-range min="0" snaps="true" max="5" pin="true" formControlName="priceRating" [(ngModel)]="store.priceRating">
-          <ion-icon color="warning" slot="start" name="thumbs-down"></ion-icon>
-          <ion-icon color="warning" slot="end" name="thumbs-up"></ion-icon>
+          <ion-icon color="danger" slot="start" name="thumbs-down"></ion-icon>
+          <ion-icon color="success" slot="end" name="thumbs-up"></ion-icon>
         </ion-range>
       </ion-item>
 
@@ -67,15 +67,15 @@
 
 <ng-container *ngIf="isUpdatingStore; else addStoreTemplate">
   <ion-footer>
-    <ion-row no-padding text-center>
+    <ion-row class="ion-no-padding" text-center>
       <ion-col size="6">
-        <ion-button expand="block" fill="outline" color="danger" (click)="deleteStore()">
+        <ion-button expand="block" strong="true" fill="outline" color="danger" (click)="deleteStore()">
           <ion-icon name="trash" slot="start"></ion-icon>
           Delete
         </ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button expand="block" fill="solid" color="success" (click)="updateStore()">
+        <ion-button expand="block" fill="solid" strong="true" color="dark" (click)="updateStore()">
           <ion-icon name="save" slot="start"></ion-icon>
           Update
         </ion-button>
@@ -85,7 +85,7 @@
 </ng-container>
 <ng-template #addStoreTemplate>
   <ion-footer class="ion-padding">
-    <ion-button expand="block" fill="solid" color="primary" (click)="addStore()">
+    <ion-button expand="block" fill="solid" strong="true" color="secondary" (click)="addStore()">
       <ion-icon name="checkmark" slot="start"></ion-icon>
       Add Store
     </ion-button>

@@ -4,9 +4,9 @@
   </ion-toolbar>
 </ion-header>-->
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <br>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
     <ion-icon size="large" name="md-arrow-back" routerLink="/menu/home"></ion-icon>
   </ion-toolbar>
  
@@ -19,9 +19,9 @@
 
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <ion-grid>
-          <ion-row color="primary" justify-content-center>
-            <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-              <div padding>
+          <ion-row color="primary" class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+              <div class="ion-padding">
                 <ion-item>
                   <ion-input name="email" type="email" placeholder="Email Address" formControlName="username" required></ion-input>
                 </ion-item>
@@ -37,7 +37,7 @@
 
          <ion-row class="buttons">
           <ion-col size="12">
-            <ion-button class="block" (click)="login()">Login</ion-button>
+            <ion-button class="block" color="secondary" (click)="login()">Login</ion-button>
           </ion-col>
           <ion-col size="7">
             <p style="color:white" class="block">Don't have an account?<p>
@@ -47,7 +47,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row padding>
+        <ion-row class="ion-padding">
           <p><u>Back to Home</u></p>
         </ion-row>
         <!---- <ion-row class="buttons" padding>

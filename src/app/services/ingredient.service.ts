@@ -1,11 +1,17 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
+import { AngularFireDatabase } from "@angular/fire/database";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 export interface Ingredient {
   nonhalal: string;
   notes: string;
+}
+
+export interface imageTagger {
+  arrNonHalal: [];
+  nonHalal: boolean;
 }
 
 @Injectable({
@@ -16,7 +22,9 @@ export class IngredientService {
 
   private ingredients: Observable<Ingredient[]>;
 
-  constructor(db: AngularFirestore) {
+  private imageCheck: Observable<imageTagger[]>
+
+  constructor(db: AngularFirestore, afd: AngularFireDatabase) {
     this.ingredientsCollection = db.collection<Ingredient>("Ingredients");
 
     this.ingredients = this.ingredientsCollection.snapshotChanges().pipe(
@@ -37,4 +45,6 @@ export class IngredientService {
   getIngredient(id) {
     return this.ingredientsCollection.doc<Ingredient>(id).valueChanges();
   }
+
+
 }

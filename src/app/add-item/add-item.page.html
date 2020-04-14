@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
     <ion-title>Add an Item</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,17 +18,17 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button class="block" color="primary" shape="round" fill="outline" (click)="closeModal()">
+        <ion-button class="block" strong="true" color="dark" fill="outline" (click)="closeModal()">
           Cancel
         </ion-button>
       </ion-col>
       <ion-col *ngIf="!passedId">
-        <ion-button class="block" shape="round" (click)="addItem()">
+        <ion-button class="block" strong="true" color="secondary" (click)="addItem()">
           Add
         </ion-button>
       </ion-col>
       <ion-col *ngIf="passedId">
-        <ion-button class="block" shape="round" (click)="updateItems()">
+        <ion-button class="block" strong="true" color="secondary" (click)="updateItems()">
           Update
         </ion-button>
       </ion-col>

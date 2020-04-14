@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="menu/home"></ion-back-button>
     </ion-buttons>
@@ -7,11 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
-  <p padding class="description">Search for a food item (animal or plants) or ingredient to determine if it's halal or not. <br> You can also click on the <ion-icon class="textCamera" name="camera"></ion-icon> to scan a "food product's" ingredient list. </p>
+  <p class="ion-padding">Search for a food item (animal or plants) or ingredient to determine if it's halal or not. <br>
+    You can also click on the <ion-icon class="textCamera" name="camera"></ion-icon> to scan a food product's ingredient
+    list. </p>
 
-  <ion-grid >
+  <ion-grid>
     <ion-row>
       <ion-col size="10">
         <ion-searchbar #searchbar lowercase [(ngModel)]="searchTerm" (search)="newSearch()" autocomplete="on"
@@ -22,47 +24,23 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col size="12">
-        <div *ngIf="showBody">
-          <div *ngIf="isHalal">
-            <ion-card>
-              <ion-card-content>
-                <ion-card-header>
-                  <ion-card-title>This item is Halal :D</ion-card-title>
-                </ion-card-header>
-              </ion-card-content>
-            </ion-card>
-          </div>
-          <div>
-            <ion-card *ngIf="!isHalal">
-              <ion-card-content>
-                <ion-card-header>
-                  <ion-card-title>This item is Not halal :(</ion-card-title>
-                  <p>{{notes}}</p>
-                </ion-card-header>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
+    <div class="halalCheck w3-animate-zoom" *ngIf="result$ | async as result">
+      <ng-container *ngIf="!result?.nonHalal">
+        <p>We didn't find any non-halal ingredients in your list, this product can be considered halal.</p>
+      </ng-container>
+      <ng-container *ngIf="result?.arrNonHalal">
+        <p>This item is not halal because it contains:</p>
+        <!-- <ion-chip color="danger" *ngFor='let result of (result$ | async)?.arrNonHalal'> -->
+        <ion-chip color="danger" *ngFor='let res of result?.arrNonHalal'>
+          <ion-label>{{ res }}</ion-label>
+        </ion-chip>
+      </ng-container>
+    </div>
 
-        <div *ngIf="result$ as result">
-          <h4>Is this item halal?</h4>
-
-          <p *ngIf="result.nonHalal" color="secondary" full>
-            No, it is not Halal!!
-          </p>
-
-          <p *ngIf="!result.nonHalal" color="danger" full>
-            Yes, it is Halal :)
-          </p>
-        </div>
-
-      </ion-col>
-    </ion-row>
+    <!-- <div class="halalCheck"> test </div> -->
 
     <div class="croppingSection" *ngIf="hideCropping">
-      <ion-row >
+      <ion-row>
         <ion-col size="12">
           <image-cropper [imageBase64]="image" [maintainAspectRatio]="true" [aspectRatio]="6/3" format="jpg"
             outputType="base64">
@@ -70,14 +48,14 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="image">
-        <ion-col size="6" >
-          <ion-button shape="round" color="secondary" (click)="startUpload()">Crop & Save</ion-button>
+        <ion-col size="6">
+          <ion-button strong="true" expand="block" color="dark" fill="outline" (click)="cancelCropping()">Close</ion-button>
         </ion-col>
         <ion-col size="6">
-          <ion-button shape="round" (click)="cancelCropping()">Close</ion-button>
+          <ion-button strong="true" expand="block" color="warning" (click)="startUpload()">Scan</ion-button>
         </ion-col>
       </ion-row>
     </div>
-    
+
   </ion-grid>
 </ion-content>

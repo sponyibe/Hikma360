@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button routerLink="/menu/home"></ion-back-button>
     </ion-buttons>
@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-fab vertical="top" horizontal="start">
-    <ion-fab-button size="small">
+    <ion-fab-button color="secondary" size="small">
       <ion-icon name="options" (click)="searchModal()"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -23,7 +23,7 @@
 
   <ng-container *ngIf="!storeList || storeList.length == 0">
     <ion-list>
-      <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+      <div *ngFor="let n of [0,1,2,3,4,5]" class="ion-padding">
         <ion-skeleton-text animated></ion-skeleton-text>
         <p>
           <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>

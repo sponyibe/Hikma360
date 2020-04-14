@@ -11,8 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../../environments/environment';
+import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFirestoreModule} from '@angular/fire/firestore';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -35,6 +36,7 @@ import { FilterGroceryStoresPageModule } from './filter-grocery-stores/filter-gr
     FilterGroceryStoresPageModule,
     AddItemPageModule,
     AngularFireStorageModule,
+    AngularFireDatabaseModule,
     NgbModule.forRoot()
   ],
   providers: [

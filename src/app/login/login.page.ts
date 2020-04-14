@@ -51,6 +51,7 @@ export class LoginPage implements OnInit {
   async loginError(){
     let toast = await this.toastCtrl.create({message: 'Your Email or Password is incorrect. Please try again',
     duration: 3000,
+    cssClass: 'toast-class',
     position: 'bottom'});
     toast.present();
   }

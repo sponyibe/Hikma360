@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button routerLink="/grocery-stores"></ion-back-button>
     </ion-buttons>
@@ -7,21 +7,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-icon name="basket"></ion-icon>
+<ion-content class="ion-padding">
   <div class="details">
-    <div class="card">
-      <h4 style="text-align:center;">{{groceryStore.Name}}</h4>
-      <p><strong>Address: </strong> <a href="https://google.ca/maps/place/{{groceryStore.Address}}"> {{groceryStore.Address}}</a></p>
-      <p><strong>City: </strong>{{groceryStore.SubRegions}}, {{groceryStore.Region}}</p>
-      <p><strong>Telephone: </strong>{{groceryStore.PhoneNumber}}</p>
-      <p><strong>Hours of Operation: </strong>{{groceryStore.HoursofOperation}}</p>
-      <p *ngIf="groceryStore.CertifedBy"> <strong>Certified By: </strong>{{groceryStore.CertifedBy}}</p>
-      <p><strong>Store Type: </strong>{{groceryStore.StoreType}}</p>
-      <p><ngb-rating [(rate)]="groceryStore.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating></p>
-      <a *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
- 
-    </div>
+    <ion-card color="light">
+      <ion-icon name="basket"></ion-icon>
+      <ion-card-header>
+        <ion-card-subtitle>{{groceryStore.SubRegions}}, {{groceryStore.Region}}</ion-card-subtitle>
+        <ion-card-title>{{groceryStore.Name}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- <h4 style="text-align:center;"></h4> -->
+        <p *ngIf="groceryStore.Address"><strong>Address: </strong> <a href="https://google.ca/maps/place/{{groceryStore.Address}}">{{groceryStore.Address}}</a></p>
+        <!-- <p><strong>City: </strong></p> -->
+        <p *ngIf="groceryStore.PhoneNumber"><strong>Telephone: </strong>{{groceryStore.PhoneNumber}}</p>
+        <p *ngIf="groceryStore.HoursofOperation"><strong>Hours of Operation: </strong>{{groceryStore.HoursofOperation}}</p>
+        <p *ngIf="groceryStore.CertifedBy"> <strong>Certified By: </strong>{{groceryStore.CertifedBy}}</p>
+        <p *ngIf="groceryStore.StoreType"><strong>Store Type: </strong>{{groceryStore.StoreType}}</p>
+        <p *ngIf="groceryStore.Rating">
+          <ngb-rating [(rate)]="groceryStore.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+        </p>
+        <a href="" *ngIf="groceryStore.Website" (click)="openWebsite()">Visit the Website</a>
+      </ion-card-content>
+    </ion-card>
   </div>
 
   <ng-template #t let-fill="fill">
