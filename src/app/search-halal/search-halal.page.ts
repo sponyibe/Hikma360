@@ -1,12 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
+import { LoadingController, ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { Subscription, Observable } from 'rxjs';
 import { tap, filter, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment'
+import * as algoliasearch from 'algoliasearch';
 
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireDatabase, AngularFireObject, AngularFireList } from "@angular/fire/database";
+import { AngularFireDatabase, AngularFireObject} from "@angular/fire/database";
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 
@@ -55,15 +55,16 @@ export class SearchHalalPage {
   @ViewChild(ImageCropperComponent) angularCropper: ImageCropperComponent;
 
   constructor(private storage: AngularFireStorage,
-    private afs: AngularFirestore,
     private afd: AngularFireDatabase,
     private camera: Camera,
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
     private ingservice: IngredientService,
+    private toastCtrl: ToastController
   ) {
-    this.isLoading = this.loadingCtrl.create({ message: 'loading...' })
+    this.client = algoliasearch(environment.algolia.appid, environment.algolia.apikey);
+    this.index = this.client.initIndex("Ingredients");
   }
 
   ionViewWillEnter() {
@@ -75,6 +76,11 @@ export class SearchHalalPage {
   }
 
   newSearch() {
+
+    if(!this.searchTerm){
+      this.showToast('Please enter a valid search term.')
+      return;
+    }
 
     this.index.search({
       query: this.searchTerm,
@@ -271,6 +277,14 @@ export class SearchHalalPage {
     setTimeout(() => {
       this.loadingCtrl.dismiss();
     }, 4000);
+  }
+
+  showToast(msg: string){
+    this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      cssClass: 'toast-class'
+    }).then(toast => toast.present());
   }
 
   ionViewWillLeave() {
