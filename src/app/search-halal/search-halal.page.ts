@@ -1,17 +1,16 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
-import { Diagnostic } from '@ionic-native/diagnostic/ngx';
-import { Subscription } from 'rxjs';
-
+import { Subscription, Observable } from 'rxjs';
+import { tap, filter, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment'
-import * as algoliasearch from 'algoliasearch';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from "@angular/fire/database";
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 
-import { Ingredient, IngredientService } from "../services/ingredient.service";
+import { Ingredient, IngredientService, imageTagger } from "../services/ingredient.service";
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 @Component({
@@ -21,16 +20,18 @@ import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 })
 export class SearchHalalPage {
 
-  showResults = false;
+  public showResults = false;
 
   // Upload task
-  task: AngularFireUploadTask;
+  public task: AngularFireUploadTask;
 
   // Firestore data
-  result$;
+  public result$: Observable<imageTagger>;
+  public photoRef: AngularFireObject<imageTagger>
 
   //loading: Loading;
   public image: string;
+  public pls: imageTagger
 
   public croppedImage = "";
   public isLoading;
@@ -55,17 +56,14 @@ export class SearchHalalPage {
 
   constructor(private storage: AngularFireStorage,
     private afs: AngularFirestore,
+    private afd: AngularFireDatabase,
     private camera: Camera,
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertController: AlertController,
     private ingservice: IngredientService,
-    private diagnostic: Diagnostic
   ) {
-    this.client = algoliasearch(environment.algolia.appid, environment.algolia.apikey);
-    this.index = this.client.initIndex("dev_Ingredients");
     this.isLoading = this.loadingCtrl.create({ message: 'loading...' })
-
   }
 
   ionViewWillEnter() {
@@ -87,15 +85,19 @@ export class SearchHalalPage {
         if (data.hits.length) {
           if(data.hits[0].nonhalal.toLowerCase() != this.searchTerm.toLowerCase()){
             console.log(data.hits[0].nonhalal)
-            this.presentAlert('if you meant ' + data.hits[0].nonhalal + ' It is not Halal', this.searchTerm, data.hits[0].notes)
+            console.log("algolia")
+            this.presentAlert('If you meant ' + data.hits[0].nonhalal + ', it is not Halal', this.searchTerm, data.hits[0].notes)
           }else{
+            console.log("algolia else")
           this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
           }
         }
         else if (!this.getList()) {
+          console.log("firestore")
           this.presentAlert("This isn't Halal", this.searchTerm, 'None')
         }
         else {
+          console.log("firestore else")
           this.presentAlert('This is Halal', this.searchTerm, 'None')
         }
       });
@@ -195,22 +197,29 @@ export class SearchHalalPage {
     this.showLoader();
 
     // const timestamp = new Date().getTime().toString();
-    const docId = this.afs.createId();
-    // console.log(docId)
+    const docId = this.afd.createPushId();
 
     const path = `${docId}.jpg`;
 
     // Make a reference to the future location of the firestore document
-    const photoRef = this.afs.collection('halalCheck').doc(docId)
+    // const photoRef = this.afs.collection('halalCheck').doc(docId)
+    this.photoRef = this.afd.object(docId)
 
     // Firestore observable, dismiss loader when data is available
-    photoRef.valueChanges().subscribe(data => {
-      this.result$ = data
-      // console.log(this.result$)
-      if (this.result$) {
-        this.hideLoader()
-      }
-    })
+    this.result$ = this.photoRef.valueChanges().pipe(
+      filter(data => !!data),
+      tap(_ => this.loadingCtrl.dismiss())
+    );
+
+    this.result$.subscribe(data => console.log(data))
+
+    // this.photoRef.snapshotChanges().subscribe(tell => {
+    //   this.pls = tell.payload.val()
+    //   console.log('test')
+    //   if(this.pls.arrNonHalal){
+    //     console.log(this.pls)
+    //   }
+    // })
 
     // The main task
     this.task = this.storage.ref(path).putString(this.imageBase64, 'data_url');

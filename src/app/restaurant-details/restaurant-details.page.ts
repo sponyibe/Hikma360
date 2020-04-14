@@ -9,7 +9,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   templateUrl: "./restaurant-details.page.html",
   styleUrls: ["./restaurant-details.page.scss"]
 })
-export class RestaurantDetailsPage implements OnInit {
+export class RestaurantDetailsPage{
   constructor(
     public locationService: LocationsService,
     private activatedRoute: ActivatedRoute,
@@ -38,10 +38,6 @@ export class RestaurantDetailsPage implements OnInit {
     distance: "",
     Website: ""
   };
-
-  ngOnInit() {
-    //this.places = this.locationService.getLocations();
-  }
 
   ionViewWillEnter() {
     let id = this.activatedRoute.snapshot.paramMap.get("id");

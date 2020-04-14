@@ -1,7 +1,7 @@
 .searchCamera{
     height: 60px;
     width: 40px;
-    color: #203305c0;
+    color: var(--ion-color-dark);
 }
 
 .textCamera{
@@ -11,4 +11,14 @@
     top: 10px;
     height: 30px;
     width: 25px;
+}
+
+.halalCheck{
+    border-left: 6px solid #f3c409;
+    background-color: rgb(243, 237, 237);
+    padding: 10px 20px;
+}
+
+.halalCheck > ion-chip {
+    padding: 10px 20px;
 }

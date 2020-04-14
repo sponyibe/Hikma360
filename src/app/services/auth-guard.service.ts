@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot } from "@angular/router";
 import { first } from 'rxjs/operators';
-import { Events } from '@ionic/angular';
+import { Events, AlertController } from '@ionic/angular';
 import { AngularFireAuth } from "@angular/fire/auth";
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AuthGuardService implements CanActivate {
 
   authState: boolean;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth, private ev: Events) { }
+  constructor(private router: Router, private afAuth: AngularFireAuth, private ev: Events, private alertController: AlertController) { }
 
   authenticated: Boolean
 
@@ -23,6 +23,7 @@ export class AuthGuardService implements CanActivate {
     this.doSomething().then(val => {
       this.authenticated = val;
       if(!this.authenticated){
+        this.presentAlert()
         this.router.navigate(["login"]);
         return false;
       }
@@ -51,6 +52,15 @@ export class AuthGuardService implements CanActivate {
     } else {
       return false;
     }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      message: 'Please login',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 
 }

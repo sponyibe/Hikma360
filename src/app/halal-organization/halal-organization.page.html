@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="dark">
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +10,7 @@
 
 
     <ng-container *ngIf="!certifyingorganizations || certifyingorganizations.length == 0">
-      <div *ngFor="let n of [0,1,2,3,4,5]" padding>
+      <div *ngFor="let n of [0,1,2,3,4,5]" class="ion-padding">
         <ion-skeleton-text animated></ion-skeleton-text>
         <p>
           <ion-skeleton-text animated style="width: 58%"></ion-skeleton-text>

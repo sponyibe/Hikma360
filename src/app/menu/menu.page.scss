@@ -1,9 +1,17 @@
 .active {
-    --ion-text-color: var(--ion-color-primary);
+    --ion-text-color: var(--ion-color-medium);
  
     ion-icon {
-        --ion-text-color-rgb: var(--ion-color-primary);
+        --ion-text-color-rgb: var(--ion-color-tertiary);
     }
+}
+
+ion-content{
+    --background: var(--ion-color-light)
+}
+
+ion-item{
+    --background: var(--ion-color-light)
 }
  
 .parent-active {
