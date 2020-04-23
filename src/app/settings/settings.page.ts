@@ -29,6 +29,7 @@ export class SettingsPage implements OnInit {
       this.afAuth.auth.currentUser.updateEmail(this.email)
       .then(() => {
         this.email = '';
+        this.afAuth.auth.currentUser.sendEmailVerification();
         this.presentEmailToast();
       })
       .catch(err => {
@@ -51,8 +52,8 @@ export class SettingsPage implements OnInit {
   }
 
   async presentEmailToast(){
-    let toast = await this.toastCtrl.create({message: 'Email updated',
-    duration: 3000,
+    let toast = await this.toastCtrl.create({message: 'Email updated.Please check your email and verify your account.',
+    duration: 5000,
     position: 'bottom'});
     toast.present();
   }
