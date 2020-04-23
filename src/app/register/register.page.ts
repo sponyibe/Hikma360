@@ -82,7 +82,7 @@ export class RegisterPage implements OnInit {
     toast.present();
   }
   async errorToast(){
-    let toast = await this.toastCtrl.create({message: 'Check your credentials and ensure your passowrds match.',
+    let toast = await this.toastCtrl.create({message: 'Check your credentials and ensure your passwords match.',
     duration: 5000,
     position: 'middle'});
     toast.present();
