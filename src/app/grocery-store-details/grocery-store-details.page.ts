@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { GroceryStoresService, GroceryStores } from "../services/grocery-stores.service";
-import { Observable } from "rxjs";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
@@ -9,18 +9,16 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   templateUrl: './grocery-store-details.page.html',
   styleUrls: ['./grocery-store-details.page.scss'],
 })
-export class GroceryStoreDetailsPage implements OnInit {
+export class GroceryStoreDetailsPage {
 
   constructor(
     public groceryStoreService: GroceryStoresService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private inAppBrowser: InAppBrowser
   ) {}
 
   public places: Observable<GroceryStores[]>;
-
-  //public restaurant: Restauarant[];
+  public subscription: Subscription;
 
   groceryStore: GroceryStores = {
     Name: '',
@@ -39,14 +37,10 @@ export class GroceryStoreDetailsPage implements OnInit {
     Website: ""
   };
 
-  ngOnInit() {
-    //this.places = this.locationService.getLocations();
-  }
-
   ionViewWillEnter() {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     if (id) {
-      this.groceryStoreService.getGroceryStore(id).subscribe(groceryStore => {
+      this.subscription = this.groceryStoreService.getGroceryStore(id).subscribe(groceryStore => {
         this.groceryStore = groceryStore;
       });
     }
@@ -55,6 +49,8 @@ export class GroceryStoreDetailsPage implements OnInit {
   openWebsite(){
     this.inAppBrowser.create(this.groceryStore.Website, '_system');
   }
-  
 
+  ionViweWillLeave(){
+    this.subscription.unsubscribe()
+  }
 }

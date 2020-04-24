@@ -19,8 +19,6 @@ export class RestaurantDetailsPage{
 
   public places: Observable<Restaurant[]>;
 
-  //public restaurant: Restaurant[];
-
   restaurants: Restaurant = {
     Name: '',
     Address: '',

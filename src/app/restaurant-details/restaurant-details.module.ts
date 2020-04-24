@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbRatingModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { RestaurantDetailsPage } from './restaurant-details.page';
 
@@ -20,7 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    NgbModule,
+    NgbRatingModule,
     RouterModule.forChild(routes)
   ],
   declarations: [RestaurantDetailsPage]

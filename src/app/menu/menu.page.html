@@ -9,7 +9,7 @@
 
   <ion-content>
     <div *ngFor="let p of pages">
-      <!--standad menu item-->
+      <!--standard menu item-->
       <ion-menu-toggle *ngIf="p.url">
         <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
           <ion-icon [name]="p.icon" slot="start"></ion-icon>
@@ -19,6 +19,11 @@
         </ion-item>
       </ion-menu-toggle>
     </div>
+    <ion-item *ngIf="authState==true" routerLink="/settings" routerDirection="root" routerLinkActive="active">
+      <ion-icon name="settings" slot="start"></ion-icon>
+      Settings
+    </ion-item>
+
     <ion-item *ngIf="authState==true" button (click)="logout()">
       <ion-icon name="log-out" slot="start"></ion-icon>
       Logout

@@ -66,15 +66,11 @@ export class RestaurantsPage implements OnInit{
             this.places = this.applyHaversine(restaurantList)
     
             this.places.sort(this.compare);
-            // this.data = [...this.places.filter(i => i.distance < 100)]
     
             this.locationService.restaurantData = [...this.places];
             this.dataList = this.locationService.restaurantData.slice(0, 25);
             this.numOfItemsDisplaying = 25;
     
-            // if (this.data.length <= 0) {
-            //   this.presentAlert("Sorry, there are no restaurants within 100km of your current location")
-            // }
             this.filtered = this.places.slice(0);
           })
       });
@@ -158,8 +154,6 @@ export class RestaurantsPage implements OnInit{
     });
   }
 
-  
-
   async presentAlert(msg) {
     const alert = await this.alertController.create({
       header: 'Notice',
@@ -172,7 +166,6 @@ export class RestaurantsPage implements OnInit{
 
   applyHaversine(locations: Restaurant[]) {
 
-    // console.log(this.usersLocation)
     locations.map((location) => {
 
       let placeLocation = {
@@ -185,7 +178,6 @@ export class RestaurantsPage implements OnInit{
         placeLocation,
       ).toFixed(2);
     });
-    // console.log(locations);
     return locations;
   }
 
@@ -231,7 +223,6 @@ export class RestaurantsPage implements OnInit{
 
     this.dataList = this.data.slice(0, 24);
     this.numOfItemsDisplaying = 25;
-    // this.filtered = this.data.slice(0);
   }
 
   ionViewWillLeave() {

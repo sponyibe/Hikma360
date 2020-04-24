@@ -15,10 +15,8 @@
       <ion-card-title>{{ certifyingorganization.OrganisationsCertified}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <!-- <h4 style="text-align:center;"></h4> -->
       <p *ngIf=certifyingorganization.Brands><b>Brands: </b>{{ certifyingorganization.Brands }}</p>
       <p><b>Address: </b><a href="https://google.ca/maps/place/{{ certifyingorganization.Address }}">{{ certifyingorganization.Address }}</a></p>
-      <!-- <p><b>City: </b></p> -->
       <p *ngIf=certifyingorganization.EmailAddress><b>Email: </b>{{ certifyingorganization.EmailAddress }}</p>
       <p *ngIf=certifyingorganization.CertifyingBody><b>Certifying Body: </b> {{ certifyingorganization.CertifyingBody }}</p>
       <p *ngIf=certifyingorganization.OutletType><b>Outlet Type: </b>{{ certifyingorganization.OutletType }}</p>

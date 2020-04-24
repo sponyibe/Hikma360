@@ -16,12 +16,10 @@
         <ion-card-title>{{restaurants.Name}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <!-- <h4 style="text-align:center;"></h4> -->
       <p  *ngIf="restaurants.Address"> <strong> Address: </strong> <a href="https://google.ca/maps/place/{{restaurants.Address}}"> {{restaurants.Address}}</a></p>
-      <!-- <p><strong>City: </strong> </p> -->
       <p *ngIf="restaurants.PhoneNumber"><strong>Telephone: </strong> {{restaurants.PhoneNumber}}</p>
       <p *ngIf="restaurants.HoursOfOperation"><strong>Hours of Operation: </strong> {{restaurants.HoursOfOperation}}</p>
-      <p *ngIf="restaurants.CertifedBy"><strong>Certified By: </strong> {{restaurants.CertifedBy}}</p>
+      <p *ngIf="restaurants.CertifiedBy"><strong>Certified By: </strong> {{restaurants.CertifedBy}}</p>
       <p *ngIf="restaurants.CuisneType"><strong>Cuisine Type: </strong> {{restaurants.CuisneType}}</p>
       <p *ngIf="restaurants.PriceRange"><strong>Price Range: </strong> {{restaurants.PriceRange}}</p>
       <p *ngIf="restaurants.Rating"><ngb-rating [(rate)]="restaurants.Rating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating></p>
