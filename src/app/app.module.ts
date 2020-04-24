@@ -5,12 +5,13 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../../environments/environment';
+import { environment } from './environments/environment.prod';
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -23,7 +24,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { AddItemPageModule } from './add-item/add-item.module';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterGroceryStoresPageModule } from './filter-grocery-stores/filter-grocery-stores.module';
 
 @NgModule({
@@ -37,7 +38,7 @@ import { FilterGroceryStoresPageModule } from './filter-grocery-stores/filter-gr
     AddItemPageModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    NgbModule.forRoot()
+    NgbRatingModule
   ],
   providers: [
     StatusBar,
@@ -47,6 +48,7 @@ import { FilterGroceryStoresPageModule } from './filter-grocery-stores/filter-gr
     Geolocation,
     InAppBrowser,
     Diagnostic,
+    FirebaseX,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],

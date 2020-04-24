@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Certifyingorganization, CertifyingOrganizationService } from '../services/certifyingorganization.service';
 import { Subscription } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
-//import { AngularFirestore } from '@angular/fire/firestore';
-
 
 @Component({
   selector: 'app-halal-organization',
@@ -18,7 +16,6 @@ export class HalalOrganizationPage{
   public searchOrgTerm;
   public filtered: Certifyingorganization[];
 
-
   constructor(private certifyingorganizationService : CertifyingOrganizationService, private loadingCtrl: LoadingController ) { }
 
   async ionViewWillEnter(){
@@ -31,7 +28,6 @@ export class HalalOrganizationPage{
     this.subscription = this.certifyingorganizationService.getCertifyingOrganization()
     .subscribe(certifyingorganization =>{
       this.certifyingorganizations = certifyingorganization;
-      // console.log(this.certifyingorganizations)
       this.loadedCertifyingOrganizationList = certifyingorganization;
 
       this.certifyingorganizationService.certifyingOrganizationsData = [...this.certifyingorganizations]
@@ -64,7 +60,6 @@ export class HalalOrganizationPage{
 
   ionViewWillLeave(){
     if(this.subscription){
-      console.log("Leave init")
       this.subscription.unsubscribe()
     }
   }

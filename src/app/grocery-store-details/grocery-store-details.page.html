@@ -16,9 +16,7 @@
         <ion-card-title>{{groceryStore.Name}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <!-- <h4 style="text-align:center;"></h4> -->
         <p *ngIf="groceryStore.Address"><strong>Address: </strong> <a href="https://google.ca/maps/place/{{groceryStore.Address}}">{{groceryStore.Address}}</a></p>
-        <!-- <p><strong>City: </strong></p> -->
         <p *ngIf="groceryStore.PhoneNumber"><strong>Telephone: </strong>{{groceryStore.PhoneNumber}}</p>
         <p *ngIf="groceryStore.HoursofOperation"><strong>Hours of Operation: </strong>{{groceryStore.HoursofOperation}}</p>
         <p *ngIf="groceryStore.CertifedBy"> <strong>Certified By: </strong>{{groceryStore.CertifedBy}}</p>

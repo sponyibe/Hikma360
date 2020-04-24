@@ -30,11 +30,6 @@ export class MenuPage implements OnInit {
       url: '/favourites',
       icon: 'star'
     },  
-    // {
-    //   title: 'Settings',
-    //   url: '/settings',
-    //   icon: 'settings'
-    // }, 
     {
       title: 'FAQ',
       url: '/faq',
@@ -83,7 +78,4 @@ export class MenuPage implements OnInit {
     position: 'bottom'});
     toast.present();
   }
-
-
-
 }

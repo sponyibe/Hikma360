@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController} from '@ionic/angular';
-import { Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-terms',
@@ -9,7 +8,7 @@ import { Router, Routes } from '@angular/router';
 })
 export class RegisterTermsPage implements OnInit {
 
-  constructor(private modalCtrl: ModalController,public router:Router) { }
+  constructor(public router:Router) { }
 
   ngOnInit() {
   }

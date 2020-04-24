@@ -1,48 +1,44 @@
 .card-background-page {
     --background : linear-gradient(#141414 30%,#000000);
 }
-    ion-card {
+
+ion-card {
     position: relative;
     text-align: center;
-    }
+}
 
-    ion-button{
-        --background: #ffc409;
-    }
+ion-button{
+    --background: #ffc409;
+}
 
-    .card-title {
+.card-title {
     background-color:#141414;
-   // position: absolute;
-  //  top: 36%;
     font-size: 2.0em;
-   // width: 100%;
-   //font-weight: bold;
     color:#ffc409;
-    }
+}
 
-    .card-subtitle {
+.card-subtitle {
     font-size: 1.0em;
     position: absolute;
     top: 52%;
     width: 100%;
     color: #fff;
-    }
+}
 
-    .headpic{
-        width: 60px;
-        height: 60px;
-    }
+.headpic{
+    width: 60px;
+    height: 60px;
+}
 
-    .title{
-        margin-left: 16px;
-       // position: absolute;
+.title{
+    margin-left: 16px;
     font-size: 2.0em;
     width: 100%;
     font-weight: bold;
     color:#ffc409;
-    }
+}
 
-    .section{
+.section{
   text-align:center;
   display:block;
   background-color: transparent;
@@ -50,4 +46,4 @@
   margin-right: 10px;
   margin-bottom: 1px;
   float:left;
-    }
+}

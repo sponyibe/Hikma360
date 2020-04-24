@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AlertController,ToastController,NavController, NavParams, Events } from '@ionic/angular';
-import { Router, Routes } from '@angular/router';
-import { AuthService } from '../services/auth.service'
-import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { ToastController,NavController, NavParams, Events } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -11,7 +10,7 @@ import { FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angula
   templateUrl: './recover.page.html',
   styleUrls: ['./recover.page.scss'],
 })
-export class RecoverPage implements OnInit {
+export class RecoverPage {
    email: string = ""
 
   recoverForm: FormGroup;
@@ -20,8 +19,6 @@ export class RecoverPage implements OnInit {
      
   }
 
-  ngOnInit() {
-  }
 
   async recover(){
     this.afAuth.auth.sendPasswordResetEmail(this.email)

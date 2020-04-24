@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController, NavParams, IonRadioGroup } from '@ionic/angular';
-import { GroceryStores } from "../services/grocery-stores.service";
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Restaurant } from '../services/locations.service';
 
@@ -27,7 +26,10 @@ export class FilterGroceryStoresPage implements OnInit {
   //Get value on ionSelect on IonRadio item
   selectedRadioStoreType: any;
 
-  constructor(private modalCtrl: ModalController, private navParams: NavParams, private config: NgbRatingConfig) {
+  constructor(
+    private modalCtrl: ModalController,
+    private navParams: NavParams,
+    private config: NgbRatingConfig) {
     config.max = 5;
     config.readonly = true;
   }
@@ -73,7 +75,6 @@ export class FilterGroceryStoresPage implements OnInit {
   }
 
   async ratingSelected(evt) {
-    // this.initializeItems()
     this.selectedRadioRating = parseInt(evt);
 
     this.passedInfoCopy = this.passedInfoCopy.filter(grocer => {
