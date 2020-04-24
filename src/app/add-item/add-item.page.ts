@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController, ToastController } from '@ionic/angular';
 import { Favourites, FavouritesService } from '../services/favourites.service';
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 })
 export class AddItemPage implements OnInit {
 
-  passedItem: ''
   passedId: ''
 
   favourite: Favourites = {
@@ -20,7 +19,14 @@ export class AddItemPage implements OnInit {
     userId: ''
   };
 
-  constructor(private afAuth: AngularFireAuth ,private navParams: NavParams, private modalCtrl: ModalController, private favouritesService: FavouritesService, private toastCtrl: ToastController, private router:Router) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private navParams: NavParams,
+    private modalCtrl: ModalController,
+    private favouritesService: FavouritesService,
+    private toastCtrl: ToastController,
+    private router:Router) 
+    {
     if (this.afAuth.auth.currentUser){
       this.favourite.userId = this.afAuth.auth.currentUser.uid
     }
@@ -37,7 +43,7 @@ export class AddItemPage implements OnInit {
       this.showToast('Item added');
       this.closeModal();
     }, err => {
-      this.showToast('There was a problem adding your item');
+      this.showToast('There was a problem adding your item: '+ err);
     });
   }
 
@@ -47,7 +53,7 @@ export class AddItemPage implements OnInit {
       this.showToast('Item updated');
       this.closeModal();
     }, err => {
-      this.showToast('There was a problem adding your item');
+      this.showToast('There was a problem updating your item:' + err);
     })
   }
   

@@ -10,7 +10,7 @@ import { FilterGroceryStoresPage } from '../filter-grocery-stores/filter-grocery
   templateUrl: './grocery-stores.page.html',
   styleUrls: ['./grocery-stores.page.scss'],
 })
-export class GroceryStoresPage implements OnInit{
+export class GroceryStoresPage implements OnInit {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('search') searchBar: IonSearchbar
@@ -27,10 +27,11 @@ export class GroceryStoresPage implements OnInit{
   }
 
   public option: string;
-  public searchGroceryStores;
+  public searchGroceryStores: '';
   public filteredList: GroceryStores[];
 
-  constructor(public groceryStoreService: GroceryStoresService,
+  constructor(
+    public groceryStoreService: GroceryStoresService,
     private alertController: AlertController,
     private modalCtrl: ModalController,
     public geolocation: Geolocation,
@@ -38,7 +39,7 @@ export class GroceryStoresPage implements OnInit{
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.presentAlert('We currently only display grocery stores based in the Greater Toronto Area (GTA). Users outside the GTA would only be able to see the distance from their location to the closest grocery store in the GTA.')
   }
 
@@ -49,7 +50,7 @@ export class GroceryStoresPage implements OnInit{
         this.usersLocation.lat = pos.coords.latitude
         this.usersLocation.lng = pos.coords.longitude
 
-        if(this.filteredList){
+        if (this.filteredList) {
           this.storeList = [...this.filteredList]
           return;
         }
@@ -64,7 +65,6 @@ export class GroceryStoresPage implements OnInit{
             this.groceryStores = this.applyHaversine(groceryStoresList)
 
             this.groceryStores.sort(this.compare);
-            // this.data = this.groceryStores.filter(i => i.distance < 100)
 
             this.groceryStoreService.groceryStoresData = [...this.groceryStores];
             this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 25);
@@ -82,7 +82,7 @@ export class GroceryStoresPage implements OnInit{
     this.storeList = this.groceryStoreService.groceryStoresData.slice(0);
   }
 
-  fastLoad(){
+  fastLoad() {
     this.storeList = [...this.groceryStoreService.groceryStoresData];
 
     this.storeList = this.groceryStoreService.groceryStoresData.slice(0, 24);
@@ -98,7 +98,7 @@ export class GroceryStoresPage implements OnInit{
       this.fastLoad()
       this.infiniteScroll.disabled = false
       return;
-    }else{
+    } else {
       this.infiniteScroll.disabled = true
     }
 
@@ -122,11 +122,11 @@ export class GroceryStoresPage implements OnInit{
     });
 
     modal.onDidDismiss().then((data) => {
-      if(data['data'] === null){
+      if (data['data'] === null) {
         this.fastLoad()
         this.infiniteScroll.disabled = false;
         this.searchBar.disabled = false;
-      }else{
+      } else {
         this.infiniteScroll.disabled = true;
         this.searchBar.disabled = true;
         this.storeList = data['data']
@@ -160,7 +160,6 @@ export class GroceryStoresPage implements OnInit{
         placeLocation,
       ).toFixed(2);
     });
-    // console.log(locations);
     return locations;
   }
 

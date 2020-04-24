@@ -3,7 +3,7 @@ import { LoadingController, ActionSheetController, AlertController, ToastControl
 import { Subscription, Observable } from 'rxjs';
 import { tap, filter, map } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment'
+import { environment } from '../environments/environment.prod';
 import * as algoliasearch from 'algoliasearch';
 
 import { AngularFireDatabase, AngularFireObject} from "@angular/fire/database";
@@ -29,7 +29,6 @@ export class SearchHalalPage {
   public result$: Observable<imageTagger>;
   public photoRef: AngularFireObject<imageTagger>
 
-  //loading: Loading;
   public image: string;
   public pls: imageTagger
 
@@ -41,7 +40,6 @@ export class SearchHalalPage {
 
   public searchTerm = '';
   public isHalal: boolean;
-  // public showBody:boolean = false;
   public hideCropping: boolean;
   public sourceType: number;
   public message: string;
@@ -87,23 +85,17 @@ export class SearchHalalPage {
       attributesToRetrieve: ['nonhalal', 'notes']
     }).
       then((data: any) => {
-        console.log(data.hits)
         if (data.hits.length) {
           if(data.hits[0].nonhalal.toLowerCase() != this.searchTerm.toLowerCase()){
-            console.log(data.hits[0].nonhalal)
-            console.log("algolia")
             this.presentAlert('If you meant ' + data.hits[0].nonhalal + ', it is not Halal', this.searchTerm, data.hits[0].notes)
           }else{
-            console.log("algolia else")
           this.presentAlert("This isn't Halal", this.searchTerm, data.hits[0].notes)
           }
         }
         else if (!this.getList()) {
-          console.log("firestore")
           this.presentAlert("This isn't Halal", this.searchTerm, 'None')
         }
         else {
-          console.log("firestore else")
           this.presentAlert('This is Halal', this.searchTerm, 'None')
         }
       });
@@ -112,7 +104,6 @@ export class SearchHalalPage {
   //For Try 3
   initializeItems() {
     this.ingredient = this.loadedIngredientList
-    // console.log(JSON.stringify(this.ingredient))
   }
 
   getList() {
@@ -123,8 +114,6 @@ export class SearchHalalPage {
     if (this.brokenDownSearch.length > 1) {
       this.brokenDownSearch.push(this.searchTerm);
     }
-
-    console.log(this.brokenDownSearch);
 
     // Loop through the individual search terms
     for (let i = 0; i < this.brokenDownSearch.length; i++) {
@@ -219,14 +208,6 @@ export class SearchHalalPage {
 
     this.result$.subscribe(data => console.log(data))
 
-    // this.photoRef.snapshotChanges().subscribe(tell => {
-    //   this.pls = tell.payload.val()
-    //   console.log('test')
-    //   if(this.pls.arrNonHalal){
-    //     console.log(this.pls)
-    //   }
-    // })
-
     // The main task
     this.task = this.storage.ref(path).putString(this.imageBase64, 'data_url');
   }
@@ -270,7 +251,6 @@ export class SearchHalalPage {
         console.log('Loading dismissed!');
       });
     });
-    // this.hideLoader();
   }
 
   hideLoader() {

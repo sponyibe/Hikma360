@@ -31,11 +31,6 @@ export class MenuPage implements OnInit {
       icon: 'star'
     },  
     {
-      title: 'Settings',
-      url: '/settings',
-      icon: 'settings'
-    }, 
-    {
       title: 'FAQ',
       url: '/faq',
       icon: 'help'
@@ -83,7 +78,4 @@ export class MenuPage implements OnInit {
     position: 'bottom'});
     toast.present();
   }
-
-
-
 }

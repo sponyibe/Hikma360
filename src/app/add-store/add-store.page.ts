@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ToastController, NavController } from "@ionic/angular";
-import { Router, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateValidator } from '../storeValidation/date'
 import { FavouritesService, Favourites, Store } from "../services/favourites.service";
@@ -43,7 +43,6 @@ export class AddStorePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private favouritesService: FavouritesService,
     private toastCtrl: ToastController,
-    private router: Router,
     private navCtrl: NavController,
     public formBuilder: FormBuilder
   ) {
@@ -65,21 +64,16 @@ export class AddStorePage implements OnInit {
     this.isUpdatingStore = false;
 
     if (this.id) {
-      // console.log(this.id)
       this.favouritesService.getFavouritesDetails(this.id).subscribe(store => {
         this.favourites = store;
         this.favourites.Store = store.Store
-        // console.log(store);
       });
     }
     if (this.index) {
-      // console.log(this.index)
       this.isUpdatingStore = true;
 
       this.favouritesService.getStoreDetails(this.id, this.index).subscribe(store => {
         this.favourites.Store[this.index] = store;
-        // console.log(this.favourites.Store[this.index]);
-
         this.store = this.favourites.Store[this.index];
       });
     }
@@ -92,8 +86,6 @@ export class AddStorePage implements OnInit {
     }
     else {
       this.favourites.Store.push(this.storeForm.value)
-      // this.favourites.Store.push(this.store)
-      // console.log(this.favourites.Store);
       this.favouritesService.addStore(this.favourites).then(() => {
         if (this.favourites.Store.length >= 3) {
           this.calculateOurPriceRating(this.favourites)
