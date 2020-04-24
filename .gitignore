@@ -30,7 +30,6 @@ plugins/ios.json
 src/app/environments/
 functions/environments/
 $RECYCLE.BIN/
-src/app/environments/
 *.keystore.old
 *.keystore
 
