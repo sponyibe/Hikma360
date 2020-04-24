@@ -36,15 +36,11 @@
     "algoliasearch": "^3.35.1",
     "angularfire2": "^5.4.2",
     "bootstrap": "^4.0.0",
-<<<<<<< HEAD
-    "cordova-android": "^8.1.0",
     "cordova-browser": "6.0.0",
     "cordova-ios": "^5.0.1",
-=======
     "cordova-android": "8.1.0",
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.0",
->>>>>>> 68e58f6c03b4dc457049905222ddf7a58f30fb5c
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-firebasex": "^9.1.0-cli",
     "cordova-plugin-geolocation": "^4.0.2",
@@ -131,13 +127,9 @@
       }
     },
     "platforms": [
-<<<<<<< HEAD
       "browser",
       "android",
       "ios"
-=======
-      "android"
->>>>>>> 68e58f6c03b4dc457049905222ddf7a58f30fb5c
     ]
   }
 }
